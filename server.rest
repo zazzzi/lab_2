@@ -1,13 +1,13 @@
-// get all users
+// get all post
 GET http://localhost:6969/api/posts
 ###
 
-// get specific user
+// get specific post
 GET http://localhost:6969/api/posts/607ed7954089c86ca462b74b
 ###
 
 
-// create new user
+// create new post
 POST http://localhost:6969/api/posts/
 Content-Type: application/json
 
@@ -22,12 +22,55 @@ Content-Type: application/json
 
 ###
 
-// delete a user
-DELETE http://localhost:6969/api/users/
+// delete specific post
+DELETE http://localhost:6969/api/posts/607ed368a931083360fe1ed0
 
 ###
 
-// delete a twat
-DELETE http://localhost:6969/api/posts/
+// update content of specific post from id
+PUT http://localhost:6969/api/posts/607f0c3deb74ad36100f60dc
+Content-Type: application/json
+
+{
+  "content": "Pooopiii"
+}
+
 
 ###
+// PROFILES
+
+GET http://localhost:6969/api/profiles
+
+###
+
+POST http://localhost:6969/api/profiles
+Content-Type: application/json
+
+{
+  "userName": "xxxdankNwetxxx",
+  "password": "1234",
+  "role": "Pro-boy",
+  "name": "Knut Knutsson"
+}
+
+### 
+// get specific character, from ID 
+GET http://localhost:6969/api/profiles/607f17cd2fbe664884221b6e
+
+### 
+// delete specific character, from ID 
+DELETE http://localhost:6969/api/profiles/607f12092fbe664884221b6d
+
+
+###
+
+
+PUT http://localhost:6969/api/profiles/607f17cd2fbe664884221b6e
+Content-Type: application/json
+
+{
+  "password": "2345",
+  "name": "Olof Swagsson"
+}
+
+
