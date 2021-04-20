@@ -27,7 +27,7 @@ DELETE http://localhost:6969/api/posts/607ed368a931083360fe1ed0
 
 ###
 
-PUT http://localhost:6969/api/posts/607ed312bfffb83ea040e149
+PUT http://localhost:6969/api/posts/607f0c3deb74ad36100f60dc
 Content-Type: application/json
 
 {

@@ -1,15 +1,15 @@
-const Post = require("./models/Post");
+const Post = require("../models/Post");
 const express = require("express");
-const router = express.Router();
+const postRouter = express.Router();
 
 // GET all twats
-router.get("/posts", async (req, res) => {
+postRouter.get("/posts", async (req, res) => {
   const posts = await Post.find();
   res.send(posts);
 });
 
 // POST new twat
-router.post("/posts", async (req, res) => {
+postRouter.post("/posts", async (req, res) => {
   const post = new Post({
     author: req.body.author,
     content: req.body.content,
@@ -21,19 +21,19 @@ router.post("/posts", async (req, res) => {
 });
 
 // GET specific post
-router.get("/posts/:id", async (req, res) => {
+postRouter.get("/posts/:id", async (req, res) => {
   const post = await Post.findOne({ _id: req.params.id });
   res.send(post);
 });
 
 //delete character from ID
-router.delete("/posts/:id", async (req, res) => {
+postRouter.delete("/posts/:id", async (req, res) => {
   const post = await Post.findOneAndDelete({ _id: req.params.id });
   res.send(post);
 });
 
 //update post from ID 
-router.put("/posts/:id", async (req, res) => {
+postRouter.put("/posts/:id", async (req, res) => {
   const post = await Post.findOneAndUpdate(
     { _id: req.params.id },
     { $set: { content: req.body.content } },
@@ -48,4 +48,4 @@ router.put("/posts/:id", async (req, res) => {
   res.send(post);
 });
 
-module.exports = router;
+module.exports = postRouter;
