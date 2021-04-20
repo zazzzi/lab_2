@@ -1,0 +1,33 @@
+// get all users
+GET http://localhost:6969/api/posts
+###
+
+// get specific user
+GET http://localhost:6969/api/posts/607ed7954089c86ca462b74b
+###
+
+
+// create new user
+POST http://localhost:6969/api/posts/
+Content-Type: application/json
+
+{
+ "author": "Stefan",
+  "content": "Minister",
+  "likes": 2,
+  "date": "Today"
+}
+###
+
+
+###
+
+// delete a user
+DELETE http://localhost:6969/api/users/
+
+###
+
+// delete a twat
+DELETE http://localhost:6969/api/posts/
+
+###
