@@ -1,13 +1,13 @@
-// get all users
+// get all post
 GET http://localhost:6969/api/posts
 ###
 
-// get specific user
+// get specific post
 GET http://localhost:6969/api/posts/607ed7954089c86ca462b74b
 ###
 
 
-// create new user
+// create new post
 POST http://localhost:6969/api/posts/
 Content-Type: application/json
 
@@ -22,12 +22,14 @@ Content-Type: application/json
 
 ###
 
-// delete a user
-DELETE http://localhost:6969/api/users/
+// delete specific post
+DELETE http://localhost:6969/api/posts/607ed368a931083360fe1ed0
 
 ###
 
-// delete a twat
-DELETE http://localhost:6969/api/posts/
+PUT http://localhost:6969/api/posts/607ed312bfffb83ea040e149
+Content-Type: application/json
 
-###
+{
+  "content": "Pooopiii"
+}

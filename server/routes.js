@@ -26,4 +26,26 @@ router.get("/posts/:id", async (req, res) => {
   res.send(post);
 });
 
+//delete character from ID
+router.delete("/posts/:id", async (req, res) => {
+  const post = await Post.findOneAndDelete({ _id: req.params.id });
+  res.send(post);
+});
+
+//update post from ID 
+router.put("/posts/:id", async (req, res) => {
+  const post = await Post.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: { content: req.body.content } },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Opsiiii something went wrooong");
+      }
+      console.log(doc);
+    }
+  );
+  res.send(post);
+});
+
 module.exports = router;
