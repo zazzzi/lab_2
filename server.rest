@@ -34,6 +34,7 @@ Content-Type: application/json
   "content": "Pooopiifffffffi"
 }
 
+//incerment like by 1 
 ### 
 POST http://localhost:6969/api/posts/60801a205e664b1a08a397f1
 
@@ -49,10 +50,10 @@ POST http://localhost:6969/api/profiles
 Content-Type: application/json
 
 {
-  "userName": "Stefan",
-  "password": "1234",
-  "role": "nobady",
-  "name": "Jane Wong"
+  "userName": "admin",
+  "password": "admin",
+  "role": "admin",
+  "name": "admin"
 }
 
 ### 

@@ -1,6 +1,8 @@
+const Profile = require("../models/Profile");
 const profileModel = require("../models/Profile");
 const express = require("express");
 const postModel = require("../models/Post");
+const bcrypt = require('bcrypt')
 
 const profileRouter = express.Router();
 
@@ -26,6 +28,7 @@ profileRouter.post("/profiles", async (req, res) => {
   res.send(profile);
 
 });
+
 
 //get specific user from ID
 profileRouter.get("/profiles/:id", async (req, res) => {
