@@ -7,3 +7,4 @@ Content-Type: application/json
 }
 
 ###
+DELETE http://localhost:6969/api/logout

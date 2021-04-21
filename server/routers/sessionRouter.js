@@ -1,16 +1,7 @@
 const Profile = require("../models/Profile");
 const express = require("express");
-const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
 const sessionRouter = express.Router()
-
-sessionRouter.use(cookieSession({
-    name: 'session',
-    secret: 'SuperSecretKey',
-    secure: false,
-    maxAge: 100000 * 10,
-    httpOnly: true
-}))
 
 //Login
 sessionRouter.post('/login', async(req,res) => {
@@ -29,17 +20,15 @@ sessionRouter.post('/login', async(req,res) => {
     res.status(204).json(null)
 })
 
-
-
 //Logout 
-/* sessionRouter.delete('/logout', async(req,res) => {
-    
-}) */
-
-//Get all Users Admin
-/* app.get('/api/users', secureWithRole('admin'), (req,res) => {
-    res.json(users);
-}) */
+sessionRouter.delete('/logout', async(req,res) => {
+    if(!req.session.id){
+        res.status(400).json('already logged out')
+        return
+    }
+    req.session = null;  
+    res.status(200).json('logout succ')
+})
 
 //Middleware functions
 /* function secure(req,res,next){
