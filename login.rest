@@ -1,0 +1,10 @@
+POST http://localhost:6969/api/login 
+Content-Type: application/json
+
+{
+    "userName": "tester420",
+    "password": "awwwyeeeh"
+}
+
+###
+DELETE http://localhost:6969/api/logout
