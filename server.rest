@@ -47,10 +47,10 @@ POST http://localhost:6969/api/profiles
 Content-Type: application/json
 
 {
-  "userName": "xxxdankNwetxxx",
-  "password": "1234",
-  "role": "Pro-boy",
-  "name": "Knut Knutsson"
+  "userName": "tester69",
+  "password": "123",
+  "role": "plebian",
+  "name": "John Doe"
 }
 
 ### 
