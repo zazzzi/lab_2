@@ -4,7 +4,13 @@ const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
 const sessionRouter = express.Router()
 
-
+sessionRouter.use(cookieSession({
+    name: 'session',
+    secret: 'SuperSecretKey',
+    secure: false,
+    maxAge: 100000 * 10,
+    httpOnly: true
+}))
 
 //Login
 sessionRouter.post('/login', async(req,res) => {
