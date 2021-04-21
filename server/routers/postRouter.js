@@ -4,7 +4,6 @@ const postRouter = express.Router();
 
 // GET all twats
 postRouter.get("/posts", async (req, res) => {
-  console.log(req.session)
   const posts = await Post.find();
   res.send(posts);
 });

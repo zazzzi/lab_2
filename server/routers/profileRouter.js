@@ -6,7 +6,7 @@ const profileRouter = express.Router();
 
 //get all profiles
 profileRouter.get("/profiles", async (req, res) => {
-  console.log(req.session.userName)
+  console.log(req.session)
   const profile = await Profile.find();
   res.send(profile);
 });
