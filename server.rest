@@ -12,7 +12,6 @@ POST http://localhost:6969/api/posts/
 Content-Type: application/json
 
 {
- "author": "Stefan",
   "content": "Minister",
   "likes": 2,
   "date": "Today"
@@ -23,17 +22,20 @@ Content-Type: application/json
 ###
 
 // delete specific post
-DELETE http://localhost:6969/api/posts/607ed368a931083360fe1ed0
+DELETE http://localhost:6969/api/posts/60801a145e664b1a08a397f0
 
 ###
 
 // update content of specific post from id
-PUT http://localhost:6969/api/posts/607f0c3deb74ad36100f60dc
+PUT http://localhost:6969/api/posts/60801a205e664b1a08a397f1
 Content-Type: application/json
 
 {
-  "content": "Pooopiii"
+  "content": "Pooopiifffffffi"
 }
+
+### 
+POST http://localhost:6969/api/posts/60801a205e664b1a08a397f1
 
 
 ###
@@ -47,10 +49,10 @@ POST http://localhost:6969/api/profiles
 Content-Type: application/json
 
 {
-  "userName": "tester420",
-  "password": "awwwyeeeh",
+  "userName": "Stefan",
+  "password": "1234",
   "role": "plebian",
-  "name": "John Hungus"
+  "name": "Jane Wong"
 }
 
 ### 
@@ -65,7 +67,7 @@ DELETE http://localhost:6969/api/profiles/607f12092fbe664884221b6d
 ###
 
 
-PUT http://localhost:6969/api/profiles/607f17cd2fbe664884221b6e
+PUT http://localhost:6969/api/profiles/60801a205e664b1a08a397f1
 Content-Type: application/json
 
 {
