@@ -6,15 +6,25 @@ const profileRouter = express.Router();
 
 //get all profiles
 profileRouter.get("/profiles", async (req, res) => {
-  console.log(req.session);
   const profile = await profileModel.find();
   res.send(profile);
 });
 
 //post new user/profile
 profileRouter.post("/profiles", async (req, res) => {
-  const profile = await profileModel.create(req.body);
-  res.status(201).json(profile);
+
+  const hashedPassword = await bcrypt.hash(req.body.password, 10)
+
+  const profile = new Profile({
+    userName: req.body.userName,
+    password: hashedPassword,
+    role: req.body.role,
+    name: req.body.name,
+  });
+  
+  await profile.save();
+  res.send(profile);
+
 });
 
 //get specific user from ID

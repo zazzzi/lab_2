@@ -33,7 +33,7 @@ postRouter.get("/posts/:id", async (req, res) => {
 });
 
 //delete post from ID
-postRouter.delete("/posts/:id", secureWithRole("plebian"), async (req, res) => {
+postRouter.delete("/posts/:id", secureWithRole("plebian", "admin"), async (req, res) => {
   const twatToDelete = await Post.findOne({ _id: req.params.id });
   if(twatToDelete.author === req.session.userName){
     const post = await Post.findOneAndDelete({ _id: req.params.id });
