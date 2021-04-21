@@ -10,10 +10,21 @@ postRouter.get("/posts", async (req, res) => {
 });
 
 // POST new twat
-postRouter.post("/posts", async (req, res) => {
-  const twat = await postModel.create(req.body);
+postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
+  const post = new Post({
+    author: req.session.userName,
+    content: req.body.content,
+    likes: req.body.likes,
+    date: req.body.date,
+  });
+  await post.save();
   res.status(201).json(twat);
 });
+
+/* postRouter.post("/posts", async (req, res) => {
+  const twat = await postModel.create(req.body);
+  res.status(201).json(twat);
+}); */
 
 // GET specific post
 postRouter.get("/posts/:id", async (req, res) => {
@@ -64,7 +75,7 @@ postRouter.post("/posts/:id", async (req, res) => {
   );
   res.status(200).json('Likes updated')
   res.send(post)
-  });
+});
 
 //Middleware functions
 function secure(req,res,next){
