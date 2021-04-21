@@ -1,6 +1,7 @@
 const Profile = require("../models/Profile");
 const express = require("express");
 const Post = require("../models/Post");
+const bcrypt = require('bcrypt');
 const profileRouter = express.Router();
 
 //get all profiles
@@ -11,12 +12,16 @@ profileRouter.get("/profiles", async (req, res) => {
 
 //post new user/profile
 profileRouter.post("/profiles", async (req, res) => {
+
+  const hashedPassword = await bcrypt.hash(req.body.password, 10)
+
   const profile = new Profile({
     userName: req.body.userName,
-    password: req.body.password,
+    password: hashedPassword,
     role: req.body.role,
     name: req.body.name,
   });
+  
   await profile.save();
   res.send(profile);
 });
