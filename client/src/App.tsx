@@ -1,49 +1,25 @@
-// import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
+import { Box, makeStyles, Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import Header from './components/Header';
+import PostField from './components/PostField';
+import TwatWrapper from './components/TwatWrapper';
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
+function App () {
+const [state, setState] = useState({
+  data: null
+}); 
 
-// export default App;
+const classes = useStyles();
 
-
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-class App extends Component {
-state = {
-    data: null
-  };
-
-  componentDidMount() {
+  useEffect(() => {
       // Call our fetch function below once the component mounts
-    this.callBackendAPI()
-      .then(res => this.setState({ data: res.express }))
+    callBackendAPI()
+      .then(res => setState({ data: res.express }))
       .catch(err => console.log(err));
-  }
+  })
     // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
-  callBackendAPI = async () => {
-    const response = await fetch('/express_backend');
+  const callBackendAPI = async () => {
+    const response = await fetch('/');
     const body = await response.json();
 
     if (response.status !== 200) {
@@ -52,18 +28,21 @@ state = {
     return body;
   };
 
-  render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        // Render the newly fetched data inside of this.state.data 
-        <p className="App-intro">{this.state.data}</p>
-      </div>
+      <Box className={classes.rootStyle}>
+        <Header/>
+        <PostField/>
+        <TwatWrapper/>
+      </Box>
     );
-  }
 }
 
+const useStyles = makeStyles((theme) => ({
+  rootStyle: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+}));
 export default App;

@@ -1,30 +1,24 @@
-const Post = require("../models/Post");
+const postModel = require("../models/Post");
 const express = require("express");
 const { json } = require("express");
 const postRouter = express.Router();
 
 // GET all twats
 postRouter.get("/posts", async (req, res) => {
-  const posts = await Post.find();
-  res.send(posts);
+  const twat = await postModel.find();
+  res.send(twat);
 });
 
 // POST new twat
-postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
-  const post = new Post({
-    author: req.session.userName,
-    content: req.body.content,
-    likes: req.body.likes,
-    date: req.body.date,
-  });
-  await post.save();
-  res.send(post);
+postRouter.post("/posts", async (req, res) => {
+  const twat = await postModel.create(req.body);
+  res.status(201).json(twat);
 });
 
 // GET specific post
 postRouter.get("/posts/:id", async (req, res) => {
-  const post = await Post.findOne({ _id: req.params.id });
-  res.send(post);
+  const twat = await postModel.findOne({ _id: req.params.id });
+  res.send(twat);
 });
 
 //delete post from ID
@@ -39,9 +33,7 @@ postRouter.delete("/posts/:id", secureWithRole("plebian"), async (req, res) => {
   }
 });
 
-//Update like 
-
-//update post from ID 
+//Update post from ID 
 postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
   const twatToUpdate = await Post.findOne({ _id: req.params.id });
   if(twatToUpdate.author === req.session.userName){
@@ -63,6 +55,7 @@ postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
   }
 });
 
+//Update like 
 postRouter.post("/posts/:id", async (req, res) => {
   const post = await Post.findOneAndUpdate(
     { _id: req.params.id },
@@ -71,7 +64,7 @@ postRouter.post("/posts/:id", async (req, res) => {
   );
   res.status(200).json('Likes updated')
   res.send(post)
-});
+
 
 //Middleware functions
 function secure(req,res,next){

@@ -49,10 +49,12 @@ POST http://localhost:6969/api/profiles
 Content-Type: application/json
 
 {
+
   "userName": "Stefan",
   "password": "1234",
   "role": "plebian",
   "name": "Jane Wong"
+=
 }
 
 ### 
