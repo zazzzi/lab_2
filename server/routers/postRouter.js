@@ -64,7 +64,7 @@ postRouter.post("/posts/:id", async (req, res) => {
   );
   res.status(200).json('Likes updated')
   res.send(post)
-
+  });
 
 //Middleware functions
 function secure(req,res,next){
