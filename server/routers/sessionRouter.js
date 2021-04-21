@@ -4,15 +4,7 @@ const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
 const sessionRouter = express.Router()
 
-/* sessionRouter.use(express.json()); */
 
-sessionRouter.use(cookieSession({
-    name: 'session',
-    secret: 'SuperSecretKey',
-    secure: false,
-    maxAge: 1000 * 10,
-    httpOnly: true
-}))
 
 //Login
 sessionRouter.post('/login', async(req,res) => {
@@ -24,7 +16,9 @@ sessionRouter.post('/login', async(req,res) => {
         return
     } 
 
-    req.session.username = profile.userName;
+    req.session.id = profile.id;
+    req.session.userName = profile.userName;
+    req.session.role = profile.role;
     res.send(profile); 
     res.status(204).json(null)
 })
@@ -32,9 +26,9 @@ sessionRouter.post('/login', async(req,res) => {
 
 
 //Logout 
-sessionRouter.delete('/logout', async(req,res) => {
+/* sessionRouter.delete('/logout', async(req,res) => {
     
-})
+}) */
 
 //Get all Users Admin
 /* app.get('/api/users', secureWithRole('admin'), (req,res) => {
@@ -42,7 +36,7 @@ sessionRouter.delete('/logout', async(req,res) => {
 }) */
 
 //Middleware functions
-function secure(req,res,next){
+/* function secure(req,res,next){
     if(req.session.username){
         next()
     } else {
@@ -58,6 +52,6 @@ function secureWithRole(role) {
             res.status(403).json('Check your priviliges!')
         }
     }]
-}
+} */
 
 module.exports = sessionRouter;

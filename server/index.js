@@ -11,10 +11,10 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     const app = express();
     app.use(express.json());
+    app.use("/api", sessionRouter);
     app.use("/api", postRouter);
     app.use("/api", profileRouter);
-    app.use("/api", sessionRouter)
-
+    
     app.listen(port, () =>
       console.log(`Server is running on http://localhost:${port}`)
     );
