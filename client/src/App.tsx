@@ -1,8 +1,9 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box, makeStyles, ThemeProvider, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import PostField from './components/PostField';
 import TwatWrapper from './components/TwatWrapper';
+import { theme } from './providers/ThemeProvider';
 
 function App () {
 const [state, setState] = useState({
@@ -29,11 +30,14 @@ const classes = useStyles();
   };
 
     return (
+    <ThemeProvider theme={theme}>
       <Box className={classes.rootStyle}>
         <Header/>
         <PostField/>
         <TwatWrapper/>
       </Box>
+    </ThemeProvider>
+
     );
 }
 
