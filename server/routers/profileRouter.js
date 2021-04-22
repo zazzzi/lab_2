@@ -48,29 +48,29 @@ profileRouter.delete("/profiles/:id", secureWithRole("plebian"), async (req, res
 });
 
 //update user from id (non admin command)
-profileRouter.put("/profiles/:id", async (req, res) => {
-  console.log(req.body.password);
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  console.log(hashedPassword);
-  
-  
-  
-  const profile = await profileModel.findOneAndUpdate(
-    { _id: req.params.id },
-    {
-      $set: {
-        name: req.body.name,
-        password: hashedPassword,
+profileRouter.put("/profiles/:id", secureWithRole("plebian"), async (req, res) => {
+  const hashedPassword = await bcrypt.hash(req.body.password, 10)
+  const profileToUpdate = await profileModel.findOne({ _id: req.params.id });
+  if(profileToUpdate.userName === req.session.userName || req.session.role === "admin"){
+    const profile = await profileModel.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          name: req.body.name,
+          password: hashedPassword,
+        },
       },
-    },
-    { new: true },
-    (err) => {
-      if (err) {
-        console.log("OH NO SOMETHING WENT WRONG");
+      { new: true },
+      (err) => {
+        if (err) {
+          console.log("OH NO SOMETHING WENT WRONG");
+        }
       }
-    }
-  );
-  res.send(profile);
+    );
+    res.send(profile);
+  } else {
+    res.status(401).json('You do not have the necessary priviliges')
+  }
 });
 
 //Middleware functions
