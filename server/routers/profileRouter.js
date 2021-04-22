@@ -49,7 +49,9 @@ profileRouter.delete("/profiles/:id", secureWithRole("plebian"), async (req, res
 
 //update user from id (non admin command)
 profileRouter.put("/profiles/:id", async (req, res) => {
-  
+  console.log(req.body.password);
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  console.log(hashedPassword);
   
   
   
@@ -58,7 +60,7 @@ profileRouter.put("/profiles/:id", async (req, res) => {
     {
       $set: {
         name: req.body.name,
-        password: req.body.password,
+        password: hashedPassword,
       },
     },
     { new: true },
