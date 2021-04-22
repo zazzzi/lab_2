@@ -1,6 +1,8 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import { responseInterceptor } from 'http-proxy-middleware';
 import React, { useEffect, useState } from 'react';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 function TwatWrapper() {
   const classes = useStyles();
@@ -20,11 +22,13 @@ function TwatWrapper() {
   return (
        <Box className={classes.rootStyle}>
          {posts.map((p:any, i) => (
-          
           <Box key={i}>
-            <Img/>
+            <img/>
+            <Typography>{p.author}</Typography>
             <Typography>{p.content}</Typography>
-            <Typography>hello</Typography>
+            <ThumbUpIcon color="action"/>
+            <Typography>{p.likes}</Typography>
+            <MoreHorizIcon color="action"/>
           </Box>
         ))}
        </Box>
