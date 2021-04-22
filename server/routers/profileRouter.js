@@ -49,7 +49,11 @@ profileRouter.delete("/profiles/:id", secureWithRole("plebian"), async (req, res
 
 //update user from id (non admin command)
 profileRouter.put("/profiles/:id", async (req, res) => {
-  const profile = await postModel.findOneAndUpdate(
+  
+  
+  
+  
+  const profile = await profileModel.findOneAndUpdate(
     { _id: req.params.id },
     {
       $set: {
