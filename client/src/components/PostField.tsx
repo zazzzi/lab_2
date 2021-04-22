@@ -10,22 +10,27 @@ import React, { useState } from "react";
 function PostField() {
   const classes = useStyles();
   const [chars, setChars] = useState<number>(0);
+  const [twat, setTwat] = useState<string>();
   const [isDisabled, setIsDisabled] = useState(false);
 
-  function handleCharacters(length: number) {
-    setChars(length);
+  function handleCharacters(value: string) {
+    setChars(value.length);
+    setTwat(value);
   }
 
-  function handleTwat() {
-    const value = "test";
+  async function handleTwat() {
+    const placeholder = {
+      author: "lol",
+      content: twat,
+      likes: 0,
+    };
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(value),
+      body: JSON.stringify(placeholder),
     };
-    fetch("http://localhost:6969/api/posts", requestOptions);
-    console.log("test");
-    
+    await fetch("http://localhost:6969/api/posts", requestOptions);
   }
 
   return (
@@ -36,7 +41,7 @@ function PostField() {
           rows={6}
           variant="outlined"
           className={classes.twatFieldStyle}
-          onChange={(event) => handleCharacters(event.target.value.length)}
+          onChange={(event) => handleCharacters(event.target.value)}
           disabled={isDisabled}
           inputProps={{ maxLength: 280 }}
           label="What's happening?"

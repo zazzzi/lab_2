@@ -1,6 +1,5 @@
+
 import { Box, makeStyles, Typography } from '@material-ui/core';
-import { responseInterceptor } from 'http-proxy-middleware';
-import React, { useEffect, useState } from 'react';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useContext } from 'react';
@@ -11,31 +10,31 @@ function TwatWrapper() {
   const {posts} = useContext(PostContext)
 
   return (
-       <Box className={classes.rootStyle}>
-         {posts.map((p:any, i) => (
+    <Box className={classes.rootStyle}>
+      {posts
+        .map((p: any, i) => (
           <Box key={i}>
-            <img/>
+            <img />
             <Typography>{p.author}</Typography>
+
             <Typography>{p.content}</Typography>
-            <ThumbUpIcon color="action"/>
+            <ThumbUpIcon color="action" />
             <Typography>{p.likes}</Typography>
-            <MoreHorizIcon color="action"/>
+            <MoreHorizIcon color="action" />
           </Box>
-        ))}
-       </Box>
-    );
+        ))
+        .reverse()}
+    </Box>
+  );
 }
 
 const useStyles = makeStyles((theme) => ({
-    rootStyle: {
-      height: "200rem",
-      width: "20rem",
-      background: "grey",
-      
-    },
-    headerWrapper: {},
-
-  }));
-
+  rootStyle: {
+    height: "200rem",
+    width: "20rem",
+    background: "grey",
+  },
+  headerWrapper: {},
+}));
 
 export default TwatWrapper;
