@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+
 const profileSchema = new mongoose.Schema({
-  userName: { type: String, trim: true },
-  password: { type: String },
+  userName: { type: String, trim: true, unique: true },
+  password: {type: String},
   role: { type: String },
   name: { type: String, trim: true },
 });
