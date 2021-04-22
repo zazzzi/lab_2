@@ -22,7 +22,7 @@ function TwatWrapper() {
          {posts.map((p:any, i) => (
           
           <Box key={i}>
-            <Img/>
+            {/* <Img/> */}
             <Typography>{p.content}</Typography>
             <Typography>hello</Typography>
           </Box>

@@ -16,16 +16,20 @@ function PostField() {
     setChars(length);
   }
 
-  function handleTwat() {
-    const value = "test";
+  async function handleTwat() {
+    const placeholder = {
+      author: "lol",
+      content: "YO WADDUP",
+      likes: 0,
+      date: "today bich",
+    };
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(value),
+      body: JSON.stringify(placeholder),
     };
-    fetch("http://localhost:6969/api/posts", requestOptions);
-    console.log("test");
-    
+    await fetch("http://localhost:6969/api/posts", requestOptions);
   }
 
   return (
