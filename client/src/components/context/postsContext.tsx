@@ -11,15 +11,12 @@ export interface Post{
 
 interface State{
     post: Post[]
-}
-
-interface ContextValue extends State{
     makeNewPost: (post: Post) => void;
     deletePost: (id: Post) => void;
     editPost: (id: Post) => void;
 }
 
-export const PostContext = createContext<ContextValue>({
+export const PostContext = createContext<State>({
     post:[],
     makeNewPost: () => {},
     deletePost: () => {},
@@ -53,7 +50,7 @@ function PostProvider(props: Props){
           setPosts(posts)
         }
         loadPosts()
-      }, [])
+    }, [])
 
     return (
         <PostContext.Provider
