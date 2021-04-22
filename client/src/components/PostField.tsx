@@ -10,18 +10,19 @@ import React, { useState } from "react";
 function PostField() {
   const classes = useStyles();
   const [chars, setChars] = useState<number>(0);
+  const [twat, setTwat] = useState<string>();
   const [isDisabled, setIsDisabled] = useState(false);
 
-  function handleCharacters(length: number) {
-    setChars(length);
+  function handleCharacters(value: string) {
+    setChars(value.length);
+    setTwat(value);
   }
 
   async function handleTwat() {
     const placeholder = {
       author: "lol",
-      content: "YO WADDUP",
+      content: twat,
       likes: 0,
-      date: "today bich",
     };
 
     const requestOptions = {
@@ -40,7 +41,7 @@ function PostField() {
           rows={6}
           variant="outlined"
           className={classes.twatFieldStyle}
-          onChange={(event) => handleCharacters(event.target.value.length)}
+          onChange={(event) => handleCharacters(event.target.value)}
           disabled={isDisabled}
           inputProps={{ maxLength: 280 }}
           label="What's happening?"
