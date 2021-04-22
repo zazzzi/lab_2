@@ -47,30 +47,30 @@ POST http://localhost:6969/api/profiles
 Content-Type: application/json
 
 {
-  "userName": "tester69",
+  "userName": "Seb",
   "password": "123",
   "role": "plebian",
-  "name": "John Doe"
+  "name": "Bajs"
 }
 
 ### 
 // get specific character, from ID 
-GET http://localhost:6969/api/profiles/607f17cd2fbe664884221b6e
+GET http://localhost:6969/api/profiles/608019bf5e664b1a08a397ee
 
 ### 
 // delete specific character, from ID 
-DELETE http://localhost:6969/api/profiles/607f12092fbe664884221b6d
+DELETE http://localhost:6969/api/profiles/608124f3f878f72ac4b9f40e
 
 
 ###
 
 
-PUT http://localhost:6969/api/profiles/607f17cd2fbe664884221b6e
+PUT http://localhost:6969/api/profiles/60802aa0a213b63d2493f4d8
 Content-Type: application/json
 
 {
-  "password": "2345",
-  "name": "Olof Swagsson"
+  "password": "12345",
+  "name": "eeeeeeeeee"
 }
 
 

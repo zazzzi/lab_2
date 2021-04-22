@@ -6,7 +6,6 @@ const profileRouter = express.Router();
 
 //get all profiles
 profileRouter.get("/profiles", async (req, res) => {
-  console.log(req.session);
   const profile = await profileModel.find();
   res.send(profile);
 });
@@ -31,7 +30,11 @@ profileRouter.delete("/profiles/:id", async (req, res) => {
 
 //update user from id (non admin command)
 profileRouter.put("/profiles/:id", async (req, res) => {
-  const profile = await postModel.findOneAndUpdate(
+  
+  
+  
+  
+  const profile = await profileModel.findOneAndUpdate(
     { _id: req.params.id },
     {
       $set: {
