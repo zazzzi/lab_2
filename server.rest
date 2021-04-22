@@ -50,11 +50,10 @@ POST http://localhost:6969/api/profiles
 Content-Type: application/json
 
 {
-
-  "userName": "Sebastian",
-  "password": "admin",
-  "role": "admin",
-  "name": "adqmin"
+  "userName": "tester2",
+  "password": "1234",
+  "role": "plebian",
+  "name": "JOngusss"
 
 }
 
@@ -73,12 +72,12 @@ DELETE http://localhost:6969/api/profiles/608124f3f878f72ac4b9f40e
 
 
 
-PUT http://localhost:6969/api/profiles/60802aa0a213b63d2493f4d8
+PUT http://localhost:6969/api/profiles/60813705f9ed4940846064ae
 Content-Type: application/json
 
 {
-  "password": "12345",
-  "name": "eeeeeeeeee"
+  "name": "Sebastian245",
+  "password": "12345"
 }
 
 

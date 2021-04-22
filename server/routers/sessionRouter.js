@@ -16,7 +16,7 @@ sessionRouter.post('/login', async(req,res) => {
     req.session.id = profile.id;
     req.session.userName = profile.userName;
     req.session.role = profile.role;
-    res.status(200).json(`You are logged in as ${req.body.role}`);
+    res.status(200).json(`You are logged in as ${req.session.userName}`);
 })
 
 //Logout 

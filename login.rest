@@ -8,3 +8,12 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:6969/api/logout
+
+###
+POST http://localhost:6969/api/login 
+Content-Type: application/json
+
+{
+    "userName": "tester2",
+    "password": "1234"
+}
