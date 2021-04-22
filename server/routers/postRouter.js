@@ -1,6 +1,7 @@
 const Post = require("../models/Post");
 const postModel = require("../models/Post");
 const express = require("express");
+const moment = require("moment")
 const postRouter = express.Router();
 
 // GET all twats
@@ -11,11 +12,13 @@ postRouter.get("/posts", async (req, res) => {
 
 // POST new twat secureWithRole("plebian")
 postRouter.post("/posts", async (req, res) => {
+  const today = moment().format("MMM DD YYYY HH:mm");
+  
   const post = new Post({
     author: req.session.userName,
     content: req.body.content,
     likes: req.body.likes,
-    date: req.body.date,
+    date: today,
   });
   await post.save();
   res.status(201);
