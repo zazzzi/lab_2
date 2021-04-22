@@ -11,6 +11,7 @@ const [state, setState] = useState({
 }); 
 
 const classes = useStyles();
+console.log(state)
 
   useEffect(() => {
       // Call our fetch function below once the component mounts
