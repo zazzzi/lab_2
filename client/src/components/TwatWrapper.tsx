@@ -23,8 +23,10 @@ function TwatWrapper() {
        <Box className={classes.rootStyle}>
          {posts.map((p:any, i) => (
           <Box key={i}>
+
             <img/>
             <Typography>{p.author}</Typography>
+
             <Typography>{p.content}</Typography>
             <ThumbUpIcon color="action"/>
             <Typography>{p.likes}</Typography>

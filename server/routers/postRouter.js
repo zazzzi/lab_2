@@ -9,8 +9,8 @@ postRouter.get("/posts", async (req, res) => {
   res.send(twat);
 });
 
-// POST new twat
-postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
+// POST new twat secureWithRole("plebian")
+postRouter.post("/posts", async (req, res) => {
   const post = new Post({
     author: req.session.userName,
     content: req.body.content,
@@ -18,7 +18,7 @@ postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
     date: req.body.date,
   });
   await post.save();
-  res.status(201).json(twat);
+  res.status(201);
 });
 
 /* postRouter.post("/posts", async (req, res) => {
