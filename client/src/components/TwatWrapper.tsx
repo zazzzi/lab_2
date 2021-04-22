@@ -8,11 +8,11 @@ import { PostContext, Post } from './context/postsContext';
 
 function TwatWrapper() {
   const classes = useStyles();
-  const {post} = useContext(PostContext)
+  const {posts} = useContext(PostContext)
 
   return (
        <Box className={classes.rootStyle}>
-         {post.map((p:any, i) => (
+         {posts.map((p:any, i) => (
           <Box key={i}>
             <img/>
             <Typography>{p.author}</Typography>

@@ -1,5 +1,4 @@
 import {createContext, useEffect, useState} from "react";
-
 export interface Post{
     _id: string;
     author: string;
@@ -10,14 +9,14 @@ export interface Post{
 }
 
 interface State{
-    post: Post[]
+    posts: Post[]
     makeNewPost: (post: Post) => void;
     deletePost: (id: Post) => void;
     editPost: (id: Post) => void;
 }
 
 export const PostContext = createContext<State>({
-    post:[],
+    posts:[],
     makeNewPost: () => {},
     deletePost: () => {},
     editPost: () => {},
@@ -28,7 +27,7 @@ interface Props {
 }
 
 function PostProvider(props: Props){
-    const [post, setPosts] = useState([] as Post[]);
+    const [posts, setPosts] = useState([] as Post[]);
     const url = "http://localhost:6969/api/posts"
 
     function makeNewPost(){
@@ -55,7 +54,7 @@ function PostProvider(props: Props){
     return (
         <PostContext.Provider
             value={{
-                post: post,
+                posts: posts,
                 makeNewPost: makeNewPost,
                 deletePost: deletePost,
                 editPost: editPost,
