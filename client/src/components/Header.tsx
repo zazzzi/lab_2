@@ -1,5 +1,6 @@
-import { Box, makeStyles, Typography } from "@material-ui/core";
+import { Avatar, Box, makeStyles, Typography, Link } from "@material-ui/core";
 import React from "react";
+import catProfile from "../assets/images/Cat-Profile.png";
 
 function Header() {
   const classes = useStyles();
@@ -7,7 +8,14 @@ function Header() {
   return (
     <Box className={classes.rootStyle}>
       <Box className={`${classes.headerWrapper}`}>
-        <Typography>Welcome to twatter, hoe</Typography>
+        <Link href="/">
+          <Typography variant={"h5"} color={"primary"}>
+            Home
+          </Typography>
+        </Link>
+        <Link href="/">
+          <Avatar src={catProfile}></Avatar>
+        </Link>
       </Box>
     </Box>
   );
@@ -17,9 +25,15 @@ const useStyles = makeStyles((theme) => ({
   rootStyle: {
     height: "5rem",
     width: "100%",
-    background: "grey",
+    background: "black",
+    display: "flex",
   },
-  headerWrapper: {},
+  headerWrapper: {
+    width: "80%",
+    margin: "auto",
+    display: "flex",
+    justifyContent: "space-around",
+  },
 }));
 
 export default Header;
