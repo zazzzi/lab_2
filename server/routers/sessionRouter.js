@@ -16,8 +16,7 @@ sessionRouter.post('/login', async(req,res) => {
     req.session.id = profile.id;
     req.session.userName = profile.userName;
     req.session.role = profile.role;
-    res.send(profile); 
-    res.status(204).json(null)
+    res.status(200).json(`You are logged in as ${req.body.role}`);
 })
 
 //Logout 
@@ -30,23 +29,5 @@ sessionRouter.delete('/logout', async(req,res) => {
     res.status(200).json('logout succ')
 })
 
-//Middleware functions
-/* function secure(req,res,next){
-    if(req.session.username){
-        next()
-    } else {
-        res.status(401).json('loginfirst pls')
-    }
-}
-
-function secureWithRole(role) {
-    return [secure, (req,res,next) => {
-        if(req.session.role === role){
-            next()
-        } else {
-            res.status(403).json('Check your priviliges!')
-        }
-    }]
-} */
 
 module.exports = sessionRouter;

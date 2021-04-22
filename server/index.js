@@ -19,6 +19,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useFind
           maxAge: 100000 * 10,
           httpOnly: true
     }))
+  
     app.use("/api", sessionRouter);
     app.use("/api", postRouter);
     app.use("/api", profileRouter);
