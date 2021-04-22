@@ -8,23 +8,11 @@ import { PostContext, Post } from './context/postsContext';
 
 function TwatWrapper() {
   const classes = useStyles();
-  const [posts, setPosts] = useState([]);
   const {post} = useContext(PostContext)
-  const url = "http://localhost:6969/api/posts"
-  const array = ["hello", "hi", "wuddup"]
-
-  useEffect( () => {
-    const loadPosts = async () => {
-      const response = await fetch(url)
-      const posts = await response.json();
-      setPosts(posts)
-    }
-    loadPosts()
-  }, [])
 
   return (
        <Box className={classes.rootStyle}>
-         {posts.map((p:any, i) => (
+         {post.map((p:any, i) => (
           <Box key={i}>
             <img/>
             <Typography>{p.author}</Typography>

@@ -31,7 +31,8 @@ interface Props {
 }
 
 function PostProvider(props: Props){
-    const [post, setPost] = useState([] as Post[]);
+    const [post, setPosts] = useState([] as Post[]);
+    const url = "http://localhost:6969/api/posts"
 
     function makeNewPost(){
 
@@ -45,9 +46,14 @@ function PostProvider(props: Props){
 
     }
 
-    useEffect(() => {
-
-    })
+    useEffect( () => {
+        const loadPosts = async () => {
+          const response = await fetch(url)
+          const posts = await response.json();
+          setPosts(posts)
+        }
+        loadPosts()
+      }, [])
 
     return (
         <PostContext.Provider
