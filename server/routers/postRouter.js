@@ -1,6 +1,6 @@
+const Post = require("../models/Post");
 const postModel = require("../models/Post");
 const express = require("express");
-const { json } = require("express");
 const postRouter = express.Router();
 
 // GET all twats
@@ -35,7 +35,7 @@ postRouter.get("/posts/:id", async (req, res) => {
 //delete post from ID
 postRouter.delete("/posts/:id", secureWithRole("plebian"), async (req, res) => {
   const twatToDelete = await Post.findOne({ _id: req.params.id });
-  if(twatToDelete.author === req.session.userName){
+  if(twatToDelete.author === req.session.userName || req.session.role === "admin"){
     const post = await Post.findOneAndDelete({ _id: req.params.id });
     res.status(200).json('delet')
     res.send(post);
@@ -47,7 +47,7 @@ postRouter.delete("/posts/:id", secureWithRole("plebian"), async (req, res) => {
 //Update post from ID 
 postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
   const twatToUpdate = await Post.findOne({ _id: req.params.id });
-  if(twatToUpdate.author === req.session.userName){
+  if(twatToUpdate.author === req.session.userName || req.session.role === "admin"){
     const post = await Post.findOneAndUpdate(
       { _id: req.params.id },
       { $set: { content: req.body.content } },
@@ -86,9 +86,9 @@ function secure(req,res,next){
     }
 }
 
-function secureWithRole(role) {
+function secureWithRole(user) {
     return [secure, (req,res,next) => {
-        if(req.session.role === role){
+        if(req.session.role === user || req.session.role === "admin"){
             next()
         } else {
             res.status(403).json('Check your priviliges!')
