@@ -25,7 +25,6 @@ function PostField() {
     };
     fetch("http://localhost:6969/api/posts", requestOptions);
     console.log("test");
-    
   }
 
   return (
@@ -58,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     width: "30rem",
     height: "10rem",
     margin: "10rem",
+    background: "#D9D9D9",
   },
   twatFieldStyle: {
     width: "30rem",
