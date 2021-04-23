@@ -7,7 +7,6 @@ export interface Post{
     date: number;
     _v: number;
 }
-
 interface State{
     posts: Post[]
     makeNewPost: (post: Post) => void;
@@ -28,28 +27,41 @@ interface Props {
 
 function PostProvider(props: Props){
     const [posts, setPosts] = useState([] as Post[]);
-    const url = "http://localhost:6969/api/posts"
+    const url = "http://localhost:6969"
 
-    function makeNewPost(){
-
-    }
-
-    function deletePost(){
+    async function makeNewPost(){
 
     }
 
-    function editPost(){
+    async function deletePost(){
 
     }
+
+    async function editPost(){
+
+    }
+
+    
 
     useEffect( () => {
         const loadPosts = async () => {
-          const response = await fetch(url)
-          const posts = await response.json();
-          setPosts(posts)
+          const allPosts = await makeRequest(`${url}/api/posts`, "GET")
+          setPosts(allPosts)
         }
         loadPosts()
     }, [])
+
+    async function makeRequest(url: RequestInfo,method: any,body?: any){
+        const response = await fetch(url, {
+            method: method,
+            body: JSON.stringify(body),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const result = await response.json()
+        return result
+    }
 
     return (
         <PostContext.Provider

@@ -1,6 +1,4 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
-import { responseInterceptor } from 'http-proxy-middleware';
-import React, { useEffect, useState } from 'react';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useContext } from 'react';

@@ -25,7 +25,6 @@ function PostField() {
     };
     fetch("http://localhost:6969/api/posts", requestOptions);
     console.log("test");
-    
   }
 
   return (
