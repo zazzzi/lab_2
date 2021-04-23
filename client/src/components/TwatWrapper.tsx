@@ -8,7 +8,7 @@ import Twat from "./Twat";
 function TwatWrapper() {
   const classes = useStyles();
 
-  const { posts, deletePost } = useContext(PostContext);
+  const { posts } = useContext(PostContext);
   console.log(posts);
   return (
     <Box className={classes.rootStyle}>
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   rootStyle: {
     width: "30rem",
     background: "black",
+    height: "100vh",
     display: "flex",
     alignItems: "center",
     flexDirection: "column",

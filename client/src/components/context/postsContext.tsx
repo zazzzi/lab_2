@@ -1,14 +1,13 @@
-import {createContext, useEffect, useState} from "react";
+import { createContext, useEffect, useState } from "react";
 import { StringMappingType } from "typescript";
-export interface Post{
-    _id: string;
-    author: string;
-    content: string;
-    likes: number;
-    date: number;
-    name: string;
-    _v: number;
-
+export interface Post {
+  _id: string;
+  author: string;
+  content: string;
+  likes: number;
+  date: number;
+  name: string;
+  _v: number;
 }
 interface State {
   posts: Post[];
@@ -53,7 +52,7 @@ function PostProvider(props: Props) {
       setPosts(allPosts);
     };
     loadPosts();
-  }, []);
+  }, [posts]);
 
   async function makeRequest(url: RequestInfo, method: any, body?: any) {
     const response = await fetch(url, {

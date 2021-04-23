@@ -1,28 +1,30 @@
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { makeStyles, Typography, Avatar, Box } from "@material-ui/core";
 import { PostContext, Post } from "./context/postsContext";
+import catProfile from "../assets/images/Cat-Profile.png";
 
 interface Props {
   post: Post;
 }
 
 function Twat(props: Props) {
+  const [likes, setLikes] = useState(props.post.likes);
   const classes = useStyles();
-  const { posts, deletePost } = useContext(PostContext);
+  const { posts, deletePost, likePost } = useContext(PostContext);
   console.log(props.post);
 
   return (
     <Box className={classes.rootStyle}>
       <Box className={classes.twatContainer}>
         <Box className={classes.avatarContainer}>
-          <Avatar className={classes.avatarLarge}>Z</Avatar>
+          <Avatar src={catProfile} className={classes.avatarLarge}></Avatar>
         </Box>
         <Box className={classes.topBar}>
           <Box className={classes.name}>
             <Box m={0.5}>
-              <Typography color="primary">Seb</Typography>
+              <Typography color="primary">{props.post.name}</Typography>
             </Box>
             <Box m={0.5}>
               <Typography variant="body2">@{props.post.author}</Typography>
@@ -48,9 +50,14 @@ function Twat(props: Props) {
           <Typography color="primary">{props.post.content}</Typography>
         </Box>
         <Box className={classes.likeIcon}>
-          <ThumbUpIcon color="primary" />
+          <ThumbUpIcon
+            color="primary"
+            onClick={() => {
+              likePost(props.post._id);
+            }}
+          />
           <Typography color="primary" className="twatContent">
-            {props.post.likes}
+            {likes}
           </Typography>
         </Box>
       </Box>
