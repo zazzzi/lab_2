@@ -19,6 +19,7 @@ mongoose
   .then(() => {
     const app = express();
     app.use(express.json());
+    app.set("trust proxy", 1);
     app.use(
       cookieSession({
         name: "session",
@@ -28,6 +29,8 @@ mongoose
         httpOnly: true,
       })
     );
+
+
     app.use(cors());
     app.use("/api", sessionRouter);
     app.use("/api", postRouter);

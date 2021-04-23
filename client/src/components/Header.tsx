@@ -28,14 +28,27 @@ function Header() {
       userName: username,
       password: password,
     };
-    const requestOptions = {
+    
+
+    const response = await fetch("http://localhost:6969/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify(loginInfo),
-    };
-    const response = await fetch("http://localhost:6969/api/login", requestOptions);
+    });
     console.log(response);
-    
+  }
+
+  async function logoutHandler() {
+    const requestOptions = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    };
+    const response = await fetch(
+      "http://localhost:6969/api/logout",
+      requestOptions
+    );
+    console.log(response);
   }
 
   return (
@@ -49,6 +62,9 @@ function Header() {
         <Button onClick={handleOpen} color="secondary">
           Login
         </Button>
+        <Button onClick={logoutHandler} color="secondary">
+          Logout
+        </Button>
         <Link href="/">
           <Avatar src={catProfile}></Avatar>
         </Link>
@@ -57,8 +73,7 @@ function Header() {
         className={classes.modal}
         open={isModalOpen}
         onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        aria-labelledby="Login"
       >
         <Box className={classes.modalContent}>
           <Typography>Login</Typography>
