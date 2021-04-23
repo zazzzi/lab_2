@@ -1,6 +1,7 @@
 import { Box, makeStyles, ThemeProvider } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import PostProvider from "./components/context/postsContext";
+import ProfileProvider from "./components/context/profileContext"
 import Header from "./components/Header";
 import PostField from "./components/PostField";
 import TwatWrapper from "./components/TwatWrapper";
@@ -35,11 +36,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Box className={classes.rootStyle}>
-        <Header />
-        <PostProvider>
-          <PostField />
-          <TwatWrapper />
-        </PostProvider>
+        <ProfileProvider>
+          <Header />
+        </ProfileProvider>
+          <PostProvider>
+            <PostField />
+            <TwatWrapper />
+          </PostProvider>
       </Box>
     </ThemeProvider>
   );

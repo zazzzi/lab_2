@@ -5,16 +5,19 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { useContext, useState } from "react";
-import { PostContext } from "./context/postsContext";
+
+import React, { useContext, useState } from "react";
+import { PostContext } from './context/postsContext';
+import { ProfileContext } from './context/profileContext';
+
 
 function PostField() {
   const classes = useStyles();
   const [chars, setChars] = useState<number>(0);
   const [twat, setTwat] = useState<any>();
-  const [isDisabled] = useState(false);
-  const { posts, makeNewPost } = useContext(PostContext);
-
+  const [isDisabled, setIsDisabled] = useState(false);
+  const {posts,makeNewPost} = useContext(PostContext)
+  
   function handleCharacters(value: string) {
     setChars(value.length);
     setTwat(value);
