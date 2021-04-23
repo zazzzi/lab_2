@@ -7,7 +7,7 @@ import { PostContext, Post } from './context/postsContext';
 
 function TwatWrapper() {
   const classes = useStyles();
-  const {posts} = useContext(PostContext)
+  const {posts, deletePost} = useContext(PostContext)
 
   return (
     <Box className={classes.rootStyle}>
@@ -20,7 +20,12 @@ function TwatWrapper() {
             <Typography>{p.content}</Typography>
             <ThumbUpIcon color="action" />
             <Typography>{p.likes}</Typography>
-            <MoreHorizIcon color="action" />
+            <MoreHorizIcon 
+              color="action"
+              onClick={() => {
+                deletePost(p._id)
+              }} 
+            />
           </Box>
         ))
         .reverse()}
@@ -38,3 +43,4 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default TwatWrapper;
+

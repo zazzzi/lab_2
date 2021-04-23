@@ -20,6 +20,7 @@ postRouter.post("/posts", async (req, res) => {
     likes: req.body.likes,
     date: today,
   });
+
   await post.save();
   res.status(201);
 });

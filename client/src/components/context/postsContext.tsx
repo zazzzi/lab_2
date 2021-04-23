@@ -10,7 +10,7 @@ export interface Post{
 interface State{
     posts: Post[]
     makeNewPost: (post: Post) => void;
-    deletePost: (id: Post) => void;
+    deletePost: (id: string) => void;
     editPost: (id: Post) => void;
 }
 
@@ -26,6 +26,7 @@ interface Props {
 }
 
 function PostProvider(props: Props){
+    const [query, setQuery] = useState(null);
     const [posts, setPosts] = useState([] as Post[]);
     const url = "http://localhost:6969"
 
@@ -33,8 +34,8 @@ function PostProvider(props: Props){
 
     }
 
-    async function deletePost(){
-
+    async function deletePost(id: string){
+        makeRequest(`${url}/api/posts/${id}`, "DELETE")
     }
 
     async function editPost(){
@@ -49,7 +50,7 @@ function PostProvider(props: Props){
           setPosts(allPosts)
         }
         loadPosts()
-    }, [])
+    }, [posts])
 
     async function makeRequest(url: RequestInfo,method: any,body?: any){
         const response = await fetch(url, {
@@ -60,7 +61,7 @@ function PostProvider(props: Props){
             }
         })
         const result = await response.json()
-        return result
+        return result;
     }
 
     return (
