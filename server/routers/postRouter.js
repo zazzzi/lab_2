@@ -78,13 +78,16 @@ postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
 
 //Update like
 postRouter.post("/posts/:id", async (req, res) => {
+  //if post is clicked again with same id remove the like. 
   const post = await Post.findOneAndUpdate(
     { _id: req.params.id },
     { $inc: { likes: 1 } },
     { new: true }
   );
+
   res.status(200).json("Likes updated");
   res.send(post);
+
 });
 
 //Middleware functions
