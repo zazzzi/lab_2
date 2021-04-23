@@ -1,11 +1,14 @@
-import { createContext, useEffect, useState } from "react";
-export interface Post {
-  _id: string;
-  author: string;
-  content: string;
-  likes: number;
-  date: number;
-  _v: number;
+import {createContext, useEffect, useState} from "react";
+import { StringMappingType } from "typescript";
+export interface Post{
+    _id: string;
+    author: string;
+    content: string;
+    likes: number;
+    date: number;
+    name: string;
+    _v: number;
+
 }
 interface State {
   posts: Post[];
