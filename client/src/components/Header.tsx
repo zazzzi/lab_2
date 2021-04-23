@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     background: "black",
     display: "flex",
+    justifyContent: "center",
   },
   headerWrapper: {
     width: "80%",

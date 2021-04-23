@@ -21,8 +21,12 @@ export const theme = createMuiTheme({
       fontWeight: 500,
     },
     body1: {
-      fontSize: 18,
-      fontStyle: "italic",
+      fontSize: "1.2rem",
+      color: "#D9D9D9",
+    },
+    body2: {
+      fontsize: "1rem",
+      color: "#6E767D",
     },
   },
 });

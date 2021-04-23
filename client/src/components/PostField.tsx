@@ -41,10 +41,11 @@ function PostField() {
           multiline
           rows={6}
           variant="outlined"
+          color="primary"
           className={classes.twatFieldStyle}
           onChange={(event) => handleCharacters(event.target.value)}
           disabled={isDisabled}
-          inputProps={{ maxLength: 280 }}
+          inputProps={{ maxLength: 280, className: classes.inputColor }}
           label="What's happening?"
         />
         <Box className={classes.twatInfoWrapper}>
@@ -67,6 +68,10 @@ const useStyles = makeStyles((theme) => ({
   },
   twatFieldStyle: {
     width: "30rem",
+    borderColor: "#D9D9D9",
+  },
+  inputColor: {
+    color: "#D9D9D9",
   },
   twatInfoWrapper: {
     display: "flex",
