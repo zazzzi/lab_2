@@ -14,6 +14,7 @@ import { PostContext, Post } from "./context/postsContext";
 import catProfile from "../assets/images/Cat-Profile.png";
 import moment from "moment";
 import YouTube from "react-youtube";
+import getVideoId from "get-video-id";
 
 interface Props {
   post: Post;
@@ -39,12 +40,8 @@ function Twat(props: Props) {
   }
 
   let postContent = props.post.content;
-  const youtubeLink = postContent.includes("watch?v=");
-
-  function matchYoutubeUrl(postContent: any) {
-    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-    return postContent.match(p) ? RegExp.$1 : false;
-  }
+  const youtubeLink = postContent.includes("https://www.youtube.com/watch?v=");
+  const videoID = getVideoId(postContent);
 
   const opts = {
     height: "190",
@@ -88,15 +85,24 @@ function Twat(props: Props) {
 
         <Box className={classes.twatContent}>
           {youtubeLink ? (
-            <YouTube
-              videoId={matchYoutubeUrl(postContent).toString()}
-              opts={opts}
-            />
+            <>
+              <Box mb={3}>
+                <YouTube videoId={videoID.id!.toString()} opts={opts} />
+              </Box>
+              <Box>
+                <Typography color="primary">{props.post.content}</Typography>
+              </Box>
+            </>
           ) : (
             <Typography color="primary">{props.post.content}</Typography>
           )}
         </Box>
-        <Box className={classes.likeIcon}>
+        <Box
+          className={classes.likeIcon}
+          onClick={() => {
+            likePost(props.post._id);
+          }}
+        >
           <Badge
             max={999}
             overlap="circle"
@@ -107,12 +113,7 @@ function Twat(props: Props) {
               horizontal: "right",
             }}
           >
-            <ThumbUpIcon
-              color="primary"
-              onClick={() => {
-                likePost(props.post._id);
-              }}
-            />
+            <ThumbUpIcon color="primary" />
           </Badge>
         </Box>
       </Box>
