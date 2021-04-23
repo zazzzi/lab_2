@@ -11,7 +11,7 @@ postRouter.get("/posts", async (req, res) => {
 });
 
 // POST new twat
-postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
+postRouter.post("/posts"/* , secureWithRole("plebian") */, async (req, res) => {
   const today = moment().format("MMM DD YYYY HH:mm");
   console.log("test");
   const post = new Post({
