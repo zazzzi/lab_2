@@ -1,9 +1,27 @@
-import { Avatar, Box, makeStyles, Typography, Link } from "@material-ui/core";
-import React from "react";
+import {
+  Avatar,
+  Box,
+  makeStyles,
+  Typography,
+  Link,
+  Button,
+  Modal,
+  TextField,
+} from "@material-ui/core";
+import React, { useState } from "react";
 import catProfile from "../assets/images/Cat-Profile.png";
 
 function Header() {
   const classes = useStyles();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <Box className={classes.rootStyle}>
@@ -13,10 +31,27 @@ function Header() {
             Home
           </Typography>
         </Link>
+        <Button onClick={handleOpen} color="secondary">
+          Login
+        </Button>
         <Link href="/">
           <Avatar src={catProfile}></Avatar>
         </Link>
       </Box>
+      <Modal
+      className={classes.modal}
+        open={isModalOpen}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Box className={classes.modalContent}>
+          <Typography>Login</Typography>
+          <TextField label="User name"/>
+          <TextField label="Password" />
+          <Button>Login</Button>
+        </Box>
+      </Modal>
     </Box>
   );
 }
@@ -33,6 +68,19 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     display: "flex",
     justifyContent: "space-around",
+  },
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  modalContent: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
   },
 }));
 
