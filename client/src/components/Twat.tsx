@@ -1,9 +1,17 @@
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { useContext, useState } from "react";
-import { makeStyles, Typography, Avatar, Box } from "@material-ui/core";
+import {
+  makeStyles,
+  Typography,
+  Avatar,
+  Box,
+  Tooltip,
+} from "@material-ui/core";
 import { PostContext, Post } from "./context/postsContext";
 import catProfile from "../assets/images/Cat-Profile.png";
+import moment from "moment";
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from "@material-ui/core";
 
 interface Props {
   post: Post;
@@ -13,8 +21,12 @@ function Twat(props: Props) {
   const [likes, setLikes] = useState(props.post.likes);
   const classes = useStyles();
   const { posts, deletePost, likePost } = useContext(PostContext);
-  console.log(props.post);
 
+  const today = moment();
+  const timeOfPost = props.post.date;
+  const momentObj = moment(timeOfPost);
+
+  const diff = today.diff(momentObj, "minutes");
   return (
     <Box className={classes.rootStyle}>
       <Box className={classes.twatContainer}>
@@ -33,7 +45,9 @@ function Twat(props: Props) {
               <Typography variant="body2">•</Typography>
             </Box>
             <Box m={0.5}>
-              <Typography variant="body2">{props.post.date}</Typography>
+              <Tooltip title={timeOfPost} arrow>
+                <Typography variant="body2">{diff}m</Typography>
+              </Tooltip>
             </Box>
           </Box>
           <Box className={classes.moreIcon}>
@@ -64,6 +78,15 @@ function Twat(props: Props) {
     </Box>
   );
 }
+
+// function hoverDate(props: Props) {
+//   const timeOfPost = props.post.date;
+//   return (
+//     <Tooltip title={timeOfPost}>
+//       <Box></Box>
+//     </Tooltip>
+//   );
+// }
 
 const useStyles = makeStyles((theme) => ({
   rootStyle: {
