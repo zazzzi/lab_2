@@ -5,20 +5,23 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { PostContext, Post } from './context/postsContext';
+
 
 function PostField() {
   const classes = useStyles();
   const [chars, setChars] = useState<number>(0);
-  const [twat, setTwat] = useState<string>();
+  const [twat, setTwat] = useState<any>();
   const [isDisabled, setIsDisabled] = useState(false);
+  const {posts, makeNewPost} = useContext(PostContext)
 
   function handleCharacters(value: string) {
     setChars(value.length);
     setTwat(value);
   }
 
-  async function handleTwat() {
+  /* async function handleTwat() {
     const placeholder = {
       author: "lol",
       content: twat,
@@ -32,7 +35,7 @@ function PostField() {
     };
     fetch("http://localhost:6969/api/posts", requestOptions);
     console.log("test");
-  }
+  } */
 
   return (
     <Box>
@@ -49,7 +52,11 @@ function PostField() {
         />
         <Box className={classes.twatInfoWrapper}>
           <Typography>{chars}/280</Typography>
-          <Button onClick={() => handleTwat()} variant="contained">
+          <Button 
+            variant="contained" 
+            onClick={() => {
+              makeNewPost(twat)
+              }}>
             Twat
           </Button>
         </Box>

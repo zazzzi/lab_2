@@ -7,8 +7,8 @@ import { PostContext, Post } from './context/postsContext';
 
 function TwatWrapper() {
   const classes = useStyles();
-  const {posts, deletePost} = useContext(PostContext)
-
+  const {posts, deletePost, likePost} = useContext(PostContext)
+  console.log(posts)
   return (
     <Box className={classes.rootStyle}>
       {posts
@@ -18,7 +18,12 @@ function TwatWrapper() {
             <Typography>{p.author}</Typography>
 
             <Typography>{p.content}</Typography>
-            <ThumbUpIcon color="action" />
+            <ThumbUpIcon 
+              color="action" 
+              onClick={() => {
+                likePost(p._id)
+              }} 
+            />
             <Typography>{p.likes}</Typography>
             <MoreHorizIcon 
               color="action"
