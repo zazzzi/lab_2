@@ -6,6 +6,7 @@ export interface Post{
     content: string;
     likes: number;
     date: number;
+    name: string;
     _v: number;
 }
 interface State{

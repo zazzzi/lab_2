@@ -13,16 +13,18 @@ postRouter.get("/posts", async (req, res) => {
 // POST new twat
 postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
   const today = moment().format("MMM DD YYYY HH:mm");
-
+  console.log('test')
   const post = new Post({
+    name: req.session.name,
     author: req.session.userName,
     content: req.body.content,
-    likes: req.body.likes,
+    likes: 0,
     date: today,
   });
 
   await post.save();
-  res.status(201);
+  res.status(201).json(post);
+  
 });
 
 /* postRouter.post("/posts", async (req, res) => {
