@@ -20,6 +20,7 @@ function PostField() {
   
   function handleCharacters(value: string) {
     setChars(value.length);
+    
     setTwat(value);
   }
 
