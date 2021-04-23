@@ -13,7 +13,7 @@ postRouter.get("/posts", async (req, res) => {
 // POST new twat
 postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
   const today = moment().format("MMM DD YYYY HH:mm");
-  console.log('test')
+  console.log("test");
   const post = new Post({
     name: req.session.name,
     author: req.session.userName,
@@ -24,7 +24,6 @@ postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
 
   await post.save();
   res.status(201).json(post);
-  
 });
 
 /* postRouter.post("/posts", async (req, res) => {
@@ -80,7 +79,7 @@ postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
 
 //Update like
 postRouter.post("/posts/:id", async (req, res) => {
-  //if post is clicked again with same id remove the like. 
+  //if post is clicked again with same id remove the like.
   const post = await Post.findOneAndUpdate(
     { _id: req.params.id },
     { $inc: { likes: 1 } },
@@ -88,8 +87,6 @@ postRouter.post("/posts/:id", async (req, res) => {
   );
 
   res.status(200).json("Likes updated");
-  res.send(post);
-
 });
 
 //Middleware functions
