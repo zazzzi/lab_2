@@ -1,23 +1,13 @@
-import { Box, makeStyles, Typography } from "@material-ui/core";
-import { responseInterceptor } from "http-proxy-middleware";
-import React, { useEffect, useState } from "react";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+
+import { Box, makeStyles, Typography } from '@material-ui/core';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { useContext } from 'react';
+import { PostContext, Post } from './context/postsContext';
 
 function TwatWrapper() {
   const classes = useStyles();
-  const [posts, setPosts] = useState([]);
-  const url = "http://localhost:6969/api/posts";
-  const array = ["hello", "hi", "wuddup"];
-
-  useEffect(() => {
-    const loadPosts = async () => {
-      const response = await fetch(url);
-      const posts = await response.json();
-      setPosts(posts);
-    };
-    loadPosts();
-  }, []);
+  const {posts, deletePost} = useContext(PostContext)
 
   return (
     <Box className={classes.rootStyle}>
@@ -30,7 +20,12 @@ function TwatWrapper() {
             <Typography>{p.content}</Typography>
             <ThumbUpIcon color="action" />
             <Typography>{p.likes}</Typography>
-            <MoreHorizIcon color="action" />
+            <MoreHorizIcon 
+              color="action"
+              onClick={() => {
+                deletePost(p._id)
+              }} 
+            />
           </Box>
         ))
         .reverse()}
@@ -48,3 +43,4 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default TwatWrapper;
+

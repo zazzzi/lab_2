@@ -30,7 +30,8 @@ function PostField() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(placeholder),
     };
-    await fetch("http://localhost:6969/api/posts", requestOptions);
+    fetch("http://localhost:6969/api/posts", requestOptions);
+    console.log("test");
   }
 
   return (
