@@ -23,6 +23,21 @@ function Header() {
     setIsModalOpen(false);
   };
 
+  async function loginHandler(username: string, password: string) {
+    const loginInfo = {
+      userName: username,
+      password: password,
+    };
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(loginInfo),
+    };
+    const response = await fetch("http://localhost:6969/api/login", requestOptions);
+    console.log(response);
+    
+  }
+
   return (
     <Box className={classes.rootStyle}>
       <Box className={`${classes.headerWrapper}`}>
@@ -39,7 +54,7 @@ function Header() {
         </Link>
       </Box>
       <Modal
-      className={classes.modal}
+        className={classes.modal}
         open={isModalOpen}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
@@ -47,9 +62,16 @@ function Header() {
       >
         <Box className={classes.modalContent}>
           <Typography>Login</Typography>
-          <TextField label="User name"/>
+          <TextField label="User name" />
           <TextField label="Password" />
-          <Button>Login</Button>
+          <Button
+            onClick={() => {
+              loginHandler("tester420", "1234");
+              handleClose();
+            }}
+          >
+            Login
+          </Button>
         </Box>
       </Modal>
     </Box>
