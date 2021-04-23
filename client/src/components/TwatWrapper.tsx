@@ -7,8 +7,9 @@ import Twat from "./Twat";
 
 function TwatWrapper() {
   const classes = useStyles();
-  const { posts, deletePost } = useContext(PostContext);
 
+  const { posts, deletePost, likePost } = useContext(PostContext);
+  console.log(posts)
   return (
     <Box className={classes.rootStyle}>
       <Box>
