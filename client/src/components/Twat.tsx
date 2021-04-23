@@ -96,7 +96,7 @@ function Twat(props: Props) {
               color="primary"
               onClick={() => {
                 updateLikes(liked => !liked)
-                liked ? likePost(props.post._id) : unlikePost(props.post._id);
+                likePost(props.post._id)
               }}
             />
           </Badge>
