@@ -13,6 +13,7 @@ import {
 import { PostContext, Post } from "./context/postsContext";
 import catProfile from "../assets/images/Cat-Profile.png";
 import moment from "moment";
+import YouTube from "react-youtube";
 
 interface Props {
   post: Post;
@@ -37,6 +38,12 @@ function Twat(props: Props) {
     timeShort = "d";
   }
 
+  const postContent = props.post.content;
+  const youtubeLink = postContent.includes("watch?v=");
+  const opts = {
+    height: "190",
+    width: "350",
+  };
   return (
     <Box className={classes.rootStyle}>
       <Box className={classes.twatContainer}>
@@ -74,7 +81,11 @@ function Twat(props: Props) {
         </Box>
 
         <Box className={classes.twatContent}>
-          <Typography color="primary">{props.post.content}</Typography>
+          {youtubeLink ? (
+            <YouTube videoId="2g811Eo7K8U" opts={opts} />
+          ) : (
+            <Typography color="primary">{props.post.content}</Typography>
+          )}
         </Box>
         <Box className={classes.likeIcon}>
           <Badge
@@ -99,18 +110,6 @@ function Twat(props: Props) {
     </Box>
   );
 }
-
-// function hoverDate(props: Props) {
-//   const today = moment();
-//   const timeOfPost = props.post.date;
-//   const momentObj = moment(timeOfPost);
-//   let timeShort = "m";
-//   let diff = today.diff(momentObj, "minutes");
-//   if (diff > 59) {
-//     diff = today.diff(momentObj, "hours");
-//     timeShort = "h";
-//   }
-// }
 
 const useStyles = makeStyles((theme) => ({
   rootStyle: {
