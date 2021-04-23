@@ -15,8 +15,7 @@ function PostField() {
   const [twat, setTwat] = useState<any>();
   const [isDisabled, setIsDisabled] = useState(false);
   const {posts,makeNewPost} = useContext(PostContext)
-  const {profiles} = useContext(ProfileContext)
-  console.log(profiles)
+  
   function handleCharacters(value: string) {
     setChars(value.length);
     setTwat(value);

@@ -36,13 +36,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Box className={classes.rootStyle}>
-        <Header />
         <ProfileProvider>
+          <Header />
+        </ProfileProvider>
           <PostProvider>
             <PostField />
             <TwatWrapper />
           </PostProvider>
-        </ProfileProvider>
       </Box>
     </ThemeProvider>
   );

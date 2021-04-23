@@ -12,7 +12,7 @@ export interface Profile {
 
 interface State {
   profiles: Profile[];
-  registerNewProfile: (userName: string, password: string, role:string,name:string) => void;
+  registerNewProfile: (body: object) => void;
   deleteProfile: (id: string) => void;
   editProfile: (id: string) => void;
 }
@@ -32,15 +32,8 @@ function ProfileProvider(props: Props) {
   const [profiles, setProfiles] = useState([] as Profile[]);
   const url = "http://localhost:6969";
 
-  async function registerNewProfile(userName: string, password: string, role:string,name:string){
-    const body = {
-        userName: userName,
-        password: password,
-        role: role,
-        name: name,
-    };
-
-    makeRequest(`${url}/api/profiles/`, "POST", body); 
+  async function registerNewProfile(body: object){
+    await makeRequest(`${url}/api/profiles/`, "POST", body); 
 }
 
   async function deleteProfile(id: string) {

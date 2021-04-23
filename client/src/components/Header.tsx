@@ -10,17 +10,28 @@ import {
 } from "@material-ui/core";
 import React, { useState } from "react";
 import catProfile from "../assets/images/Cat-Profile.png";
+import Register from "./Register";
+
 
 function Header() {
   const classes = useStyles();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   const handleOpen = () => {
-    setIsModalOpen(true);
+    setIsLoginModalOpen(true);
   };
 
   const handleClose = () => {
-    setIsModalOpen(false);
+    setIsLoginModalOpen(false);
+  };
+
+  const handleRegOpen = () => {
+    setIsRegisterModalOpen(true)
+  }
+
+  const handleRegClose = () => {
+    setIsRegisterModalOpen(false);
   };
 
   async function loginHandler(username: string, password: string) {
@@ -49,13 +60,16 @@ function Header() {
         <Button onClick={handleOpen} color="secondary">
           Login
         </Button>
+        <Button onClick={handleRegOpen} color="secondary">
+          Register
+        </Button>
         <Link href="/">
           <Avatar src={catProfile}></Avatar>
         </Link>
       </Box>
       <Modal
         className={classes.modal}
-        open={isModalOpen}
+        open={isLoginModalOpen}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -72,6 +86,19 @@ function Header() {
           >
             Login
           </Button>
+        </Box>
+      </Modal>
+      <Modal
+        className={classes.modal}
+        open={isRegisterModalOpen}
+        onClose={handleRegClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Box>
+          <Register
+            handleRegClose={handleRegClose}
+          />
         </Box>
       </Modal>
     </Box>
