@@ -6,8 +6,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useContext, useState } from "react";
-import { PostContext, Post } from './context/postsContext';
-
+import { PostContext } from './context/postsContext';
 
 function PostField() {
   const classes = useStyles();
@@ -20,22 +19,6 @@ function PostField() {
     setChars(value.length);
     setTwat(value);
   }
-
-  /* async function handleTwat() {
-    const placeholder = {
-      author: "lol",
-      content: twat,
-      likes: 0,
-    };
-
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(placeholder),
-    };
-    fetch("http://localhost:6969/api/posts", requestOptions);
-    console.log("test");
-  } */
 
   return (
     <Box>
