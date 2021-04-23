@@ -37,24 +37,15 @@ function PostProvider(props: Props) {
     const body = {
       content: content,
     };
-    const post = makeRequest(`${url}/api/posts/`, "POST", body);
+    const post = await makeRequest(`${url}/api/posts/`, "POST", body);
     const newPost = [...posts, post]
     setPosts(newPost)
   }
 
   async function deletePost(id: string) {
-    /* const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE"); */
-    const findPost = posts.find((p: { _id: string; }) => p._id === id)
-  
-    setPosts((prev: any[]) =>
-      prev.reduce((ack: any, item: { id: string; }) => {
-        if (item.id === findPost._id) {
-          return ack;
-        } else {
-          return [...ack, item];
-        }
-      }, [] as Post[])
-    );
+    const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE");
+    const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id)
+    setPosts(filteredArray)
   }
 
   async function editPost() {}
