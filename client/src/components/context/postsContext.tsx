@@ -1,4 +1,5 @@
 import {createContext, useEffect, useState} from "react";
+import { StringMappingType } from "typescript";
 export interface Post{
     _id: string;
     author: string;
@@ -11,7 +12,8 @@ interface State{
     posts: Post[]
     makeNewPost: (post: Post) => void;
     deletePost: (id: string) => void;
-    editPost: (id: Post) => void;
+    editPost: (id: string, content: string) => void;
+    likePost: (id: string) => void;
 }
 
 export const PostContext = createContext<State>({
@@ -19,6 +21,7 @@ export const PostContext = createContext<State>({
     makeNewPost: () => {},
     deletePost: () => {},
     editPost: () => {},
+    likePost: () => {},
 })
 
 interface Props {
@@ -26,32 +29,36 @@ interface Props {
 }
 
 function PostProvider(props: Props){
-    const [query, setQuery] = useState(null);
     const [posts, setPosts] = useState([] as Post[]);
     const url = "http://localhost:6969"
 
     async function makeNewPost(){
 
     }
-
+    
     async function deletePost(id: string){
         makeRequest(`${url}/api/posts/${id}`, "DELETE")
     }
 
-    async function editPost(){
-
+    async function editPost(id: string,content:string){
+        const body = {
+            content: content
+        }
+        makeRequest(`${url}/api/posts/${id}`, "PUT", body)
     }
 
-    
+    async function likePost(id: string){
+        makeRequest(`${url}/api/posts/${id}`, "POST")
+    }
 
     useEffect( () => {
         const loadPosts = async () => {
-          const allPosts = await makeRequest(`${url}/api/posts`, "GET")
-          setPosts(allPosts)
+            const allPosts = await makeRequest(`${url}/api/posts`, "GET")
+            setPosts(allPosts)
         }
         loadPosts()
-    }, [posts])
-
+    }, [])
+  
     async function makeRequest(url: RequestInfo,method: any,body?: any){
         const response = await fetch(url, {
             method: method,
@@ -71,6 +78,7 @@ function PostProvider(props: Props){
                 makeNewPost: makeNewPost,
                 deletePost: deletePost,
                 editPost: editPost,
+                likePost: likePost,
             }}
         >
             {props.children}
