@@ -15,7 +15,7 @@ function TwatWrapper() {
         {posts
           .map((p: any, i) => (
             <Box key={i} className={classes.twatContainer}>
-              <Twat />
+              <Twat post={p} />
             </Box>
           ))
           .reverse()}

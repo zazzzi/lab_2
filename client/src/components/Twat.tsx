@@ -1,12 +1,17 @@
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { useContext } from "react";
-import { PostContext, Post } from "./context/postsContext";
 import { makeStyles, Typography, Avatar, Box } from "@material-ui/core";
+import { PostContext, Post } from "./context/postsContext";
 
-function Twat() {
+interface Props {
+  post: Post;
+}
+
+function Twat(props: Props) {
   const classes = useStyles();
   const { posts, deletePost } = useContext(PostContext);
+  console.log(props.post);
 
   return (
     <Box className={classes.rootStyle}>
@@ -16,31 +21,36 @@ function Twat() {
         </Box>
         <Box className={classes.topBar}>
           <Box className={classes.name}>
-            <Typography color="primary">Seb</Typography>
-            <Typography variant="body2">@zazzi</Typography>
-            <Typography variant="body2">•</Typography>
-            <Typography variant="body2">4h</Typography>
+            <Box m={0.5}>
+              <Typography color="primary">Seb</Typography>
+            </Box>
+            <Box m={0.5}>
+              <Typography variant="body2">@{props.post.author}</Typography>
+            </Box>
+            <Box m={0.5}>
+              <Typography variant="body2">•</Typography>
+            </Box>
+            <Box m={0.5}>
+              <Typography variant="body2">{props.post.date}</Typography>
+            </Box>
           </Box>
           <Box className={classes.moreIcon}>
             <MoreHorizIcon
               color="primary"
               onClick={() => {
-                //   deletePost(p._id);
+                deletePost(props.post._id);
               }}
             />
           </Box>
         </Box>
 
         <Box className={classes.twatContent}>
-          <Typography color="primary">
-            Lorem ipsum dolor sit amet consectetur, adipisicing consectetur
-            dolor sit amet consecteturamet
-          </Typography>
+          <Typography color="primary">{props.post.content}</Typography>
         </Box>
         <Box className={classes.likeIcon}>
           <ThumbUpIcon color="primary" />
           <Typography color="primary" className="twatContent">
-            3k
+            {props.post.likes}
           </Typography>
         </Box>
       </Box>
@@ -89,7 +99,6 @@ const useStyles = makeStyles((theme) => ({
   name: {
     position: "relative",
     left: "6rem",
-    width: "10rem",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
