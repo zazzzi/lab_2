@@ -5,15 +5,15 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useContext, useState } from "react";
-import { PostContext } from './context/postsContext';
+import { useContext, useState } from "react";
+import { PostContext } from "./context/postsContext";
 
 function PostField() {
   const classes = useStyles();
   const [chars, setChars] = useState<number>(0);
   const [twat, setTwat] = useState<any>();
-  const [isDisabled, setIsDisabled] = useState(false);
-  const {posts, makeNewPost} = useContext(PostContext)
+  const [isDisabled] = useState(false);
+  const { posts, makeNewPost } = useContext(PostContext);
 
   function handleCharacters(value: string) {
     setChars(value.length);
@@ -36,11 +36,13 @@ function PostField() {
         />
         <Box className={classes.twatInfoWrapper}>
           <Typography>{chars}/280</Typography>
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             onClick={() => {
-              makeNewPost(twat)
-              }}>
+              makeNewPost(twat);
+            }}
+            color="secondary"
+          >
             Twat
           </Button>
         </Box>

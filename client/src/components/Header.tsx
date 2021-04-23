@@ -7,6 +7,8 @@ import {
   Button,
   Modal,
   TextField,
+  Tooltip,
+  Zoom,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import catProfile from "../assets/images/Cat-Profile.png";
@@ -33,9 +35,11 @@ function Header() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginInfo),
     };
-    const response = await fetch("http://localhost:6969/api/login", requestOptions);
+    const response = await fetch(
+      "http://localhost:6969/api/login",
+      requestOptions
+    );
     console.log(response);
-    
   }
 
   return (
@@ -50,7 +54,9 @@ function Header() {
           Login
         </Button>
         <Link href="/">
-          <Avatar src={catProfile}></Avatar>
+          <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
+            <Avatar src={catProfile}></Avatar>
+          </Tooltip>
         </Link>
       </Box>
       <Modal
