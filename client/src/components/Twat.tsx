@@ -22,7 +22,7 @@ function Twat(props: Props) {
   const [likes, setLikes] = useState(props.post.likes);
   const [liked, updateLikes] = useState(false);
   const classes = useStyles();
-  const { posts, deletePost, likePost } = useContext(PostContext);
+  const { posts, deletePost, likePost, unlikePost } = useContext(PostContext);
 
   useEffect(() => {
     setLikes(likes => likes + (liked ? 1 : -1));
@@ -96,7 +96,7 @@ function Twat(props: Props) {
               color="primary"
               onClick={() => {
                 updateLikes(liked => !liked)
-                likePost(props.post._id);
+                liked ? likePost(props.post._id) : unlikePost(props.post._id);
               }}
             />
           </Badge>
