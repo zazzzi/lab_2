@@ -18,7 +18,8 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useFind
           secret: 'SuperSecretKey',
           secure: false,
           maxAge: 100000 * 10,
-          httpOnly: true
+          httpOnly: true,
+          domain: "http://localhost:3000"
     }))
     app.use(cors())
     app.use("/api", sessionRouter);
