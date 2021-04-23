@@ -30,24 +30,44 @@ interface Props {
 
 function PostProvider(props: Props) {
   const [query, setQuery] = useState(null);
-  const [posts, setPosts] = useState([] as Post[]);
+  const [posts, setPosts] = useState<any>([] as Post[]);
   const url = "http://localhost:6969";
 
   async function makeNewPost(content: string) {
     const body = {
       content: content,
     };
-    makeRequest(`${url}/api/posts/`, "POST", body);
+    const post = makeRequest(`${url}/api/posts/`, "POST", body);
+    const newPost = [...posts, post]
+    setPosts(newPost)
   }
 
   async function deletePost(id: string) {
-    makeRequest(`${url}/api/posts/${id}`, "DELETE");
+    /* const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE"); */
+    const findPost = posts.find((p: { _id: string; }) => p._id === id)
+  
+    setPosts((prev: any[]) =>
+      prev.reduce((ack: any, item: { id: string; }) => {
+        if (item.id === findPost._id) {
+          return ack;
+        } else {
+          return [...ack, item];
+        }
+      }, [] as Post[])
+    );
   }
 
   async function editPost() {}
 
   async function likePost(id: string) {
-    makeRequest(`${url}/api/posts/${id}`, "POST");
+    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST");
+    setPosts((prev: any) => {
+        return prev.map((p: any) => 
+          likedPost._id === p._id
+          ? {...p, likes: p.likes + 1}
+          : p 
+      );
+    })
   }
 
   useEffect(() => {

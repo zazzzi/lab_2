@@ -80,7 +80,7 @@ function Twat(props: Props) {
           <Badge
             max={999}
             overlap="circle"
-            badgeContent={likes}
+            badgeContent={props.post.likes}
             color="secondary"
             anchorOrigin={{
               vertical: "bottom",

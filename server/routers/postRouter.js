@@ -38,18 +38,16 @@ postRouter.get("/posts/:id", async (req, res) => {
 });
 
 //delete post from ID
-postRouter.delete("/posts/:id", secureWithRole("plebian"), async (req, res) => {
-  const twatToDelete = await Post.findOne({ _id: req.params.id });
-  if (
-    twatToDelete.author === req.session.userName ||
-    req.session.role === "admin"
-  ) {
-    const post = await Post.findOneAndDelete({ _id: req.params.id });
-    res.status(200).json("delet");
-    res.send(post);
+postRouter.delete("/posts/:id", /* secureWithRole("plebian"), */ async (req, res) => {
+  /* const twatToDelete = await Post.findOne({ _id: req.params.id }); */
+  const post = await Post.findOneAndDelete({ _id: req.params.id });
+  res.status(200).json(post);
+
+ /*  if (twatToDelete.author === req.session.userName || req.session.role === "admin") {
+    
   } else {
     res.status(401).json("You do not have the necessary priviliges");
-  }
+  } */
 });
 
 //Update post from ID
@@ -86,7 +84,7 @@ postRouter.post("/posts/:id", async (req, res) => {
     { new: true }
   );
 
-  res.status(200).json("Likes updated");
+  res.status(200).json(post);
 });
 
 //Middleware functions
