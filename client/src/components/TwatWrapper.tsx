@@ -8,15 +8,15 @@ import Twat from "./Twat";
 function TwatWrapper() {
   const classes = useStyles();
 
-  const { posts, deletePost, likePost } = useContext(PostContext);
-  console.log(posts)
+  const { posts, deletePost } = useContext(PostContext);
+  console.log(posts);
   return (
     <Box className={classes.rootStyle}>
       <Box>
         {posts
           .map((p: any, i) => (
             <Box key={i} className={classes.twatContainer}>
-              <Twat />
+              <Twat post={p} />
             </Box>
           ))
           .reverse()}

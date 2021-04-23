@@ -8,86 +8,71 @@ export interface Post{
     date: number;
     name: string;
     _v: number;
+
 }
-interface State{
-    posts: Post[]
-    makeNewPost: (content: string) => void;
-    deletePost: (id: string) => void;
-    editPost: (id: string, content: string) => void;
-    likePost: (id: string) => void;
+interface State {
+  posts: Post[];
+  makeNewPost: (post: Post) => void;
+  deletePost: (id: string) => void;
+  editPost: (id: Post) => void;
 }
 
 export const PostContext = createContext<State>({
-    posts:[],
-    makeNewPost: () => {},
-    deletePost: () => {},
-    editPost: () => {},
-    likePost: () => {},
-})
+  posts: [],
+  makeNewPost: () => {},
+  deletePost: () => {},
+  editPost: () => {},
+});
 
 interface Props {
-    children: Object;
+  children: Object;
 }
 
-function PostProvider(props: Props){
-    const [posts, setPosts] = useState([] as Post[]);
-    const url = "http://localhost:6969"
+function PostProvider(props: Props) {
+  const [query, setQuery] = useState(null);
+  const [posts, setPosts] = useState([] as Post[]);
+  const url = "http://localhost:6969";
 
-    async function makeNewPost(content: string){
-        const body = {
-            content: content,
-        };
-        makeRequest(`${url}/api/posts/`, "POST", body); 
-    }
-    
-    async function deletePost(id: string){
-        makeRequest(`${url}/api/posts/${id}`, "DELETE")
-    }
+  async function makeNewPost() {}
 
-    async function editPost(id: string,content:string){
-        const body = {
-            content: content
-        }
-        makeRequest(`${url}/api/posts/${id}`, "PUT", body)
-    }
+  async function deletePost(id: string) {
+    makeRequest(`${url}/api/posts/${id}`, "DELETE");
+  }
 
-    async function likePost(id: string){
-        makeRequest(`${url}/api/posts/${id}`, "POST")
-    }
+  async function editPost() {}
 
-    useEffect( () => {
-        const loadPosts = async () => {
-            const allPosts = await makeRequest(`${url}/api/posts`, "GET")
-            setPosts(allPosts)
-        }
-        loadPosts()
-    }, [])
-  
-    async function makeRequest(url: RequestInfo,method: any,body?: any){
-        const response = await fetch(url, {
-            method: method,
-            body: JSON.stringify(body),
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
-        const result = await response.json()
-        return result;
-    }
+  useEffect(() => {
+    const loadPosts = async () => {
+      const allPosts = await makeRequest(`${url}/api/posts`, "GET");
+      setPosts(allPosts);
+    };
+    loadPosts();
+  }, [posts]);
 
-    return (
-        <PostContext.Provider
-            value={{
-                posts: posts,
-                makeNewPost: makeNewPost,
-                deletePost: deletePost,
-                editPost: editPost,
-                likePost: likePost,
-            }}
-        >
-            {props.children}
-        </PostContext.Provider>
-    )
+  async function makeRequest(url: RequestInfo, method: any, body?: any) {
+    const response = await fetch(url, {
+      method: method,
+      body: JSON.stringify(body),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    const result = await response.json();
+    return result;
+  }
+
+  return (
+    <PostContext.Provider
+      value={{
+        posts: posts,
+        makeNewPost: makeNewPost,
+        deletePost: deletePost,
+        editPost: editPost,
+      }}
+    >
+      {props.children}
+    </PostContext.Provider>
+  );
 }
 
 export const PostConsumer = PostContext.Consumer;
