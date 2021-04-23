@@ -4,6 +4,8 @@ const express = require("express");
 const moment = require("moment");
 const postRouter = express.Router();
 
+let liked = false;
+
 // GET all twats
 postRouter.get("/posts", async (req, res) => {
   const twat = await postModel.find();
@@ -83,7 +85,7 @@ postRouter.post("/posts/:id", async (req, res) => {
     { $inc: { likes: 1 } },
     { new: true }
   );
-
+  
   res.status(200).json(post);
 });
 

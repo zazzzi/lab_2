@@ -29,9 +29,9 @@ interface Props {
 }
 
 function PostProvider(props: Props) {
-  const [query, setQuery] = useState(null);
   const [posts, setPosts] = useState<any>([] as Post[]);
   const url = "http://localhost:6969";
+  let liked = false;
 
   async function makeNewPost(content: string) {
     const body = {
@@ -46,6 +46,7 @@ function PostProvider(props: Props) {
     const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE");
     const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id)
     setPosts(filteredArray)
+    return deletedPost
   }
 
   async function editPost() {}
