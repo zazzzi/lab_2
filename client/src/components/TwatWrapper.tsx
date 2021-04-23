@@ -1,8 +1,6 @@
-import { Box, makeStyles, Typography } from "@material-ui/core";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import { Box, makeStyles } from "@material-ui/core";
 import { useContext } from "react";
-import { PostContext, Post } from "./context/postsContext";
+import { PostContext } from "./context/postsContext";
 import Twat from "./Twat";
 
 function TwatWrapper() {

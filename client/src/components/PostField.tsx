@@ -5,9 +5,11 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+
 import React, { useContext, useState } from "react";
 import { PostContext } from './context/postsContext';
 import { ProfileContext } from './context/profileContext';
+
 
 function PostField() {
   const classes = useStyles();
@@ -37,11 +39,13 @@ function PostField() {
         />
         <Box className={classes.twatInfoWrapper}>
           <Typography>{chars}/280</Typography>
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             onClick={() => {
-              makeNewPost(twat)
-              }}>
+              makeNewPost(twat);
+            }}
+            color="secondary"
+          >
             Twat
           </Button>
         </Box>

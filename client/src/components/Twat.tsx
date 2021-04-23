@@ -7,11 +7,12 @@ import {
   Avatar,
   Box,
   Tooltip,
+  Badge,
+  Zoom,
 } from "@material-ui/core";
 import { PostContext, Post } from "./context/postsContext";
 import catProfile from "../assets/images/Cat-Profile.png";
 import moment from "moment";
-import { unstable_createMuiStrictModeTheme as createMuiTheme } from "@material-ui/core";
 
 interface Props {
   post: Post;
@@ -25,8 +26,17 @@ function Twat(props: Props) {
   const today = moment();
   const timeOfPost = props.post.date;
   const momentObj = moment(timeOfPost);
+  let timeShort = "m";
+  let diff = today.diff(momentObj, "minutes");
+  if (diff >= 60) {
+    diff = today.diff(momentObj, "hours");
+    timeShort = "h";
+  }
+  if (diff >= 1440) {
+    diff = today.diff(momentObj, "days");
+    timeShort = "d";
+  }
 
-  const diff = today.diff(momentObj, "minutes");
   return (
     <Box className={classes.rootStyle}>
       <Box className={classes.twatContainer}>
@@ -45,8 +55,11 @@ function Twat(props: Props) {
               <Typography variant="body2">•</Typography>
             </Box>
             <Box m={0.5}>
-              <Tooltip title={timeOfPost} arrow>
-                <Typography variant="body2">{diff}m</Typography>
+              <Tooltip title={timeOfPost} arrow TransitionComponent={Zoom}>
+                <Typography variant="body2">
+                  {diff}
+                  {timeShort}
+                </Typography>
               </Tooltip>
             </Box>
           </Box>
@@ -64,15 +77,23 @@ function Twat(props: Props) {
           <Typography color="primary">{props.post.content}</Typography>
         </Box>
         <Box className={classes.likeIcon}>
-          <ThumbUpIcon
-            color="primary"
-            onClick={() => {
-              likePost(props.post._id);
+          <Badge
+            max={999}
+            overlap="circle"
+            badgeContent={likes}
+            color="secondary"
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
             }}
-          />
-          <Typography color="primary" className="twatContent">
-            {likes}
-          </Typography>
+          >
+            <ThumbUpIcon
+              color="primary"
+              onClick={() => {
+                likePost(props.post._id);
+              }}
+            />
+          </Badge>
         </Box>
       </Box>
     </Box>
@@ -80,12 +101,15 @@ function Twat(props: Props) {
 }
 
 // function hoverDate(props: Props) {
+//   const today = moment();
 //   const timeOfPost = props.post.date;
-//   return (
-//     <Tooltip title={timeOfPost}>
-//       <Box></Box>
-//     </Tooltip>
-//   );
+//   const momentObj = moment(timeOfPost);
+//   let timeShort = "m";
+//   let diff = today.diff(momentObj, "minutes");
+//   if (diff > 59) {
+//     diff = today.diff(momentObj, "hours");
+//     timeShort = "h";
+//   }
 // }
 
 const useStyles = makeStyles((theme) => ({
