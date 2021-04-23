@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { StringMappingType } from "typescript";
 export interface Post {
   _id: string;
   author: string;
@@ -11,7 +10,7 @@ export interface Post {
 }
 interface State {
   posts: Post[];
-  makeNewPost: (post: Post) => void;
+  makeNewPost: (post: string) => void;
   deletePost: (id: string) => void;
   editPost: (id: Post) => void;
   likePost: (id: string) => void;
@@ -34,7 +33,12 @@ function PostProvider(props: Props) {
   const [posts, setPosts] = useState([] as Post[]);
   const url = "http://localhost:6969";
 
-  async function makeNewPost() {}
+  async function makeNewPost(content: string) {
+    const body = {
+      content: content,
+    };
+    makeRequest(`${url}/api/posts/`, "POST", body);
+  }
 
   async function deletePost(id: string) {
     makeRequest(`${url}/api/posts/${id}`, "DELETE");

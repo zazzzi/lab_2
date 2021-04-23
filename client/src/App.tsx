@@ -1,4 +1,4 @@
-import { Box, makeStyles, ThemeProvider, Typography } from "@material-ui/core";
+import { Box, makeStyles, ThemeProvider } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import PostProvider from "./components/context/postsContext";
 import Header from "./components/Header";
