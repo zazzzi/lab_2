@@ -44,7 +44,7 @@ function PostProvider(props: Props) {
       setPosts(allPosts);
     };
     loadPosts();
-  }, []);
+  }, [posts]);
 
   async function makeRequest(url: RequestInfo, method: any, body?: any) {
     const response = await fetch(url, {
