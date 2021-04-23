@@ -7,14 +7,16 @@ import {
 } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { PostContext } from './context/postsContext';
+import { ProfileContext } from './context/profileContext';
 
 function PostField() {
   const classes = useStyles();
   const [chars, setChars] = useState<number>(0);
   const [twat, setTwat] = useState<any>();
   const [isDisabled, setIsDisabled] = useState(false);
-  const {posts, makeNewPost} = useContext(PostContext)
-
+  const {posts,makeNewPost} = useContext(PostContext)
+  const {profiles} = useContext(ProfileContext)
+  console.log(profiles)
   function handleCharacters(value: string) {
     setChars(value.length);
     setTwat(value);
