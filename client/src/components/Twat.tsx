@@ -38,8 +38,14 @@ function Twat(props: Props) {
     timeShort = "d";
   }
 
-  const postContent = props.post.content;
+  let postContent = props.post.content;
   const youtubeLink = postContent.includes("watch?v=");
+
+  function matchYoutubeUrl(postContent: any) {
+    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    return postContent.match(p) ? RegExp.$1 : false;
+  }
+
   const opts = {
     height: "190",
     width: "350",
@@ -82,7 +88,10 @@ function Twat(props: Props) {
 
         <Box className={classes.twatContent}>
           {youtubeLink ? (
-            <YouTube videoId="2g811Eo7K8U" opts={opts} />
+            <YouTube
+              videoId={matchYoutubeUrl(postContent).toString()}
+              opts={opts}
+            />
           ) : (
             <Typography color="primary">{props.post.content}</Typography>
           )}
