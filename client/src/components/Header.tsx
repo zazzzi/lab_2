@@ -19,6 +19,10 @@ function Header() {
   const classes = useStyles();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [loginCredentials, setloginCredentials] = useState<Object>({
+    userName: "",
+    password: "",
+  })
 
   const handleOpen = () => {
     setIsLoginModalOpen(true);
@@ -36,18 +40,22 @@ function Header() {
     setIsRegisterModalOpen(false);
   };
 
-  async function loginHandler(username: string, password: string) {
-    const loginInfo = {
-      userName: username,
-      password: password,
-    };
-    
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setloginCredentials(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+  };
 
+  console.log(loginCredentials)
+
+  async function loginHandler(loginCredentials: object) {
     const response = await fetch("http://localhost:6969/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify(loginInfo),
+      body: JSON.stringify(loginCredentials),
     });
     console.log(response);
   }
@@ -97,11 +105,19 @@ function Header() {
       >
         <Box className={classes.modalContent}>
           <Typography>Login</Typography>
-          <TextField label="User name" />
-          <TextField label="Password" />
+          <TextField 
+            name="userName" 
+            label="User name"
+            onChange={handleChange}
+          />
+          <TextField 
+            name="password" 
+            label="Password" 
+            onChange={handleChange}
+          />
           <Button
             onClick={() => {
-              loginHandler("tester420", "1234");
+              loginHandler(loginCredentials);
               handleClose();
             }}
           >
