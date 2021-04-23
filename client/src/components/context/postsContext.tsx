@@ -13,8 +13,7 @@ interface State {
   makeNewPost: (post: string) => void;
   deletePost: (id: string) => void;
   editPost: (id: Post) => void;
-  likePost: (id: string) => void;
-  unlikePost: (id: string) => void;
+  likePost: (id: string, liked: boolean) => void;
 }
 
 export const PostContext = createContext<State>({
@@ -23,7 +22,6 @@ export const PostContext = createContext<State>({
   deletePost: () => {},
   editPost: () => {},
   likePost: () => {},
-  unlikePost: () => {},
 });
 
 interface Props {
@@ -32,6 +30,7 @@ interface Props {
 
 function PostProvider(props: Props) {
   const [posts, setPosts] = useState<any>([] as Post[]);
+  const [like, setLike] = useState(false)
   const url = "http://localhost:6969";
   let liked = false;
 
@@ -53,23 +52,13 @@ function PostProvider(props: Props) {
 
   async function editPost() {}
 
-  async function likePost(id: string) {
-    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST");
+  async function likePost(id: string, liked: boolean) {
+    console.log(liked)
+    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST", liked);
     setPosts((prev: any) => {
         return prev.map((p: any) => 
           likedPost._id === p._id
           ? {...p, likes: p.likes + 1}
-          : p 
-      );
-    })
-  }
-
-  async function unlikePost(id: string) {
-    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST");
-    setPosts((prev: any) => {
-        return prev.map((p: any) => 
-          likedPost._id === p._id
-          ? {...p, likes: p.likes - 1}
           : p 
       );
     })
@@ -103,7 +92,6 @@ function PostProvider(props: Props) {
         deletePost: deletePost,
         editPost: editPost,
         likePost: likePost,
-        unlikePost: unlikePost,
       }}
     >
       {props.children}

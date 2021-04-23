@@ -4,6 +4,7 @@ GET http://localhost:6969/api/posts
 
 // get specific post
 GET http://localhost:6969/api/posts/607ed7954089c86ca462b74b
+
 ###
 
 
@@ -13,7 +14,7 @@ Content-Type: application/json
 
 {
   "content": "Minister",
-  "likes": 2,
+  "likes": 1,
   "date": "Today"
 }
 ###
@@ -36,7 +37,12 @@ Content-Type: application/json
 
 //incerment like by 1 
 ### 
-POST http://localhost:6969/api/posts/60801a205e664b1a08a397f1
+POST http://localhost:6969/api/posts/60834f34e1113460d44137d9
+Content-Type: application/json
+
+{
+  "liked": true
+}
 
 
 ###

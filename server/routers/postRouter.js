@@ -4,7 +4,7 @@ const express = require("express");
 const moment = require("moment");
 const postRouter = express.Router();
 
-let liked = false;
+
 
 // GET all twats
 postRouter.get("/posts", async (req, res) => {
@@ -20,8 +20,9 @@ postRouter.post("/posts"/* , secureWithRole("plebian") */, async (req, res) => {
     name: req.session.name,
     author: req.session.userName,
     content: req.body.content,
-    likes: 0,
+    likes: 1,
     date: today,
+    liked: false,
   });
 
   await post.save();
@@ -77,16 +78,28 @@ postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
   }
 });
 
-//Update like
+//handleLikes
 postRouter.post("/posts/:id", async (req, res) => {
-  //if post is clicked again with same id remove the like.
-  const post = await Post.findOneAndUpdate(
-    { _id: req.params.id },
-    { $inc: { likes: 1 } },
-    { new: true }
-  );
+  //add a liked boolean to schema 
   
-  res.status(200).json(post);
+  if(req.body.liked) {
+    const post = await Post.findOneAndUpdate(
+      { _id: req.params.id },
+      { $inc: { likes: 1 } },
+      { new: true }
+    );
+    res.status(200).json(post);
+    return;
+  } else if (!req.body.liked) {
+    const post = await Post.findOneAndUpdate(
+      { _id: req.params.id },
+      { $inc: { likes: -1 } },
+      { new: true }
+    );
+    res.status(200).json(post);
+    return;
+  }
+  
 });
 
 //Middleware functions
