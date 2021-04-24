@@ -51,7 +51,7 @@ function Header() {
   async function loginHandler(loginCredentials: object) {
     const response = await fetch("http://localhost:6969/api/login", {
       method: "POST",
-      credentials: 'same-origin',
+      credentials: 'include',
       body: JSON.stringify(loginCredentials),
       headers: { "Content-Type": "application/json" },
     }); 
@@ -60,7 +60,7 @@ function Header() {
   async function logoutHandler() {
     const response = await fetch("http://localhost:6969/api/logout", {
       method: "DELETE",
-      credentials: 'same-origin',
+      credentials: 'include',
       headers: { "Content-Type": "application/json" },
     }); 
   }

@@ -3,11 +3,12 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const sessionRouter = express.Router();
 
+
+
 //Login
 sessionRouter.post("/login", async (req, res) => {
-  
+  console.log(req.body + " text")
   const { userName, password } = req.body;
-  console.log(req.body.userName + " " + req.body.password)
   const profile = await Profile.findOne({ userName: userName });
 
   if (!profile || !(await bcrypt.compare(password, profile.password))) {
@@ -20,7 +21,6 @@ sessionRouter.post("/login", async (req, res) => {
   req.session.role = profile.role;
   req.session.name = profile.name;
   res.status(204).json(`You are logged in as ${req.session.userName}`);
-  console.log(req.session.userName);
 });
 
 //Logout
