@@ -10,11 +10,11 @@ export interface Post {
   _v: number;
 }
 
-interface Session{
-  userName: string,
-  id: string,
-  name: string,
-  role: string,
+interface Session {
+  userName: string;
+  id: string;
+  name: string;
+  role: string;
 }
 interface State {
   posts: Post[];
@@ -38,7 +38,7 @@ interface Props {
 
 function PostProvider(props: Props) {
   const [posts, setPosts] = useState<any>([] as Post[]);
-  const [session, setSession] = useState<Object>([] as Session[])
+  const [session, setSession] = useState<any>([] as Session[])
   const url = "http://localhost:6969";
   
   console.log(session)
@@ -49,15 +49,22 @@ function PostProvider(props: Props) {
       content: content,
     };
     const post = await makeRequest(`${url}/api/posts/`, "POST", body);
-    const newPost = [...posts, post]
-    setPosts(newPost)
+    console.log(post)
+    if(session.role === "admin" || session.role === "plebian"){
+      const newPost = [...posts, post]
+      setPosts(newPost)
+      return;
+    }
   }
 
   async function deletePost(id: string) {
     const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE");
-    const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id)
-    setPosts(filteredArray)
-    return deletedPost
+    const postToDelete = posts.find((p: { _id: string; }) => p._id === id);
+    const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id);
+    if(session.role === "admin" || session.userName === postToDelete.userName){
+      setPosts(filteredArray);
+      return deletedPost;
+    }
   }
 
   async function editPost() {}
@@ -92,6 +99,9 @@ function PostProvider(props: Props) {
     loadSession()
   }, [])
 
+
+  /*  */
+
   async function makeRequest(url: RequestInfo, method: any, body?: any) {
     const response = await fetch(url, {
       method: method,
@@ -104,6 +114,7 @@ function PostProvider(props: Props) {
     const result = await response.json();
     return result;
   }
+
 
   function getCookie(cname: string) {
     var name = cname + "=";
