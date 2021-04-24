@@ -10,6 +10,9 @@ import {
   Badge,
   Zoom,
   Modal,
+  Menu,
+  MenuItem,
+  Button,
 } from "@material-ui/core";
 import { PostContext, Post } from "./context/postsContext";
 import catProfile from "../assets/images/Cat-Profile.png";
@@ -26,9 +29,16 @@ function Twat(props: Props) {
   const [liked, updateLikes] = useState(false);
   const classes = useStyles();
   const { posts, deletePost, likePost} = useContext(PostContext);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<any>(null);
 
-  console.log(isEditModalOpen)
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   useEffect(() => {
     setLikes(likes => likes + (liked ? 1 : -1));
   }, [liked]);
@@ -74,22 +84,26 @@ function Twat(props: Props) {
             </Box>
           </Box>
           <Box className={classes.moreIcon}>
-            <MoreHorizIcon
-              color="primary"
-              onClick={() => {
-                /* deletePost(props.post._id); */
-                setIsEditModalOpen(isEditModalOpen => !isEditModalOpen)
-              }}
-            />
-            <Modal
-              className={classes.modal}
-              open={isEditModalOpen}
-              onClose={()=>{setIsEditModalOpen(false)}}
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
+            <Button
+              aria-controls="simple-menu" 
+              aria-haspopup="true" 
+              onClick={handleClick}
             >
-              <EditModal/>
-            </Modal>
+              <MoreHorizIcon color="primary"/>
+            </Button>
+             <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Edit</MenuItem>
+                <MenuItem onClick={() => {
+                  deletePost(props.post._id)
+                  handleClose
+                  }}>Delete</MenuItem>
+              </Menu>
           </Box>
         </Box>
 

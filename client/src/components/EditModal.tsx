@@ -1,17 +1,24 @@
 import { Box, Button, makeStyles, TextField, Typography } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function EditModal() {
     const classes = useStyles();
+    /* const [parentElementCoords, setParentElementCoords] = useState({
+        styles: {
+            top: 0,
+            left: 0
+        }
+    }) */
 
     function handleChange(){
 
     }
 
+
     return(
         <Box >
             <Box >
-            {<Typography>Register</Typography>}
+            <Typography>Register</Typography>
                 <TextField 
                     label="User Name"
                     onChange={handleChange}
@@ -28,12 +35,12 @@ function EditModal() {
                     name="password"
                 />
                 <Button
-                    onClick={() => {
+                    /* onClick={() => {
                         
-                    }}
+                    }} */
                 >
                 Register
-            </Button>
+                </Button>
             </Box> 
         </Box> 
     )
