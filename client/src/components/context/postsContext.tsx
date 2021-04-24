@@ -46,7 +46,6 @@ function PostProvider(props: Props) {
       content: content,
     };
     const post = await makeRequest(`${url}/api/posts/`, "POST", body);
-    console.log(post)
     if(session.role === "admin" || session.role === "plebian"){
       const newPost = [...posts, post]
       setPosts(newPost)
@@ -109,7 +108,6 @@ function PostProvider(props: Props) {
     const result = await response.json();
     return result;
   }
-
 
   function getCookie(cname: string) {
     var name = cname + "=";
