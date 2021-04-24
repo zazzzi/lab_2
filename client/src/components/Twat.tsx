@@ -98,10 +98,12 @@ function Twat(props: Props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Edit</MenuItem>
-                <MenuItem onClick={() => {
-                  deletePost(props.post._id)
+                <MenuItem onClick={
                   handleClose
+                }>Edit</MenuItem>
+                <MenuItem onClick={() => {
+                  handleClose()
+                  deletePost(props.post._id)
                   }}>Delete</MenuItem>
               </Menu>
           </Box>
