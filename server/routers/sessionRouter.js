@@ -5,7 +5,9 @@ const sessionRouter = express.Router();
 
 //Login
 sessionRouter.post("/login", async (req, res) => {
+  
   const { userName, password } = req.body;
+  console.log(req.body.userName + " " + req.body.password)
   const profile = await Profile.findOne({ userName: userName });
 
   if (!profile || !(await bcrypt.compare(password, profile.password))) {
@@ -23,6 +25,7 @@ sessionRouter.post("/login", async (req, res) => {
 
 //Logout
 sessionRouter.delete("/logout", async (req, res) => {
+  console.log(req.session.userName)
   if (!req.session.id) {
     res.status(400).json("already logged out");
     return;

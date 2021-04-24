@@ -20,8 +20,8 @@ function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [loginCredentials, setloginCredentials] = useState<Object>({
-    userName: "",
-    password: "",
+    "userName": "",
+    "password": ""
   })
 
   const handleOpen = () => {
@@ -48,30 +48,21 @@ function Header() {
     }));
   };
 
-  console.log(loginCredentials)
-
   async function loginHandler(loginCredentials: object) {
     const response = await fetch("http://localhost:6969/api/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
+      credentials: 'same-origin',
       body: JSON.stringify(loginCredentials),
-    });
-    console.log(response);
+      headers: { "Content-Type": "application/json" },
+    }); 
   }
 
   async function logoutHandler() {
-    const requestOptions = {
+    const response = await fetch("http://localhost:6969/api/logout", {
       method: "DELETE",
+      credentials: 'same-origin',
       headers: { "Content-Type": "application/json" },
-    };
-    const response = await fetch(
-
-      "http://localhost:6969/api/logout",
-
-      requestOptions
-    );
-    console.log(response);
+    }); 
   }
 
   return (

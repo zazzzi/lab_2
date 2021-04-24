@@ -18,6 +18,7 @@ mongoose
   })
   .then(() => {
     const app = express();
+    app.set("trust proxy", 1);
     app.use(cors({
       'allowedHeaders': ['sessionId', 'Content-Type'],
       'exposedHeaders': ['sessionId'],
@@ -32,13 +33,14 @@ mongoose
         secret: "SuperSecretKey",
         secure: false,
         maxAge: 100000 * 10,
-        httpOnly: true,
+        httpOnly: false,
+        path:"http://localhost:3000"
       })
     );
-    /* app.use(function (req, res, next) {
+    app.use(function (req, res, next) {
 
       // Website you wish to allow to connect
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+      res.setHeader('Access-Control-Allow-Origin', '*');
   
       // Request methods you wish to allow
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -52,9 +54,8 @@ mongoose
   
       // Pass to next layer of middleware
       next();
-  }); */
-    app.set("trust proxy", 1);
-    
+  });
+
     app.use("/api", sessionRouter);
     app.use("/api", postRouter);
     app.use("/api", profileRouter);
