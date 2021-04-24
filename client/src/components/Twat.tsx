@@ -17,9 +17,6 @@ import {
 import { PostContext, Post } from "./context/postsContext";
 import catProfile from "../assets/images/Cat-Profile.png";
 import moment from "moment";
-import EditModal from "./EditModal";
-import { FullscreenExitTwoTone } from "@material-ui/icons";
-
 interface Props {
   post: Post;
 }
@@ -97,6 +94,10 @@ function Twat(props: Props) {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
               >
                 <MenuItem onClick={
                   handleClose
