@@ -13,7 +13,7 @@ interface State {
   makeNewPost: (post: string) => void;
   deletePost: (id: string) => void;
   editPost: (id: Post) => void;
-  likePost: (id: string) => void;
+  likePost: (id: string, liked: boolean) => void;
 }
 
 export const PostContext = createContext<State>({
@@ -29,25 +29,41 @@ interface Props {
 }
 
 function PostProvider(props: Props) {
-  const [query, setQuery] = useState(null);
-  const [posts, setPosts] = useState([] as Post[]);
+  const [posts, setPosts] = useState<any>([] as Post[]);
+  const [like, setLike] = useState(false)
   const url = "http://localhost:6969";
+  let liked = false;
 
   async function makeNewPost(content: string) {
     const body = {
       content: content,
     };
-    makeRequest(`${url}/api/posts/`, "POST", body);
+    const post = await makeRequest(`${url}/api/posts/`, "POST", body);
+    const newPost = [...posts, post]
+    setPosts(newPost)
   }
 
   async function deletePost(id: string) {
-    makeRequest(`${url}/api/posts/${id}`, "DELETE");
+    const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE");
+    const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id)
+    setPosts(filteredArray)
+    return deletedPost
   }
 
   async function editPost() {}
 
-  async function likePost(id: string) {
-    makeRequest(`${url}/api/posts/${id}`, "POST");
+  async function likePost(id: string, liked: boolean) {
+    const body = {
+      liked: liked,
+    }
+    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST",body);
+    setPosts((prev: any) => {
+        return prev.map((p: any) => 
+          likedPost._id === p._id
+          ? {...p, likes: p.likes + 1}
+          : p 
+      );
+    })
   }
 
   useEffect(() => {
@@ -62,6 +78,7 @@ function PostProvider(props: Props) {
     const response = await fetch(url, {
       method: method,
       body: JSON.stringify(body),
+      credentials: 'include',
       headers: {
         "Content-type": "application/json",
       },

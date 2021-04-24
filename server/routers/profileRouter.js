@@ -9,6 +9,7 @@ const profileRouter = express.Router();
 
 //get all profiles
 profileRouter.get("/profiles", async (req, res) => {
+  console.log(req.session.userName)
   const profile = await profileModel.find();
   res.send(profile);
 });

@@ -1,6 +1,6 @@
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   makeStyles,
   Typography,
@@ -22,8 +22,13 @@ interface Props {
 
 function Twat(props: Props) {
   const [likes, setLikes] = useState(props.post.likes);
+  const [liked, updateLikes] = useState(false);
   const classes = useStyles();
-  const { posts, deletePost, likePost } = useContext(PostContext);
+  const { posts, deletePost, likePost} = useContext(PostContext);
+
+  useEffect(() => {
+    setLikes(likes => likes + (liked ? 1 : -1));
+  }, [liked]);
 
   const today = moment();
   const timeOfPost = props.post.date;
@@ -113,7 +118,13 @@ function Twat(props: Props) {
               horizontal: "right",
             }}
           >
-            <ThumbUpIcon color="primary" />
+            <ThumbUpIcon
+              color="primary"
+              onClick={() => {
+                updateLikes(liked => !liked)
+                likePost(props.post._id, liked)
+              }}
+            />
           </Badge>
         </Box>
       </Box>

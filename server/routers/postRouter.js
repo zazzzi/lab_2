@@ -18,18 +18,14 @@ postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
     name: req.session.name,
     author: req.session.userName,
     content: req.body.content,
-    likes: 0,
+    likes: 1,
     date: today,
+    liked: false,
   });
 
   await post.save();
   res.status(201).json(post);
 });
-
-/* postRouter.post("/posts", async (req, res) => {
-  const twat = await postModel.create(req.body);
-  res.status(201).json(twat);
-}); */
 
 // GET specific post
 postRouter.get("/posts/:id", async (req, res) => {
@@ -40,13 +36,9 @@ postRouter.get("/posts/:id", async (req, res) => {
 //delete post from ID
 postRouter.delete("/posts/:id", secureWithRole("plebian"), async (req, res) => {
   const twatToDelete = await Post.findOne({ _id: req.params.id });
-  if (
-    twatToDelete.author === req.session.userName ||
-    req.session.role === "admin"
-  ) {
+  if (twatToDelete.author === req.session.userName || req.session.role === "admin") {
     const post = await Post.findOneAndDelete({ _id: req.params.id });
-    res.status(200).json("delet");
-    res.send(post);
+    res.status(200).json(post);
   } else {
     res.status(401).json("You do not have the necessary priviliges");
   }
@@ -77,16 +69,27 @@ postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
   }
 });
 
-//Update like
+//handleLikes
 postRouter.post("/posts/:id", async (req, res) => {
-  //if post is clicked again with same id remove the like.
-  const post = await Post.findOneAndUpdate(
-    { _id: req.params.id },
-    { $inc: { likes: 1 } },
-    { new: true }
-  );
-
-  res.status(200).json("Likes updated");
+  console.log(req.body.liked)
+  if(!req.body.liked) {
+    const post = await Post.findOneAndUpdate(
+      { _id: req.params.id },
+      { $inc: { likes: 1 } },
+      { new: true }
+    );
+    res.status(200).json(post);
+    return;
+  } else if (req.body.liked) {
+    const post = await Post.findOneAndUpdate(
+      { _id: req.params.id },
+      { $inc: { likes: -1 } },
+      { new: true }
+    );
+    res.status(200).json(post);
+    return;
+  }
+  
 });
 
 //Middleware functions
@@ -98,9 +101,14 @@ function secure(req, res, next) {
   }
 }
 
+function test(req, res, next) {
+  console.log(req.session.userName)
+  next()
+}
+
 function secureWithRole(user) {
   return [
-    secure,
+    test,secure, 
     (req, res, next) => {
       if (req.session.role === user || req.session.role === "admin") {
         next();

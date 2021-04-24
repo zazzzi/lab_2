@@ -19,19 +19,22 @@ mongoose
   .then(() => {
     const app = express();
     app.use(express.json());
-    app.set("trust proxy", 1);
     app.use(
       cookieSession({
         name: "session",
         secret: "SuperSecretKey",
         secure: false,
         maxAge: 100000 * 10,
-        httpOnly: true,
+        httpOnly: false,
+        path:"/"
       })
     );
-
-
-    app.use(cors());
+    app.set("trust proxy", 1);
+    app.use(cors({
+      'origin': 'http://localhost:3000',
+      'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      'credentials': true
+    }));
     app.use("/api", sessionRouter);
     app.use("/api", postRouter);
     app.use("/api", profileRouter);

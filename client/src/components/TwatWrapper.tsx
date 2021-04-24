@@ -7,6 +7,7 @@ function TwatWrapper() {
   const classes = useStyles();
 
   const { posts } = useContext(PostContext);
+
   return (
     <Box className={classes.rootStyle}>
       <Box>

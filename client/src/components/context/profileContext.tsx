@@ -54,6 +54,7 @@ function ProfileProvider(props: Props) {
     const response = await fetch(url, {
       method: method,
       body: JSON.stringify(body),
+      credentials: 'include',
       headers: {
         "Content-type": "application/json",
       },

@@ -3,6 +3,8 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const sessionRouter = express.Router();
 
+
+
 //Login
 sessionRouter.post("/login", async (req, res) => {
   const { userName, password } = req.body;
@@ -17,12 +19,13 @@ sessionRouter.post("/login", async (req, res) => {
   req.session.userName = profile.userName;
   req.session.role = profile.role;
   req.session.name = profile.name;
+  console.log(req.session.userName)
   res.status(204).json(`You are logged in as ${req.session.userName}`);
-  console.log(req.session.userName);
 });
 
 //Logout
 sessionRouter.delete("/logout", async (req, res) => {
+  console.log(req.session.userName)
   if (!req.session.id) {
     res.status(400).json("already logged out");
     return;
