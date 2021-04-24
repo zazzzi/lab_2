@@ -6,29 +6,29 @@ import { PostContext, Post } from "./context/postsContext";
 import Twat from "./Twat";
 import PostField from "./PostField";
 
-function Profile() {
-  const classes = useStyles();
+// function Profile() {
+//   const classes = useStyles();
 
-  const { posts } = useContext(PostContext);
-  return (
-    <>
-      <Box>
-        <PostField />
-      </Box>
-      <Box className={classes.rootStyle}>
-        <Box>
-          {posts
-            .map((p: any, i) => (
-              <Box key={i} className={classes.twatContainer}>
-                <Twat post={p} />
-              </Box>
-            ))
-            .reverse()}
-        </Box>
-      </Box>
-    </>
-  );
-}
+//   const { posts } = useContext(PostContext);
+//   return (
+//     <>
+//       <Box>
+//         <PostField />
+//       </Box>
+//       <Box className={classes.rootStyle}>
+//         <Box>
+//           {posts
+//             .map((p: any, i) => (
+//               <Box key={i} className={classes.twatContainer}>
+//                 {/* <Twat post={p} /> */}
+//               </Box>
+//             ))
+//             .reverse()}
+//         </Box>
+//       </Box>
+//     </>
+//   );
+// }
 
 const useStyles = makeStyles((theme) => ({
   rootStyle: {
@@ -49,4 +49,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default Profile;
+// export default Profile;
