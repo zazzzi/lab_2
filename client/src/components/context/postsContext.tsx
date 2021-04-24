@@ -32,8 +32,9 @@ function PostProvider(props: Props) {
   const [posts, setPosts] = useState<any>([] as Post[]);
   const [like, setLike] = useState(false)
   const url = "http://localhost:6969";
+  var x = document.cookie;
   let liked = false;
-
+  console.log(x)
   async function makeNewPost(content: string) {
     const body = {
       content: content,

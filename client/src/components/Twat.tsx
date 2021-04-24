@@ -1,6 +1,6 @@
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   makeStyles,
   Typography,
@@ -9,10 +9,13 @@ import {
   Tooltip,
   Badge,
   Zoom,
+  Modal,
 } from "@material-ui/core";
 import { PostContext, Post } from "./context/postsContext";
 import catProfile from "../assets/images/Cat-Profile.png";
 import moment from "moment";
+import EditModal from "./EditModal";
+import { FullscreenExitTwoTone } from "@material-ui/icons";
 
 interface Props {
   post: Post;
@@ -23,7 +26,9 @@ function Twat(props: Props) {
   const [liked, updateLikes] = useState(false);
   const classes = useStyles();
   const { posts, deletePost, likePost} = useContext(PostContext);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  console.log(isEditModalOpen)
   useEffect(() => {
     setLikes(likes => likes + (liked ? 1 : -1));
   }, [liked]);
@@ -72,9 +77,19 @@ function Twat(props: Props) {
             <MoreHorizIcon
               color="primary"
               onClick={() => {
-                deletePost(props.post._id);
+                /* deletePost(props.post._id); */
+                setIsEditModalOpen(isEditModalOpen => !isEditModalOpen)
               }}
             />
+            <Modal
+              className={classes.modal}
+              open={isEditModalOpen}
+              onClose={()=>{setIsEditModalOpen(false)}}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            >
+              <EditModal/>
+            </Modal>
           </Box>
         </Box>
 
@@ -169,6 +184,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
+  modal: {
+    display: 'flex'
+  }
 }));
 
 export default Twat;
