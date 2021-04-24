@@ -13,6 +13,8 @@ import {
 import { PostContext, Post } from "./context/postsContext";
 import catProfile from "../assets/images/Cat-Profile.png";
 import moment from "moment";
+import YouTube from "react-youtube";
+import getVideoId from "get-video-id";
 
 interface Props {
   post: Post;
@@ -37,6 +39,14 @@ function Twat(props: Props) {
     timeShort = "d";
   }
 
+  let postContent = props.post.content;
+  const youtubeLink = postContent.includes("https://www.youtube.com/watch?v=");
+  const videoID = getVideoId(postContent);
+
+  const opts = {
+    height: "190",
+    width: "350",
+  };
   return (
     <Box className={classes.rootStyle}>
       <Box className={classes.twatContainer}>
@@ -74,9 +84,25 @@ function Twat(props: Props) {
         </Box>
 
         <Box className={classes.twatContent}>
-          <Typography color="primary">{props.post.content}</Typography>
+          {youtubeLink ? (
+            <>
+              <Box mb={3}>
+                <YouTube videoId={videoID.id!.toString()} opts={opts} />
+              </Box>
+              <Box>
+                <Typography color="primary">{props.post.content}</Typography>
+              </Box>
+            </>
+          ) : (
+            <Typography color="primary">{props.post.content}</Typography>
+          )}
         </Box>
-        <Box className={classes.likeIcon}>
+        <Box
+          className={classes.likeIcon}
+          onClick={() => {
+            likePost(props.post._id);
+          }}
+        >
           <Badge
             max={999}
             overlap="circle"
@@ -87,30 +113,13 @@ function Twat(props: Props) {
               horizontal: "right",
             }}
           >
-            <ThumbUpIcon
-              color="primary"
-              onClick={() => {
-                likePost(props.post._id);
-              }}
-            />
+            <ThumbUpIcon color="primary" />
           </Badge>
         </Box>
       </Box>
     </Box>
   );
 }
-
-// function hoverDate(props: Props) {
-//   const today = moment();
-//   const timeOfPost = props.post.date;
-//   const momentObj = moment(timeOfPost);
-//   let timeShort = "m";
-//   let diff = today.diff(momentObj, "minutes");
-//   if (diff > 59) {
-//     diff = today.diff(momentObj, "hours");
-//     timeShort = "h";
-//   }
-// }
 
 const useStyles = makeStyles((theme) => ({
   rootStyle: {
