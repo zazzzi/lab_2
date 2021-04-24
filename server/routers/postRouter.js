@@ -81,8 +81,8 @@ postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
 //handleLikes
 postRouter.post("/posts/:id", async (req, res) => {
   //add a liked boolean to schema 
-  
-  if(req.body.liked) {
+  console.log(req.body.liked)
+  if(!req.body.liked) {
     const post = await Post.findOneAndUpdate(
       { _id: req.params.id },
       { $inc: { likes: 1 } },
@@ -90,7 +90,7 @@ postRouter.post("/posts/:id", async (req, res) => {
     );
     res.status(200).json(post);
     return;
-  } else if (!req.body.liked) {
+  } else if (req.body.liked) {
     const post = await Post.findOneAndUpdate(
       { _id: req.params.id },
       { $inc: { likes: -1 } },

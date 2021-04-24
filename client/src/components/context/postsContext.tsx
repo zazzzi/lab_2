@@ -53,8 +53,10 @@ function PostProvider(props: Props) {
   async function editPost() {}
 
   async function likePost(id: string, liked: boolean) {
-    console.log(liked)
-    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST", liked);
+    const body = {
+      liked: liked,
+    }
+    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST",body);
     setPosts((prev: any) => {
         return prev.map((p: any) => 
           likedPost._id === p._id
