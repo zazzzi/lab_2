@@ -4,8 +4,6 @@ const express = require("express");
 const moment = require("moment");
 const postRouter = express.Router();
 
-
-
 // GET all twats
 postRouter.get("/posts", async (req, res) => {
   const twat = await postModel.find();
@@ -13,7 +11,7 @@ postRouter.get("/posts", async (req, res) => {
 });
 
 // POST new twat
-postRouter.post("/posts"/* , secureWithRole("plebian") */, async (req, res) => {
+postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
   const today = moment().format("MMM DD YYYY HH:mm");
   console.log("test");
   const post = new Post({
@@ -29,11 +27,6 @@ postRouter.post("/posts"/* , secureWithRole("plebian") */, async (req, res) => {
   res.status(201).json(post);
 });
 
-/* postRouter.post("/posts", async (req, res) => {
-  const twat = await postModel.create(req.body);
-  res.status(201).json(twat);
-}); */
-
 // GET specific post
 postRouter.get("/posts/:id", async (req, res) => {
   const twat = await postModel.findOne({ _id: req.params.id });
@@ -41,16 +34,14 @@ postRouter.get("/posts/:id", async (req, res) => {
 });
 
 //delete post from ID
-postRouter.delete("/posts/:id", /* secureWithRole("plebian"), */ async (req, res) => {
-  /* const twatToDelete = await Post.findOne({ _id: req.params.id }); */
-  const post = await Post.findOneAndDelete({ _id: req.params.id });
-  res.status(200).json(post);
-
- /*  if (twatToDelete.author === req.session.userName || req.session.role === "admin") {
-    
+postRouter.delete("/posts/:id", secureWithRole("plebian"), async (req, res) => {
+  const twatToDelete = await Post.findOne({ _id: req.params.id });
+  if (twatToDelete.author === req.session.userName || req.session.role === "admin") {
+    const post = await Post.findOneAndDelete({ _id: req.params.id });
+    res.status(200).json(post);
   } else {
     res.status(401).json("You do not have the necessary priviliges");
-  } */
+  }
 });
 
 //Update post from ID
@@ -80,7 +71,6 @@ postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
 
 //handleLikes
 postRouter.post("/posts/:id", async (req, res) => {
-  //add a liked boolean to schema 
   console.log(req.body.liked)
   if(!req.body.liked) {
     const post = await Post.findOneAndUpdate(
@@ -111,9 +101,14 @@ function secure(req, res, next) {
   }
 }
 
+function test(req, res, next) {
+  console.log(req.session.userName)
+  next()
+}
+
 function secureWithRole(user) {
   return [
-    secure,
+    test,secure, 
     (req, res, next) => {
       if (req.session.role === user || req.session.role === "admin") {
         next();

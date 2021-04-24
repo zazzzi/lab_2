@@ -7,7 +7,6 @@ const sessionRouter = express.Router();
 
 //Login
 sessionRouter.post("/login", async (req, res) => {
-  console.log(req.body + " text")
   const { userName, password } = req.body;
   const profile = await Profile.findOne({ userName: userName });
 
@@ -20,6 +19,7 @@ sessionRouter.post("/login", async (req, res) => {
   req.session.userName = profile.userName;
   req.session.role = profile.role;
   req.session.name = profile.name;
+  console.log(req.session.userName)
   res.status(204).json(`You are logged in as ${req.session.userName}`);
 });
 

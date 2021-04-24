@@ -18,12 +18,6 @@ mongoose
   })
   .then(() => {
     const app = express();
-    app.set("trust proxy", 1);
-    app.use(cors({
-      'origin': 'http://localhost:3000',
-      'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      'credentials': true
-    }));
     app.use(express.json());
     app.use(
       cookieSession({
@@ -35,7 +29,12 @@ mongoose
         path:"/"
       })
     );
-    
+    app.set("trust proxy", 1);
+    app.use(cors({
+      'origin': 'http://localhost:3000',
+      'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      'credentials': true
+    }));
     app.use("/api", sessionRouter);
     app.use("/api", postRouter);
     app.use("/api", profileRouter);
