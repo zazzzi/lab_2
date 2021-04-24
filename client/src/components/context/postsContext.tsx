@@ -41,9 +41,6 @@ function PostProvider(props: Props) {
   const [session, setSession] = useState<any>([] as Session[])
   const url = "http://localhost:6969";
   
-  console.log(session)
-  
-
   async function makeNewPost(content: string) {
     const body = {
       content: content,
@@ -58,12 +55,10 @@ function PostProvider(props: Props) {
   }
 
   async function deletePost(id: string) {
-    const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE");
-    const postToDelete = posts.find((p: { _id: string; }) => p._id === id);
+    const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE"); 
     const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id);
-    if(session.role === "admin" || session.userName === postToDelete.userName){
+    if(session.role === "admin" || session.userName === deletedPost.author){
       setPosts(filteredArray);
-      return deletedPost;
     }
   }
 
