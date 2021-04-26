@@ -1,11 +1,10 @@
 import { Box, makeStyles } from "@material-ui/core";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PostContext } from "./context/postsContext";
 import Twat from "./Twat";
 
 function TwatWrapper() {
   const classes = useStyles();
-
   const { posts } = useContext(PostContext);
 
   return (

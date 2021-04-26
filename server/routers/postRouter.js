@@ -89,7 +89,6 @@ postRouter.post("/posts/:id", async (req, res) => {
     res.status(200).json(post);
     return;
   }
-  
 });
 
 //Middleware functions

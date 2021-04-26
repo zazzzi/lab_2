@@ -1,6 +1,6 @@
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   makeStyles,
   Typography,
@@ -9,6 +9,10 @@ import {
   Tooltip,
   Badge,
   Zoom,
+  Modal,
+  Menu,
+  MenuItem,
+  Button,
 } from "@material-ui/core";
 import { PostContext, Post } from "./context/postsContext";
 import catProfile from "../assets/images/Cat-Profile.png";
@@ -25,6 +29,15 @@ function Twat(props: Props) {
   const [liked, updateLikes] = useState(false);
   const classes = useStyles();
   const { posts, deletePost, likePost} = useContext(PostContext);
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     setLikes(likes => likes + (liked ? 1 : -1));
@@ -79,12 +92,32 @@ function Twat(props: Props) {
             </Box>
           </Box>
           <Box className={classes.moreIcon}>
-            <MoreHorizIcon
-              color="primary"
-              onClick={() => {
-                deletePost(props.post._id);
-              }}
-            />
+            <Button
+              aria-controls="simple-menu" 
+              aria-haspopup="true" 
+              onClick={handleClick}
+            >
+              <MoreHorizIcon color="primary"/>
+            </Button>
+             <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+              >
+                <MenuItem onClick={
+                  handleClose
+                }>Edit</MenuItem>
+                <MenuItem onClick={() => {
+                  handleClose()
+                  deletePost(props.post._id)
+                  }}>Delete</MenuItem>
+              </Menu>
           </Box>
         </Box>
 
@@ -183,6 +216,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
+  modal: {
+    display: 'flex'
+  }
 }));
 
 export default Twat;
