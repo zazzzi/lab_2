@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { ObjectBindingOrAssignmentElement } from "typescript";
+import { Session } from "../../App";
 export interface Post {
   _id: string;
   author: string;
@@ -27,7 +27,7 @@ export const PostContext = createContext<State>({
 
 interface Props {
   children: Object;
-  session: any;
+  session: Session;
 }
 
 function PostProvider(props: Props) {
@@ -50,7 +50,7 @@ function PostProvider(props: Props) {
     const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE"); 
     const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id);
     if(props.session.userName === undefined){
-      props.session.userName = null;
+      props.session.userName = "";
     } if(props.session.role === "admin" || props.session.userName === deletedPost.author){
       setPosts(filteredArray);
     }
