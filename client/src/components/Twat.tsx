@@ -15,7 +15,6 @@ import {
   Button,
 } from "@material-ui/core";
 import { PostContext, Post } from "./context/postsContext";
-import catProfile from "../assets/images/Cat-Profile.png";
 import moment from "moment";
 import YouTube from "react-youtube";
 import getVideoId from "get-video-id";
@@ -101,8 +100,6 @@ function Twat(props: Props) {
               <Tooltip title={timeOfPost} arrow TransitionComponent={Zoom}>
                 <Typography variant="body2">
                   {diff <= 0 ? "Just now" : [diff, timeShort]}
-                  {/* {diff}
-                  {timeShort} */}
                 </Typography>
               </Tooltip>
             </Box>
