@@ -64,7 +64,7 @@ function Twat(props: Props) {
     diff = today.diff(momentObj, "hours");
     timeShort = "h";
   }
-  if (diff >= 1440) {
+  if (diff >= 24) {
     diff = today.diff(momentObj, "days");
     timeShort = "d";
   }
