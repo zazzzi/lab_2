@@ -13,7 +13,7 @@ interface State {
   posts: Post[];
   makeNewPost: (post: string) => void;
   deletePost: (id: string) => void;
-  editPost: (id: Post) => void;
+  editPost: (content: string, postID: string) => void;
   likePost: (id: string, liked: boolean) => void;
 }
 
@@ -32,13 +32,15 @@ interface Props {
 
 function PostProvider(props: Props) {
   const [posts, setPosts] = useState<any>([] as Post[]);
+
   const url = "http://localhost:6969";
-  
+
   async function makeNewPost(content: string) {
     const body = {
       content: content,
     };
     const post = await makeRequest(`${url}/api/posts/`, "POST", body);
+
     if(props.session.role === "admin" || props.session.role === "plebian"){
       const newPost = [...posts, post]
       setPosts(newPost)
@@ -47,29 +49,50 @@ function PostProvider(props: Props) {
   }
 
   async function deletePost(id: string) {
+
     const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE"); 
     const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id);
     if(props.session.userName === undefined){
       props.session.userName = "";
     } if(props.session.role === "admin" || props.session.userName === deletedPost.author){
+
       setPosts(filteredArray);
     }
   }
 
-  async function editPost() {}
+  async function editPost(content: string, postID: string) {
+    const body = {
+      content: content,
+    };
+    const urlWithID = `${url}/api/posts/${postID}`;
+    const updatedPost = await makeRequest(urlWithID, "PUT", body);
+    const indexOfPost = posts.findIndex(
+      (p: { _id: string }) => p._id === postID
+      );
+      if (!session.userName) {
+        session.userName = null;
+      }
+      if (
+        session.role === "admin" ||
+        session.userName === posts[indexOfPost].author
+        ) {
+      const updatedPosts = posts;
+      updatedPosts[indexOfPost].content = content;
+      setPosts(updatedPosts);
+      console.log(updatedPosts);
+    }
+  }
 
   async function likePost(id: string, liked: boolean) {
     const body = {
       liked: liked,
-    }
-    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST",body);
+    };
+    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST", body);
     setPosts((prev: any) => {
-        return prev.map((p: any) => 
-          likedPost._id === p._id
-          ? {...p, likes: p.likes + 1}
-          : p 
+      return prev.map((p: any) =>
+        likedPost._id === p._id ? { ...p, likes: p.likes + 1 } : p
       );
-    })
+    });
   }
 
   useEffect(() => {
@@ -80,11 +103,12 @@ function PostProvider(props: Props) {
     loadPosts();
   }, []);
 
+
   async function makeRequest(url: RequestInfo, method: any, body?: any) {
     const response = await fetch(url, {
       method: method,
       body: JSON.stringify(body),
-      credentials: 'include',
+      credentials: "include",
       headers: {
         "Content-type": "application/json",
       },
@@ -92,6 +116,7 @@ function PostProvider(props: Props) {
     const result = await response.json();
     return result;
   }
+
 
   return (
     <PostContext.Provider

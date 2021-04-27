@@ -62,8 +62,7 @@ postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
         console.log(doc);
       }
     );
-    res.status(200).json("updated");
-    res.send(post);
+    res.status(200).json("updated")
   } else {
     res.status(401).json("You do not have the necessary priviliges");
   }

@@ -20,6 +20,7 @@ import moment from "moment";
 import YouTube from "react-youtube";
 import getVideoId from "get-video-id";
 import { LinkedCameraRounded } from "@material-ui/icons";
+import EditTwat from "./EditTwat";
 
 interface Props {
   post: Post;
@@ -31,6 +32,7 @@ function Twat(props: Props) {
   const classes = useStyles();
   const { posts, deletePost, likePost } = useContext(PostContext);
   const [anchorEl, setAnchorEl] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editing, setEdit] = useState(false);
 
   const handleClick = (event: any) => {
@@ -41,9 +43,18 @@ function Twat(props: Props) {
     setAnchorEl(null);
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     setLikes((likes) => likes + (liked ? 1 : -1));
   }, [liked]);
+
 
   const today = moment();
   const timeOfPost = props.post.date;
@@ -111,7 +122,8 @@ function Twat(props: Props) {
               <MenuItem
                 onClick={() => {
                   handleClose();
-                  setEdit(true);
+
+                  handleModalOpen();
                 }}
               >
                 Edit
@@ -122,11 +134,25 @@ function Twat(props: Props) {
                   deletePost(props.post._id);
                 }}
               >
+
                 Delete
               </MenuItem>
             </Menu>
           </Box>
         </Box>
+
+        {/* Twat editing modal */}
+        <Modal
+          className={classes.modal}
+          open={isModalOpen}
+          onClose={handleModalClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <Box>
+            <EditTwat twatID={props.post._id} handleClose={handleModalClose} />
+          </Box>
+        </Modal>
 
         <Box className={classes.twatContent}>
           {youtubeLink ? (
@@ -159,6 +185,7 @@ function Twat(props: Props) {
               horizontal: "right",
             }}
           >
+
             <ThumbUpIcon color="primary" />
           </Badge>
         </Box>
@@ -220,6 +247,9 @@ const useStyles = makeStyles((theme) => ({
   },
   modal: {
     display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
   },
 }));
 
