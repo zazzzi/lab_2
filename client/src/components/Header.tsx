@@ -106,7 +106,9 @@ function Header(props: Props) {
           )}
           <Link href="/profile">
             <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
-              <Avatar src={catProfile}></Avatar>
+              <Avatar className={classes.avatarStyle}>
+                {props.session.name.toUpperCase().slice(0, 1)}
+              </Avatar>
             </Tooltip>
           </Link>
         </Box>
@@ -200,6 +202,9 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+  },
+  avatarStyle: {
+    backgroundColor: "#1DA1F2",
   },
   adminModal: {},
 }));
