@@ -106,10 +106,6 @@ function Twat(props: Props) {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
               >
                 <MenuItem onClick={
                   handleClose
