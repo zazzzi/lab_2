@@ -10,19 +10,22 @@ import {
   Tooltip,
   Zoom,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import catProfile from "../assets/images/Cat-Profile.png";
 import Register from "./Register";
 
+interface Props {
+  session: any;
+}
 
-function Header() {
+function Header(props: Props) {
   const classes = useStyles();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [loginCredentials, setloginCredentials] = useState<Object>({
-    "userName": "",
-    "password": ""
-  })
+    userName: "",
+    password: "",
+  });
 
   const handleOpen = () => {
     setIsLoginModalOpen(true);
@@ -33,8 +36,8 @@ function Header() {
   };
 
   const handleRegOpen = () => {
-    setIsRegisterModalOpen(true)
-  }
+    setIsRegisterModalOpen(true);
+  };
 
   const handleRegClose = () => {
     setIsRegisterModalOpen(false);
@@ -42,32 +45,71 @@ function Header() {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    setloginCredentials(prevState => ({
-        ...prevState,
-        [name]: value
+    setloginCredentials((prevState) => ({
+      ...prevState,
+      [name]: value,
     }));
+  };
+
+  const reloadPage = () => {
+    setTimeout(reload, 300);
+    function reload() {
+      window.location.reload();
+    }
   };
 
   async function loginHandler(loginCredentials: object) {
     const response = await fetch("http://localhost:6969/api/login", {
       method: "POST",
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify(loginCredentials),
       headers: { "Content-Type": "application/json" },
-    }); 
+    });
   }
 
   async function logoutHandler() {
     const response = await fetch("http://localhost:6969/api/logout", {
       method: "DELETE",
-      credentials: 'include',
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
-    }); 
+    });
   }
 
   return (
     <Box className={classes.rootStyle}>
+      { props.session.role === "admin" || props.session.role === "plebian"? (
       <Box className={`${classes.headerWrapper}`}>
+        <Link href="/">
+          <Typography variant={"h5"} color={"primary"}>
+            Home
+          </Typography>
+        </Link>
+
+        <Button onClick={() => {
+          window.location.href = "/";
+          logoutHandler()
+        }
+          } color="secondary">
+          Logout
+        </Button>
+        { props.session.role === "plebian" ? (
+            <Button onClick={handleRegOpen} color="secondary">
+              profile
+            </Button>
+          ) : (
+            <Button onClick={handleRegOpen} color="secondary">
+              Admin Panel
+            </Button>
+          )
+        }
+        <Link href="/">
+          <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
+            <Avatar src={catProfile}></Avatar>
+          </Tooltip>
+        </Link>
+      </Box>
+      ) : (
+        <Box className={`${classes.headerWrapper}`}>
         <Link href="/">
           <Typography variant={"h5"} color={"primary"}>
             Home
@@ -75,9 +117,6 @@ function Header() {
         </Link>
         <Button onClick={handleOpen} color="secondary">
           Login
-        </Button>
-        <Button onClick={logoutHandler} color="secondary">
-          Logout
         </Button>
         <Button onClick={handleRegOpen} color="secondary">
           Register
@@ -88,6 +127,8 @@ function Header() {
           </Tooltip>
         </Link>
       </Box>
+      )
+      }
       <Modal
         className={classes.modal}
         open={isLoginModalOpen}
@@ -96,18 +137,20 @@ function Header() {
       >
         <Box className={classes.modalContent}>
           <Typography>Login</Typography>
-          <TextField 
-            name="userName" 
+          <TextField
+            name="userName"
             label="User name"
             onChange={handleChange}
           />
-          <TextField 
-            name="password" 
-            label="Password" 
+          <TextField
+            name="password"
+            label="Password"
+            type="password"
             onChange={handleChange}
           />
           <Button
             onClick={() => {
+              reloadPage();
               loginHandler(loginCredentials);
               handleClose();
             }}
@@ -124,9 +167,7 @@ function Header() {
         aria-describedby="simple-modal-description"
       >
         <Box>
-          <Register
-            handleRegClose={handleRegClose}
-          />
+          <Register handleRegClose={handleRegClose} />
         </Box>
       </Modal>
     </Box>
@@ -160,6 +201,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  adminModal: {
+  }
 }));
 
 export default Header;

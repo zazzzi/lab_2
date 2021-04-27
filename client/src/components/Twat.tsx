@@ -33,9 +33,7 @@ function Twat(props: Props) {
   const { posts, deletePost, likePost } = useContext(PostContext);
   const [anchorEl, setAnchorEl] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-
-
+  const [editing, setEdit] = useState(false);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -124,6 +122,7 @@ function Twat(props: Props) {
               <MenuItem
                 onClick={() => {
                   handleClose();
+
                   handleModalOpen();
                 }}
               >
@@ -135,6 +134,7 @@ function Twat(props: Props) {
                   deletePost(props.post._id);
                 }}
               >
+
                 Delete
               </MenuItem>
             </Menu>
@@ -172,6 +172,7 @@ function Twat(props: Props) {
           className={classes.likeIcon}
           onClick={() => {
             likePost(props.post._id, liked);
+            updateLikes((liked) => !liked);
           }}
         >
           <Badge
@@ -184,13 +185,8 @@ function Twat(props: Props) {
               horizontal: "right",
             }}
           >
-            <ThumbUpIcon
-              color="primary"
-              onClick={() => {
-                updateLikes((liked) => !liked);
-                likePost(props.post._id, liked);
-              }}
-            />
+
+            <ThumbUpIcon color="primary" />
           </Badge>
         </Box>
       </Box>
@@ -253,6 +249,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+
   },
 }));
 

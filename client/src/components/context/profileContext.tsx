@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { Session } from "../../App";
 
 export interface Profile {
   _id: string;
@@ -26,6 +27,7 @@ export const ProfileContext = createContext<State>({
 
 interface Props {
   children: Object;
+  session: Session;
 }
 
 function ProfileProvider(props: Props) {
@@ -64,6 +66,7 @@ function ProfileProvider(props: Props) {
   }
 
   return (
+    
     <ProfileContext.Provider
       value={{
         profiles: profiles,
