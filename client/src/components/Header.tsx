@@ -11,7 +11,6 @@ import {
   Zoom,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import catProfile from "../assets/images/Cat-Profile.png";
 import AdminPanel from "./AdminPanel";
 import Register from "./Register";
 
@@ -95,11 +94,7 @@ function Header(props: Props) {
           >
             Logout
           </Button>
-          {props.session.role === "plebian" ? (
-            <Button onClick={handleRegOpen} color="secondary">
-              profile
-            </Button>
-          ) : (
+          {props.session.role === "plebian" ? null : (
             <Button onClick={handleRegOpen} color="secondary">
               Admin Panel
             </Button>

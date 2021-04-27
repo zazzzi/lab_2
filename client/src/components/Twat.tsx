@@ -15,7 +15,6 @@ import {
   Button,
 } from "@material-ui/core";
 import { PostContext, Post } from "./context/postsContext";
-import catProfile from "../assets/images/Cat-Profile.png";
 import moment from "moment";
 import YouTube from "react-youtube";
 import getVideoId from "get-video-id";
@@ -60,11 +59,12 @@ function Twat(props: Props) {
   const momentObj = moment(timeOfPost);
   let timeShort = "m";
   let diff = today.diff(momentObj, "minutes");
+
   if (diff >= 60) {
     diff = today.diff(momentObj, "hours");
     timeShort = "h";
   }
-  if (diff >= 1440) {
+  if (diff >= 24) {
     diff = today.diff(momentObj, "days");
     timeShort = "d";
   }
@@ -99,8 +99,7 @@ function Twat(props: Props) {
             <Box m={0.5}>
               <Tooltip title={timeOfPost} arrow TransitionComponent={Zoom}>
                 <Typography variant="body2">
-                  {diff}
-                  {timeShort}
+                  {diff <= 0 ? "Just now" : [diff, timeShort]}
                 </Typography>
               </Tooltip>
             </Box>
