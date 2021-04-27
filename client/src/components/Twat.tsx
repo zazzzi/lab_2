@@ -35,8 +35,6 @@ function Twat(props: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editing, setEdit] = useState(false);
 
-  console.log(props);
-
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
@@ -83,7 +81,9 @@ function Twat(props: Props) {
     <Box className={classes.rootStyle}>
       <Box className={classes.twatContainer}>
         <Box className={classes.avatarContainer}>
-          <Avatar src={catProfile} className={classes.avatarLarge}></Avatar>
+          <Avatar className={classes.avatarLarge}>
+            {props.post.name.toUpperCase().slice(0, 1)}
+          </Avatar>
         </Box>
         <Box className={classes.topBar}>
           <Box className={classes.name}>
@@ -127,7 +127,7 @@ function Twat(props: Props) {
                   handleModalOpen();
                 }}
               >
-                Edit
+                <Typography color={"secondary"}>Edit</Typography>
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -135,7 +135,7 @@ function Twat(props: Props) {
                   deletePost(props.post._id);
                 }}
               >
-                Delete
+                <Typography color={"secondary"}>Delete</Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -230,6 +230,7 @@ const useStyles = makeStyles((theme) => ({
   avatarLarge: {
     width: "4rem",
     height: "4rem",
+    backgroundColor: "#1DA1F2",
   },
   name: {
     position: "relative",
@@ -248,6 +249,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  avatarBackground: {
+    background: "secondary",
   },
 }));
 
