@@ -39,7 +39,13 @@ function ProfileProvider(props: Props) {
 }
 
   async function deleteProfile(id: string) {
-    makeRequest(`${url}/api/profiles/${id}`, "DELETE");
+    const deleteProfile = await makeRequest(`${url}/api/profiles/${id}`, "DELETE");
+    const filteredArray = profiles.filter((p: { _id: string; }) => p._id !== id);
+    if(props.session.userName === undefined){
+      props.session.userName = "";
+    } if(props.session.role === "admin" || props.session.userName === deleteProfile.userName){
+      setProfiles(filteredArray);
+    }
   }
 
   async function editProfile() {}
