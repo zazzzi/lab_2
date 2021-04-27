@@ -35,7 +35,12 @@ function ProfileProvider(props: Props) {
   const url = "http://localhost:6969";
 
   async function registerNewProfile(body: object){
-    await makeRequest(`${url}/api/profiles/`, "POST", body); 
+    const profile = await makeRequest(`${url}/api/profiles/`, "POST", body); 
+    if(props.session.role === "admin" || props.session.role === "plebian"){
+      const newProfile = [...profiles, profile]
+      setProfiles(newProfile)
+      return;
+    }
 }
 
   async function deleteProfile(id: string) {
