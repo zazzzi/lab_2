@@ -5,33 +5,42 @@ import ProfileProvider from "./components/context/profileContext"
 import Header from "./components/Header";
 import PostField from "./components/PostField";
 import TwatWrapper from "./components/TwatWrapper";
-
 import { theme } from "./providers/ThemeProvider";
 
-function App() {
-  const [state, setState] = useState({
-    data: null,
-  });
+export interface Session {
+  userName: string;
+  id: string;
+  name: string;
+  role: string;
+}
 
+function App() {
   const classes = useStyles();
-  console.log(state);
+  const [session, setSession] = useState<any>([] as Session[])
 
   useEffect(() => {
-    // Call our fetch function below once the component mounts
-    callBackendAPI()
-      .then((res) => setState({ data: res.express }))
-      .catch((err) => console.log(err));
-  });
-  // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
-  const callBackendAPI = async () => {
-    const response = await fetch("/");
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message);
+    const loadSession = async () => {
+      const decodedString = await JSON.parse(atob(getCookie('session')));
+      setSession(decodedString)
     }
-    return body;
-  };
+    loadSession()
+  }, [])
+  
+  function getCookie(cname: string) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -39,7 +48,7 @@ function App() {
         <ProfileProvider>
           <Header />
         </ProfileProvider>
-          <PostProvider>
+          <PostProvider session={session}>
             <PostField />
             <TwatWrapper />
           </PostProvider>

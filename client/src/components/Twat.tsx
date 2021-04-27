@@ -31,6 +31,7 @@ function Twat(props: Props) {
   const classes = useStyles();
   const { posts, deletePost, likePost} = useContext(PostContext);
   const [anchorEl, setAnchorEl] = useState<any>(null);
+  const [editing, setEdit] = useState(false) 
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -79,7 +80,7 @@ function Twat(props: Props) {
             </Box>
             <Box m={0.5}>
               <Typography variant="body2">@{props.post.author}</Typography>
-            </Box>
+            </Box>  
             <Box m={0.5}>
               <Typography variant="body2">•</Typography>
             </Box>
@@ -107,9 +108,10 @@ function Twat(props: Props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={
-                  handleClose
-                }>Edit</MenuItem>
+                <MenuItem onClick={() =>{
+                  handleClose()
+                  setEdit(true)
+                }}>Edit</MenuItem>
                 <MenuItem onClick={() => {
                   handleClose()
                   deletePost(props.post._id)
