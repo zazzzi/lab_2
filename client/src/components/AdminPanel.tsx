@@ -97,7 +97,7 @@ function AdminPanel(props: IProps) {
           <Box className={classes.editStlye}>
             <Typography>Edit</Typography>
             {profiles.map((u: any, i) => (
-                <UserItem userName={u.userName} name={u.name} password={u.password} role={u.role} />
+                <UserItem id={u._id} userName={u.userName} name={u.name} password={u.password} role={u.role} />
               ))}
           </Box>
         ) : currentAction === "created" ? (
