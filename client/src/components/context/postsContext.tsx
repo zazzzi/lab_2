@@ -32,7 +32,6 @@ interface Props {
 
 function PostProvider(props: Props) {
   const [posts, setPosts] = useState<any>([] as Post[]);
-
   const url = "http://localhost:6969";
 
   async function makeNewPost(content: string) {
@@ -49,7 +48,6 @@ function PostProvider(props: Props) {
   }
 
   async function deletePost(id: string) {
-
     const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE"); 
     const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id);
     if(props.session.userName === undefined){
@@ -64,22 +62,20 @@ function PostProvider(props: Props) {
     const body = {
       content: content,
     };
-    const urlWithID = `${url}/api/posts/${postID}`;
-    const updatedPost = await makeRequest(urlWithID, "PUT", body);
-    const indexOfPost = posts.findIndex(
-      (p: { _id: string }) => p._id === postID
-      );
+    const updatedPost = await makeRequest(`${url}/api/posts/${postID}`, "PUT", body);
+    const post = posts.find((p: { _id: string }) => p._id === postID);
       if (!props.session.userName) {
         props.session.userName = "";
       }
-      if (
-        props.session.role === "admin" ||
-        props.session.userName === posts[indexOfPost].author
-        ) {
-      const updatedPosts = posts;
-      updatedPosts[indexOfPost].content = content;
-      setPosts(updatedPosts);
-      console.log(updatedPosts);
+      if (props.session.role === "admin" ||props.session.userName === posts.author) {
+        setPosts((prev: Post[]) => {
+          return prev.map((p: Post) => 
+            p._id === post._id
+              ? {...p, content: content}
+              : p
+          )
+        }
+      )
     }
   }
 
