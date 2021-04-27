@@ -60,6 +60,7 @@ function Twat(props: Props) {
   const momentObj = moment(timeOfPost);
   let timeShort = "m";
   let diff = today.diff(momentObj, "minutes");
+
   if (diff >= 60) {
     diff = today.diff(momentObj, "hours");
     timeShort = "h";
@@ -99,8 +100,9 @@ function Twat(props: Props) {
             <Box m={0.5}>
               <Tooltip title={timeOfPost} arrow TransitionComponent={Zoom}>
                 <Typography variant="body2">
-                  {diff}
-                  {timeShort}
+                  {diff <= 0 ? "Just now" : [diff, timeShort]}
+                  {/* {diff}
+                  {timeShort} */}
                 </Typography>
               </Tooltip>
             </Box>
