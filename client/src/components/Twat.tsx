@@ -35,6 +35,8 @@ function Twat(props: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editing, setEdit] = useState(false);
 
+  console.log(props);
+
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
@@ -54,7 +56,6 @@ function Twat(props: Props) {
   useEffect(() => {
     setLikes((likes) => likes + (liked ? 1 : -1));
   }, [liked]);
-
 
   const today = moment();
   const timeOfPost = props.post.date;
@@ -134,7 +135,6 @@ function Twat(props: Props) {
                   deletePost(props.post._id);
                 }}
               >
-
                 Delete
               </MenuItem>
             </Menu>
@@ -185,7 +185,6 @@ function Twat(props: Props) {
               horizontal: "right",
             }}
           >
-
             <ThumbUpIcon color="primary" />
           </Badge>
         </Box>
@@ -249,7 +248,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-
   },
 }));
 

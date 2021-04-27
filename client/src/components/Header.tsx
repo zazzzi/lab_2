@@ -104,7 +104,8 @@ function Header(props: Props) {
               Admin Panel
             </Button>
           )}
-          <Link href="/">
+          <Link href="/profile">
+
             <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
               <Avatar src={catProfile}></Avatar>
             </Tooltip>
@@ -123,7 +124,9 @@ function Header(props: Props) {
           <Button onClick={handleRegOpen} color="secondary">
             Register
           </Button>
-          <Link href="/">
+
+          <Link href="/profile">
+
             <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
               <Avatar src={catProfile}></Avatar>
             </Tooltip>

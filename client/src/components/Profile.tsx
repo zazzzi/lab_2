@@ -1,34 +1,43 @@
-import { Box, makeStyles, Typography } from "@material-ui/core";
+import { Box, makeStyles, Typography, Modal } from "@material-ui/core";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { useContext } from "react";
+
+import React, { useContext, useEffect, useState } from "react";
 import { PostContext, Post } from "./context/postsContext";
 import Twat from "./Twat";
-import PostField from "./PostField";
+import { Session } from "../App";
 
-// function Profile() {
-//   const classes = useStyles();
+interface Props {
+  session: Session;
+}
 
-//   const { posts } = useContext(PostContext);
-//   return (
-//     <>
-//       <Box>
-//         <PostField />
-//       </Box>
-//       <Box className={classes.rootStyle}>
-//         <Box>
-//           {posts
-//             .map((p: any, i) => (
-//               <Box key={i} className={classes.twatContainer}>
-//                 {/* <Twat post={p} /> */}
-//               </Box>
-//             ))
-//             .reverse()}
-//         </Box>
-//       </Box>
-//     </>
-//   );
-// }
+function Profile(props: Props) {
+  const classes = useStyles();
+  const { posts } = useContext(PostContext);
+
+  return (
+    <Box className={classes.rootStyle}>
+      <Box>
+        {posts
+          .map((p: any, i: any) =>
+            p.author === props.session.userName ? (
+              <Box key={i} className={classes.twatContainer}>
+                <Twat post={p} />
+              </Box>
+            ) : null
+          )
+          .reverse()}
+        {props.session.userName === undefined ? (
+          <Box className={classes.twatContainer}>
+            <Typography color={"primary"} variant={"h5"}>
+              Please log in first.
+            </Typography>
+          </Box>
+        ) : null}
+      </Box>
+    </Box>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   rootStyle: {
@@ -49,4 +58,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// export default Profile;
+export default Profile;
