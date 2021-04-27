@@ -10,12 +10,15 @@ import {
   Tooltip,
   Zoom,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import catProfile from "../assets/images/Cat-Profile.png";
 import Register from "./Register";
 
+interface Props {
+  session: any;
+}
 
-function Header() {
+function Header(props: Props) {
   const classes = useStyles();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -48,6 +51,13 @@ function Header() {
     }));
   };
 
+  const reloadPage = () => {
+    setTimeout( reload, 300)
+    function reload () {
+      window.location.reload()
+    }
+  }
+
   async function loginHandler(loginCredentials: object) {
     const response = await fetch("http://localhost:6969/api/login", {
       method: "POST",
@@ -76,7 +86,11 @@ function Header() {
         <Button onClick={handleOpen} color="secondary">
           Login
         </Button>
-        <Button onClick={logoutHandler} color="secondary">
+        <Button onClick={() => {
+          window.location.href = "/";
+          logoutHandler()
+        }
+          } color="secondary">
           Logout
         </Button>
         <Button onClick={handleRegOpen} color="secondary">
@@ -108,6 +122,7 @@ function Header() {
           />
           <Button
             onClick={() => {
+              reloadPage()
               loginHandler(loginCredentials);
               handleClose();
             }}
