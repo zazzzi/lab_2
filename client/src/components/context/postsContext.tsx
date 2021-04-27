@@ -20,7 +20,7 @@ interface State {
   posts: Post[];
   makeNewPost: (post: string) => void;
   deletePost: (id: string) => void;
-  editPost: (id: Post) => void;
+  editPost: (content: string, postID: string) => void;
   likePost: (id: string, liked: boolean) => void;
 }
 
@@ -38,45 +38,65 @@ interface Props {
 
 function PostProvider(props: Props) {
   const [posts, setPosts] = useState<any>([] as Post[]);
-  const [session, setSession] = useState<any>([] as Session[])
+  const [session, setSession] = useState<any>([] as Session[]);
   const url = "http://localhost:6969";
-  
+
   async function makeNewPost(content: string) {
     const body = {
       content: content,
     };
     const post = await makeRequest(`${url}/api/posts/`, "POST", body);
-    if(session.role === "admin" || session.role === "plebian"){
-      const newPost = [...posts, post]
-      setPosts(newPost)
+    if (session.role === "admin" || session.role === "plebian") {
+      const newPost = [...posts, post];
+      setPosts(newPost);
       return;
     }
   }
 
   async function deletePost(id: string) {
-    const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE"); 
-    const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id);
-    if(session.userName === undefined){
+    const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE");
+    const filteredArray = posts.filter((p: { _id: string }) => p._id !== id);
+    if (session.userName === undefined) {
       session.userName = null;
-    } if(session.role === "admin" || session.userName === deletedPost.author){
+    }
+    if (session.role === "admin" || session.userName === deletedPost.author) {
       setPosts(filteredArray);
     }
   }
 
-  async function editPost() {}
+  async function editPost(content: string, postID: string) {
+    const body = {
+      content: content,
+    };
+    const urlWithID = `${url}/api/posts/${postID}`;
+    const updatedPost = await makeRequest(urlWithID, "PUT", body);
+    const indexOfPost = posts.findIndex(
+      (p: { _id: string }) => p._id === postID
+      );
+      if (!session.userName) {
+        session.userName = null;
+      }
+      if (
+        session.role === "admin" ||
+        session.userName === posts[indexOfPost].author
+        ) {
+      const updatedPosts = posts;
+      updatedPosts[indexOfPost].content = content;
+      setPosts(updatedPosts);
+      console.log(updatedPosts);
+    }
+  }
 
   async function likePost(id: string, liked: boolean) {
     const body = {
       liked: liked,
-    }
-    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST",body);
+    };
+    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST", body);
     setPosts((prev: any) => {
-        return prev.map((p: any) => 
-          likedPost._id === p._id
-          ? {...p, likes: p.likes + 1}
-          : p 
+      return prev.map((p: any) =>
+        likedPost._id === p._id ? { ...p, likes: p.likes + 1 } : p
       );
-    })
+    });
   }
 
   useEffect(() => {
@@ -89,12 +109,11 @@ function PostProvider(props: Props) {
 
   useEffect(() => {
     const loadSession = async () => {
-      const decodedString = await JSON.parse(atob(getCookie('session')));
-      setSession(decodedString)
-    }
-    loadSession()
-  }, [])
-
+      const decodedString = await JSON.parse(atob(getCookie("session")));
+      setSession(decodedString);
+    };
+    loadSession();
+  }, []);
 
   /*  */
 
@@ -102,7 +121,7 @@ function PostProvider(props: Props) {
     const response = await fetch(url, {
       method: method,
       body: JSON.stringify(body),
-      credentials: 'include',
+      credentials: "include",
       headers: {
         "Content-type": "application/json",
       },
@@ -114,10 +133,10 @@ function PostProvider(props: Props) {
   function getCookie(cname: string) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
+    var ca = decodedCookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
       var c = ca[i];
-      while (c.charAt(0) == ' ') {
+      while (c.charAt(0) == " ") {
         c = c.substring(1);
       }
       if (c.indexOf(name) == 0) {

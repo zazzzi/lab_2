@@ -20,6 +20,7 @@ import moment from "moment";
 import YouTube from "react-youtube";
 import getVideoId from "get-video-id";
 import { LinkedCameraRounded } from "@material-ui/icons";
+import EditTwat from "./EditTwat";
 
 interface Props {
   post: Post;
@@ -29,8 +30,12 @@ function Twat(props: Props) {
   const [likes, setLikes] = useState(props.post.likes);
   const [liked, updateLikes] = useState(false);
   const classes = useStyles();
-  const { posts, deletePost, likePost} = useContext(PostContext);
+  const { posts, deletePost, likePost } = useContext(PostContext);
   const [anchorEl, setAnchorEl] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -40,9 +45,18 @@ function Twat(props: Props) {
     setAnchorEl(null);
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
-    setLikes(likes => likes + (liked ? 1 : -1));
+    setLikes((likes) => likes + (liked ? 1 : -1));
   }, [liked]);
+
 
   const today = moment();
   const timeOfPost = props.post.date;
@@ -94,29 +108,51 @@ function Twat(props: Props) {
           </Box>
           <Box className={classes.moreIcon}>
             <Button
-              aria-controls="simple-menu" 
-              aria-haspopup="true" 
+              aria-controls="simple-menu"
+              aria-haspopup="true"
               onClick={handleClick}
             >
-              <MoreHorizIcon color="primary"/>
+              <MoreHorizIcon color="primary" />
             </Button>
-             <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  handleModalOpen();
+                }}
               >
-                <MenuItem onClick={
-                  handleClose
-                }>Edit</MenuItem>
-                <MenuItem onClick={() => {
-                  handleClose()
-                  deletePost(props.post._id)
-                  }}>Delete</MenuItem>
-              </Menu>
+                Edit
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  deletePost(props.post._id);
+                }}
+              >
+                Delete
+              </MenuItem>
+            </Menu>
           </Box>
         </Box>
+
+        {/* Twat editing modal */}
+        <Modal
+          className={classes.modal}
+          open={isModalOpen}
+          onClose={handleModalClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <Box>
+            <EditTwat twatID={props.post._id} handleClose={handleModalClose} />
+          </Box>
+        </Modal>
 
         <Box className={classes.twatContent}>
           {youtubeLink ? (
@@ -151,8 +187,8 @@ function Twat(props: Props) {
             <ThumbUpIcon
               color="primary"
               onClick={() => {
-                updateLikes(liked => !liked)
-                likePost(props.post._id, liked)
+                updateLikes((liked) => !liked);
+                likePost(props.post._id, liked);
               }}
             />
           </Badge>
@@ -214,8 +250,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   modal: {
-    display: 'flex'
-  }
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 export default Twat;
