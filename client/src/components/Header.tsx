@@ -105,7 +105,6 @@ function Header(props: Props) {
             </Button>
           )}
           <Link href="/profile">
-
             <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
               <Avatar src={catProfile}></Avatar>
             </Tooltip>
@@ -124,13 +123,6 @@ function Header(props: Props) {
           <Button onClick={handleRegOpen} color="secondary">
             Register
           </Button>
-
-          <Link href="/profile">
-
-            <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
-              <Avatar src={catProfile}></Avatar>
-            </Tooltip>
-          </Link>
         </Box>
       )}
       <Modal
@@ -172,7 +164,7 @@ function Header(props: Props) {
       >
         <Box>
           {props.session.role === "admin" ? (
-            <AdminPanel session={props.session}/>
+            <AdminPanel session={props.session} />
           ) : (
             <Register handleRegClose={handleRegClose} />
           )}
