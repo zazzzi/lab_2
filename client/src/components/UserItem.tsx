@@ -1,15 +1,20 @@
 import { Box, Button, makeStyles, Typography } from "@material-ui/core";
-import React from "react";
+import React, { useContext } from "react";
+import { ProfileContext } from "./context/profileContext";
 
 interface IProps {
   userName: string;
   name: string;
   role: string;
   password: string;
+  id: string;
 }
 
 function UserItem(props: IProps) {
   const classes = useStyles();
+  const { deleteProfile } = useContext(ProfileContext);
+
+
   return (
     <Box className={classes.rootStyle}>
       <Box>
@@ -19,7 +24,7 @@ function UserItem(props: IProps) {
       </Box>
       <Box>
         <Button>Edit</Button>
-        <Button>Delete</Button>
+        <Button onClick={()=> deleteProfile(props.id)}>Delete</Button>
       </Box>
     </Box>
   );
