@@ -69,12 +69,12 @@ function PostProvider(props: Props) {
     const indexOfPost = posts.findIndex(
       (p: { _id: string }) => p._id === postID
       );
-      if (!session.userName) {
-        session.userName = null;
+      if (!props.session.userName) {
+        props.session.userName = "";
       }
       if (
-        session.role === "admin" ||
-        session.userName === posts[indexOfPost].author
+        props.session.role === "admin" ||
+        props.session.userName === posts[indexOfPost].author
         ) {
       const updatedPosts = posts;
       updatedPosts[indexOfPost].content = content;
