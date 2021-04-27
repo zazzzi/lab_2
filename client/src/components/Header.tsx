@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import catProfile from "../assets/images/Cat-Profile.png";
+import AdminPanel from "./AdminPanel";
 import Register from "./Register";
 
 interface Props {
@@ -104,6 +105,7 @@ function Header(props: Props) {
             </Button>
           )}
           <Link href="/profile">
+
             <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
               <Avatar src={catProfile}></Avatar>
             </Tooltip>
@@ -122,7 +124,9 @@ function Header(props: Props) {
           <Button onClick={handleRegOpen} color="secondary">
             Register
           </Button>
+
           <Link href="/profile">
+
             <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
               <Avatar src={catProfile}></Avatar>
             </Tooltip>
@@ -167,7 +171,11 @@ function Header(props: Props) {
         aria-describedby="simple-modal-description"
       >
         <Box>
-          <Register handleRegClose={handleRegClose} />
+          {props.session.role === "admin" ? (
+            <AdminPanel session={props.session}/>
+          ) : (
+            <Register handleRegClose={handleRegClose} />
+          )}
         </Box>
       </Modal>
     </Box>
