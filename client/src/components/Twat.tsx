@@ -19,6 +19,7 @@ import catProfile from "../assets/images/Cat-Profile.png";
 import moment from "moment";
 import YouTube from "react-youtube";
 import getVideoId from "get-video-id";
+import { LinkedCameraRounded } from "@material-ui/icons";
 
 interface Props {
   post: Post;
@@ -138,7 +139,7 @@ function Twat(props: Props) {
         <Box
           className={classes.likeIcon}
           onClick={() => {
-            likePost(props.post._id);
+            likePost(props.post._id, liked);
           }}
         >
           <Badge
