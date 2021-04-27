@@ -45,8 +45,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Box className={classes.rootStyle}>
-        <ProfileProvider>
-          <Header />
+        <ProfileProvider session={session}>
+          <Header session={session}/>
         </ProfileProvider>
           <PostProvider session={session}>
             <PostField />

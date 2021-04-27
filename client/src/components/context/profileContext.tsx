@@ -26,6 +26,7 @@ export const ProfileContext = createContext<State>({
 
 interface Props {
   children: Object;
+  session: any;
 }
 
 function ProfileProvider(props: Props) {

@@ -14,12 +14,14 @@ import React, { useEffect, useState } from "react";
 import catProfile from "../assets/images/Cat-Profile.png";
 import Register from "./Register";
 
+interface Props {
+  session: any;
+}
 
-function Header() {
+function Header(props: Props) {
   const classes = useStyles();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [session, setSession] = useState<any>([])
   const [loginCredentials, setloginCredentials] = useState<Object>({
     "userName": "",
     "password": ""
@@ -49,35 +51,11 @@ function Header() {
     }));
   };
 
-  useEffect(() => {
-    const loadSession = async () => {
-      const decodedString = await JSON.parse(atob(getCookie('session')));
-      setSession(decodedString)
-    }
-    loadSession()
-  }, [])
-
   const reloadPage = () => {
     setTimeout( reload, 300)
     function reload () {
       window.location.reload()
     }
-  }
-
-  function getCookie(cname: string) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
   }
 
   async function loginHandler(loginCredentials: object) {
