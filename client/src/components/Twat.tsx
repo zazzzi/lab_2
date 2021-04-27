@@ -29,9 +29,9 @@ function Twat(props: Props) {
   const [likes, setLikes] = useState(props.post.likes);
   const [liked, updateLikes] = useState(false);
   const classes = useStyles();
-  const { posts, deletePost, likePost} = useContext(PostContext);
+  const { posts, deletePost, likePost } = useContext(PostContext);
   const [anchorEl, setAnchorEl] = useState<any>(null);
-  const [editing, setEdit] = useState(false) 
+  const [editing, setEdit] = useState(false);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -42,7 +42,7 @@ function Twat(props: Props) {
   };
 
   useEffect(() => {
-    setLikes(likes => likes + (liked ? 1 : -1));
+    setLikes((likes) => likes + (liked ? 1 : -1));
   }, [liked]);
 
   const today = moment();
@@ -80,7 +80,7 @@ function Twat(props: Props) {
             </Box>
             <Box m={0.5}>
               <Typography variant="body2">@{props.post.author}</Typography>
-            </Box>  
+            </Box>
             <Box m={0.5}>
               <Typography variant="body2">•</Typography>
             </Box>
@@ -95,28 +95,36 @@ function Twat(props: Props) {
           </Box>
           <Box className={classes.moreIcon}>
             <Button
-              aria-controls="simple-menu" 
-              aria-haspopup="true" 
+              aria-controls="simple-menu"
+              aria-haspopup="true"
               onClick={handleClick}
             >
-              <MoreHorizIcon color="primary"/>
+              <MoreHorizIcon color="primary" />
             </Button>
-             <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setEdit(true);
+                }}
               >
-                <MenuItem onClick={() =>{
-                  handleClose()
-                  setEdit(true)
-                }}>Edit</MenuItem>
-                <MenuItem onClick={() => {
-                  handleClose()
-                  deletePost(props.post._id)
-                  }}>Delete</MenuItem>
-              </Menu>
+                Edit
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  deletePost(props.post._id);
+                }}
+              >
+                Delete
+              </MenuItem>
+            </Menu>
           </Box>
         </Box>
 
@@ -138,6 +146,7 @@ function Twat(props: Props) {
           className={classes.likeIcon}
           onClick={() => {
             likePost(props.post._id, liked);
+            updateLikes((liked) => !liked);
           }}
         >
           <Badge
@@ -150,13 +159,7 @@ function Twat(props: Props) {
               horizontal: "right",
             }}
           >
-            <ThumbUpIcon
-              color="primary"
-              onClick={() => {
-                updateLikes(liked => !liked)
-                likePost(props.post._id, liked)
-              }}
-            />
+            <ThumbUpIcon color="primary" />
           </Badge>
         </Box>
       </Box>
@@ -216,8 +219,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   modal: {
-    display: 'flex'
-  }
+    display: "flex",
+  },
 }));
 
 export default Twat;

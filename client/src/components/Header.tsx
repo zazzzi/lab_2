@@ -23,9 +23,9 @@ function Header(props: Props) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [loginCredentials, setloginCredentials] = useState<Object>({
-    "userName": "",
-    "password": ""
-  })
+    userName: "",
+    password: "",
+  });
 
   const handleOpen = () => {
     setIsLoginModalOpen(true);
@@ -36,8 +36,8 @@ function Header(props: Props) {
   };
 
   const handleRegOpen = () => {
-    setIsRegisterModalOpen(true)
-  }
+    setIsRegisterModalOpen(true);
+  };
 
   const handleRegClose = () => {
     setIsRegisterModalOpen(false);
@@ -45,34 +45,34 @@ function Header(props: Props) {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    setloginCredentials(prevState => ({
-        ...prevState,
-        [name]: value
+    setloginCredentials((prevState) => ({
+      ...prevState,
+      [name]: value,
     }));
   };
 
   const reloadPage = () => {
-    setTimeout( reload, 300)
-    function reload () {
-      window.location.reload()
+    setTimeout(reload, 300);
+    function reload() {
+      window.location.reload();
     }
-  }
+  };
 
   async function loginHandler(loginCredentials: object) {
     const response = await fetch("http://localhost:6969/api/login", {
       method: "POST",
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify(loginCredentials),
       headers: { "Content-Type": "application/json" },
-    }); 
+    });
   }
 
   async function logoutHandler() {
     const response = await fetch("http://localhost:6969/api/logout", {
       method: "DELETE",
-      credentials: 'include',
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
-    }); 
+    });
   }
 
   return (
@@ -84,6 +84,7 @@ function Header(props: Props) {
             Home
           </Typography>
         </Link>
+
         <Button onClick={() => {
           window.location.href = "/";
           logoutHandler()
@@ -136,19 +137,20 @@ function Header(props: Props) {
       >
         <Box className={classes.modalContent}>
           <Typography>Login</Typography>
-          <TextField 
-            name="userName" 
+          <TextField
+            name="userName"
             label="User name"
             onChange={handleChange}
           />
-          <TextField 
-            name="password" 
-            label="Password" 
+          <TextField
+            name="password"
+            label="Password"
+            type="password"
             onChange={handleChange}
           />
           <Button
             onClick={() => {
-              reloadPage()
+              reloadPage();
               loginHandler(loginCredentials);
               handleClose();
             }}
@@ -165,9 +167,7 @@ function Header(props: Props) {
         aria-describedby="simple-modal-description"
       >
         <Box>
-          <Register
-            handleRegClose={handleRegClose}
-          />
+          <Register handleRegClose={handleRegClose} />
         </Box>
       </Modal>
     </Box>
