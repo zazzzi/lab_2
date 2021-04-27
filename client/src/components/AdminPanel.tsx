@@ -7,7 +7,9 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import { log } from "node:console";
 import React, { useContext, useState } from "react";
+import { convertTypeAcquisitionFromJson } from "typescript";
 import { ProfileContext } from "./context/profileContext";
 import Register from "./Register";
 import UserItem from "./UserItem";
@@ -30,7 +32,7 @@ function AdminPanel(props: IProps) {
 
   const roles = [
     { value: "admin", label: "Admin" },
-    { value: "pleabian", label: "Pleabian" },
+    { value: "plebian", label: "Plebian" },
   ];
 
   const handleChange = (e: any) => {
