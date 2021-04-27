@@ -77,22 +77,24 @@ function Header(props: Props) {
 
   return (
     <Box className={classes.rootStyle}>
-      { props.session.role === "admin" || props.session.role === "plebian"? (
-      <Box className={`${classes.headerWrapper}`}>
-        <Link href="/">
-          <Typography variant={"h5"} color={"primary"}>
-            Home
-          </Typography>
-        </Link>
+      {props.session.role === "admin" || props.session.role === "plebian" ? (
+        <Box className={`${classes.headerWrapper}`}>
+          <Link href="/">
+            <Typography variant={"h5"} color={"primary"}>
+              Home
+            </Typography>
+          </Link>
 
-        <Button onClick={() => {
-          window.location.href = "/";
-          logoutHandler()
-        }
-          } color="secondary">
-          Logout
-        </Button>
-        { props.session.role === "plebian" ? (
+          <Button
+            onClick={() => {
+              window.location.href = "/";
+              logoutHandler();
+            }}
+            color="secondary"
+          >
+            Logout
+          </Button>
+          {props.session.role === "plebian" ? (
             <Button onClick={handleRegOpen} color="secondary">
               profile
             </Button>
@@ -100,35 +102,33 @@ function Header(props: Props) {
             <Button onClick={handleRegOpen} color="secondary">
               Admin Panel
             </Button>
-          )
-        }
-        <Link href="/">
-          <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
-            <Avatar src={catProfile}></Avatar>
-          </Tooltip>
-        </Link>
-      </Box>
+          )}
+          <Link href="/profile">
+            <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
+              <Avatar src={catProfile}></Avatar>
+            </Tooltip>
+          </Link>
+        </Box>
       ) : (
         <Box className={`${classes.headerWrapper}`}>
-        <Link href="/">
-          <Typography variant={"h5"} color={"primary"}>
-            Home
-          </Typography>
-        </Link>
-        <Button onClick={handleOpen} color="secondary">
-          Login
-        </Button>
-        <Button onClick={handleRegOpen} color="secondary">
-          Register
-        </Button>
-        <Link href="/">
-          <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
-            <Avatar src={catProfile}></Avatar>
-          </Tooltip>
-        </Link>
-      </Box>
-      )
-      }
+          <Link href="/">
+            <Typography variant={"h5"} color={"primary"}>
+              Home
+            </Typography>
+          </Link>
+          <Button onClick={handleOpen} color="secondary">
+            Login
+          </Button>
+          <Button onClick={handleRegOpen} color="secondary">
+            Register
+          </Button>
+          <Link href="/profile">
+            <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
+              <Avatar src={catProfile}></Avatar>
+            </Tooltip>
+          </Link>
+        </Box>
+      )}
       <Modal
         className={classes.modal}
         open={isLoginModalOpen}
@@ -201,8 +201,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  adminModal: {
-  }
+  adminModal: {},
 }));
 
 export default Header;
