@@ -56,11 +56,10 @@ function PostProvider(props: Props) {
   async function deletePost(id: string) {
     const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE"); 
     const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id);
-    console.log(session.userName + " " + deletedPost.author)
-    if(!session.userName){
-      if(session.role === "admin" || session.userName === deletedPost.author){
-        setPosts(filteredArray);
-      }
+    if(session.userName === undefined){
+      session.userName = null;
+    } if(session.role === "admin" || session.userName === deletedPost.author){
+      setPosts(filteredArray);
     }
   }
 
