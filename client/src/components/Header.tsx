@@ -95,11 +95,7 @@ function Header(props: Props) {
           >
             Logout
           </Button>
-          {props.session.role === "plebian" ? (
-            <Button onClick={handleRegOpen} color="secondary">
-              profile
-            </Button>
-          ) : (
+          {props.session.role === "plebian" ? null : (
             <Button onClick={handleRegOpen} color="secondary">
               Admin Panel
             </Button>
