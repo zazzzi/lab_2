@@ -1,6 +1,6 @@
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   makeStyles,
   Typography,
@@ -18,7 +18,6 @@ import { PostContext, Post } from "./context/postsContext";
 import moment from "moment";
 import YouTube from "react-youtube";
 import getVideoId from "get-video-id";
-import { LinkedCameraRounded } from "@material-ui/icons";
 import EditTwat from "./EditTwat";
 import { Session } from "../App";
 interface Props {
@@ -30,8 +29,8 @@ function Twat(props: Props) {
   const [likes, setLikes] = useState(props.post.likes);
   const [liked, updateLikes] = useState(false);
   const classes = useStyles();
-  const { posts, deletePost, likePost } = useContext(PostContext);
-  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const { deletePost, likePost } = useContext(PostContext);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClick = (event: any) => {

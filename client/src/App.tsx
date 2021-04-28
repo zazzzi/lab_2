@@ -1,5 +1,5 @@
 import { Box, makeStyles, ThemeProvider } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PostProvider from "./components/context/postsContext";
 import ProfileProvider from "./components/context/profileContext";
 import Header from "./components/Header";
@@ -19,7 +19,7 @@ export interface Session {
 
 function App() {
   const classes = useStyles();
-  const [session, setSession] = useState<any>([] as Session[]);
+  const [session, setSession] = useState<Session[]>([]);
 
   useEffect(() => {
     const loadSession = async () => {
@@ -35,10 +35,10 @@ function App() {
     var ca = decodedCookie.split(";");
     for (var i = 0; i < ca.length; i++) {
       var c = ca[i];
-      while (c.charAt(0) == " ") {
+      while (c.charAt(0) === " ") {
         c = c.substring(1);
       }
-      if (c.indexOf(name) == 0) {
+      if (c.indexOf(name) === 0) {
         return c.substring(name.length, c.length);
       }
     }

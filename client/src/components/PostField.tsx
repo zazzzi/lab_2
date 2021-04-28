@@ -6,20 +6,18 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { PostContext } from "./context/postsContext";
-import { ProfileContext } from "./context/profileContext";
 
 function PostField() {
   const classes = useStyles();
   const [chars, setChars] = useState<number>(0);
   const [twat, setTwat] = useState<any>();
-  const [isDisabled, setIsDisabled] = useState(false);
-  const { posts, makeNewPost } = useContext(PostContext);
+  const [isDisabled] = useState(false);
+  const { makeNewPost } = useContext(PostContext);
 
   function handleCharacters(value: string) {
     setChars(value.length);
-
     setTwat(value);
   }
 
@@ -55,7 +53,7 @@ function PostField() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   rootStyle: {},
   twatWrapperStyle: {
     width: "30rem",

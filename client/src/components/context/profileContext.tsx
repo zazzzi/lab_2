@@ -1,4 +1,3 @@
-import { profile } from "node:console";
 import { createContext, useEffect, useState } from "react";
 import { Session } from "../../App";
 
@@ -9,7 +8,6 @@ export interface Profile {
   likes: number;
   role: string;
   name: string;
-  _v: number;
 }
 
 interface State {
@@ -43,7 +41,7 @@ function ProfileProvider(props: Props) {
       return;
     }
   }
-
+  
   async function deleteProfile(id: string) {
     const deleteProfile = await makeRequest(
       `${url}/api/profiles/${id}`,
@@ -84,6 +82,7 @@ function ProfileProvider(props: Props) {
         );
       });
     }
+    return updatedPost;
   }
 
   useEffect(() => {

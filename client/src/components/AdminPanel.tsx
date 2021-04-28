@@ -1,4 +1,3 @@
-import classes from "*.module.css";
 import {
   Box,
   Button,
@@ -7,18 +6,11 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { log } from "node:console";
-import React, { useContext, useState } from "react";
-import { convertTypeAcquisitionFromJson } from "typescript";
+import { useContext, useState } from "react";
 import { ProfileContext } from "./context/profileContext";
-import Register from "./Register";
 import UserItem from "./UserItem";
 
-interface IProps {
-  session: any;
-}
-
-function AdminPanel(props: IProps) {
+function AdminPanel() {
   const [currentAction, setCurrentAction] = useState("create");
   const classes = useStyles();
   const { registerNewProfile, profiles } = useContext(ProfileContext);
@@ -35,7 +27,7 @@ function AdminPanel(props: IProps) {
     { value: "plebian", label: "Plebian" },
   ];
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: { target: { value: string; name: string; }; }) => {
     const { name, value } = e.target;
     setValues((prevState) => ({
       ...prevState,
@@ -107,7 +99,7 @@ function AdminPanel(props: IProps) {
         ) : currentAction === "edit" ? (
           <Box className={classes.editStlye}>
             <Typography color="secondary">Edit</Typography>
-            {profiles.map((u: any, i) => (
+            {profiles.map((u: any, _i) => (
               <UserItem
                 id={u._id}
                 userName={u.userName}

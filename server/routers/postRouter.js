@@ -13,14 +13,12 @@ postRouter.get("/posts", async (req, res) => {
 // POST new twat
 postRouter.post("/posts", secureWithRole("plebian"), async (req, res) => {
   const today = moment().format("MMM DD YYYY HH:mm");
-  console.log("test");
   const post = new Post({
     name: req.session.name,
     author: req.session.userName,
     content: req.body.content,
     likes: 1,
     date: today,
-    liked: false,
   });
 
   await post.save();
@@ -70,7 +68,6 @@ postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
 
 //handleLikes
 postRouter.post("/posts/:id", async (req, res) => {
-  console.log(req.body.liked)
   if(!req.body.liked) {
     const post = await Post.findOneAndUpdate(
       { _id: req.params.id },
@@ -99,14 +96,9 @@ function secure(req, res, next) {
   }
 }
 
-function test(req, res, next) {
-  console.log(req.session.userName)
-  next()
-}
-
 function secureWithRole(user) {
   return [
-    test,secure, 
+    secure, 
     (req, res, next) => {
       if (req.session.role === user || req.session.role === "admin") {
         next();

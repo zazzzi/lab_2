@@ -1,12 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
-  Avatar,
   Box,
   makeStyles,
   Typography,
-  Link,
   Button,
-  Modal,
   TextField,
 } from "@material-ui/core";
 import { ProfileContext } from "./context/profileContext";
@@ -24,7 +21,7 @@ function Register(props: Props) {
     password: "",
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: { target: { name: string; value: string; }; }) => {
     const { name, value } = e.target;
     registerValues((prevState) => ({
       ...prevState,

@@ -7,7 +7,6 @@ export interface Post {
   likes: number;
   date: number;
   name: string;
-  _v: number;
 }
 interface State {
   posts: Post[];
@@ -70,13 +69,14 @@ function PostProvider(props: Props) {
       if (props.session.role === "admin" ||props.session.userName === posts.author) {
         setPosts((prev: Post[]) => {
           return prev.map((p: Post) => 
-            p._id === post._id
+            p._id === post!._id
               ? {...p, content: content}
               : p
           )
         }
       )
     }
+    return updatedPost;
   }
 
   async function likePost(id: string, liked: boolean) {
