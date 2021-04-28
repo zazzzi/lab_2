@@ -57,9 +57,7 @@ function ProfileProvider(props: Props) {
   }
 
   async function editProfile(id: string, content: any) {
-    const body = {
-      content: content,
-    };
+    const body = content;
     const updatedPost = await makeRequest(
       `${url}/api/profiles/${id}`,
       "PUT",
