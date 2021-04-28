@@ -51,21 +51,21 @@ function UserItem(props: IProps) {
         <TextField
           disabled={!editMode}
           label="Username"
-          value={props.userName}
+          defaultValue={props.userName}
         />
-        <TextField disabled={!editMode} label="Name" value={props.name} />
+        <TextField disabled={!editMode} label="Name" defaultValue={props.name} />
         {!editMode ? (
-          <TextField disabled={!editMode} label="Role" value={props.role} />
+          <TextField disabled={!editMode} label="Role" defaultValue={props.role} />
         ) : (
           <TextField
             select
-            value={rolePlaceholder}
+            defaultValue={rolePlaceholder}
             onChange={handleChange}
             label="Role"
             name="role"
           >
             {roles.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
+              <MenuItem key={option.value} defaultValue={option.value}>
                 {option.label}
               </MenuItem>
             ))}
