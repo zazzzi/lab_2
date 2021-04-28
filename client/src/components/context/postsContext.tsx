@@ -106,6 +106,7 @@ function PostProvider(props: Props) {
     const response = await fetch("/", {
       method: method,
       body: JSON.stringify(body),
+      credentials: "include",
       headers: {
         "Content-type": "application/json",
       },
