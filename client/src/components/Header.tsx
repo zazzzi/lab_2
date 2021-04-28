@@ -129,19 +129,22 @@ function Header(props: Props) {
         aria-labelledby="Login"
       >
         <Box className={classes.modalContent}>
-          <Typography>Login</Typography>
+          <Typography color="secondary">Login</Typography>
           <TextField
+            color="secondary"
             name="userName"
             label="User name"
             onChange={handleChange}
           />
           <TextField
+            color="secondary"
             name="password"
             label="Password"
             type="password"
             onChange={handleChange}
           />
           <Button
+            color="secondary"
             onClick={() => {
               reloadPage();
               loginHandler(loginCredentials);
