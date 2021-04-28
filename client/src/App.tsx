@@ -19,7 +19,7 @@ export interface Session {
 
 function App() {
   const classes = useStyles();
-  const [session, setSession] = useState<Session[]>([]);
+  const [session, setSession] = useState<any>([] as Session[]);
 
   useEffect(() => {
     const loadSession = async () => {
