@@ -16,18 +16,23 @@ function Profile(props: Props) {
   return (
     <Box className={classes.rootStyle}>
       <Box>
+        {props.session.userName === undefined ? null : (
+          <Box mt={5} className={classes.profileTitle}>
+            <Typography color="secondary" variant="h5">
+              {props.session.userName}'s posts
+            </Typography>
+          </Box>
+        )}
         {posts
           .map((p: Post, i: number) =>
             p.author === props.session.userName ? (
               <Box key={i} className={classes.twatContainer}>
-                <Twat 
-                  session={props.session}
-                  post={p} 
-                />
+                <Twat session={props.session} post={p} />
               </Box>
             ) : null
           )
           .reverse()}
+
         {props.session.userName === undefined ? (
           <Box className={classes.twatContainer}>
             <Typography color={"primary"} variant={"h5"}>
@@ -56,6 +61,10 @@ const useStyles = makeStyles(() => ({
   },
   twatContent: {
     width: "10%",
+  },
+  profileTitle: {
+    height: "10rem",
+    textAlign: "center",
   },
 }));
 
