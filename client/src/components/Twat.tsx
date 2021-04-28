@@ -26,7 +26,6 @@ interface Props {
   session: Session;
 }
 
-
 function Twat(props: Props) {
   const [likes, setLikes] = useState(props.post.likes);
   const [liked, updateLikes] = useState(false);
@@ -44,7 +43,7 @@ function Twat(props: Props) {
   };
 
   const handleModalOpen = () => {
-    if(props.session.length === undefined){
+    if (props.session.length === undefined) {
       setIsModalOpen(true);
     }
   };
@@ -234,7 +233,8 @@ const useStyles = makeStyles((theme) => ({
   avatarLarge: {
     width: "4rem",
     height: "4rem",
-    backgroundColor: "#1DA1F2",
+    background:
+      "linear-gradient(261deg, rgba(33,60,209,1) 0%, rgba(29,161,242,1) 100%)",
   },
   name: {
     position: "relative",

@@ -129,20 +129,22 @@ function Header(props: Props) {
         aria-labelledby="Login"
       >
         <Box className={classes.modalContent}>
-          <Typography color="secondary">Login</Typography>
-          <TextField
-            color="secondary"
-            name="userName"
-            label="User name"
-            onChange={handleChange}
-          />
-          <TextField
-            color="secondary"
-            name="password"
-            label="Password"
-            type="password"
-            onChange={handleChange}
-          />
+          <Box>
+            <Typography color="secondary">Login</Typography>
+            <TextField
+              color="secondary"
+              name="userName"
+              label="User name"
+              onChange={handleChange}
+            />
+            <TextField
+              color="secondary"
+              name="password"
+              label="Password"
+              type="password"
+              onChange={handleChange}
+            />
+          </Box>
           <Button
             color="secondary"
             onClick={() => {
@@ -200,9 +202,13 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    display: "flex",
+    justifyContent: "space-araound",
+    alignItems: "center",
   },
   avatarStyle: {
-    backgroundColor: "#1DA1F2",
+    background:
+      "linear-gradient(261deg, rgba(33,60,209,1) 0%, rgba(29,161,242,1) 100%)",
   },
   adminModal: {},
 }));
