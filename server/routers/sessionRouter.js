@@ -31,4 +31,12 @@ sessionRouter.delete("/logout", async (req, res) => {
   res.status(200).json("logout succ");
 });
 
+sessionRouter.get('/authenticated', async ( req, res) => {
+  if(req.session){
+    res.status(200).json(req.session)
+  } else {
+    res.status(401).json(null)
+  }
+})
+
 module.exports = sessionRouter;
