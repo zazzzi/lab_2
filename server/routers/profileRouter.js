@@ -51,18 +51,23 @@ profileRouter.delete("/profiles/:id", secureWithRole("plebian"), async (req, res
 
 //update user from id (non admin command)
 profileRouter.put("/profiles/:id", secureWithRole("plebian"), async (req, res) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 10)
+  const hashedPassword = req.body.password ? await bcrypt.hash(req.body.password, 10): null
   const profileToUpdate = await profileModel.findOne({ _id: req.params.id });
   if(profileToUpdate.userName === req.session.userName || req.session.role === "admin"){
     const profile = await profileModel.findOneAndUpdate(
       { _id: req.params.id },
       {
-        $set: {
+         $set: hashedPassword ? {
           name: req.body.name,
           password: hashedPassword,
           role: req.body.role,
           userName: req.body.userName
-        },
+        } :
+        {
+          name: req.body.name,
+          role: req.body.role,
+          userName: req.body.userName
+        } ,
       },
       { new: true },
       (err) => {
