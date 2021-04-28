@@ -27,9 +27,9 @@ function App() {
       if(emptyValue === ""){
         return;
       } else {
-      const decodedString = await JSON.parse(atob(getCookie("session")));
-      setSession(decodedString);
-      }
+        const decodedString = await JSON.parse(atob(getCookie("session")));
+        setSession(decodedString);
+    }
     };
     loadSession();
   }, []);
