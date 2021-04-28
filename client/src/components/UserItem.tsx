@@ -44,7 +44,8 @@ function UserItem(props: IProps) {
       setRolePlaceholder(e.target.value);
     }
   };
-  console.log(values);
+ console.log(rolePlaceholder);
+ 
 
   return (
     <Box className={classes.rootStyle}>
@@ -71,7 +72,7 @@ function UserItem(props: IProps) {
             color="secondary"
             disabled={!editMode}
             label="Role"
-            defaultValue={props.role}
+            defaultValue={rolePlaceholder}
           />
         ) : (
           <TextField
