@@ -23,8 +23,13 @@ function App() {
 
   useEffect(() => {
     const loadSession = async () => {
-      const decodedString = await JSON.parse(atob(getCookie("session")));
-      setSession(decodedString);
+      const emptyValue = getCookie('session')
+      if(emptyValue === ""){
+        return;
+      } else {
+        const decodedString = await JSON.parse(atob(getCookie("session")));
+        setSession(decodedString);
+    }
     };
     loadSession();
   }, []);
