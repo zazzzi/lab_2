@@ -20,10 +20,12 @@ import YouTube from "react-youtube";
 import getVideoId from "get-video-id";
 import { LinkedCameraRounded } from "@material-ui/icons";
 import EditTwat from "./EditTwat";
-
+import { Session } from "../App";
 interface Props {
   post: Post;
+  session: Session;
 }
+
 
 function Twat(props: Props) {
   const [likes, setLikes] = useState(props.post.likes);
@@ -32,7 +34,6 @@ function Twat(props: Props) {
   const { posts, deletePost, likePost } = useContext(PostContext);
   const [anchorEl, setAnchorEl] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editing, setEdit] = useState(false);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -43,7 +44,9 @@ function Twat(props: Props) {
   };
 
   const handleModalOpen = () => {
-    setIsModalOpen(true);
+    if(props.session.length === undefined){
+      setIsModalOpen(true);
+    }
   };
 
   const handleModalClose = () => {
