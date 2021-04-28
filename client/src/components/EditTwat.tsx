@@ -11,6 +11,7 @@ import { PostContext } from "./context/postsContext";
 interface IProps {
   twatID: string;
   handleClose: () => void;
+  twatContent: string;
 }
 
 function EditTwat(props: IProps) {
@@ -33,10 +34,11 @@ function EditTwat(props: IProps) {
           multiline
           rows={6}
           variant="outlined"
-          color="primary"
+          color="secondary"
           className={classes.twatFieldStyle}
           onChange={(event) => handleCharacters(event.target.value)}
           disabled={isDisabled}
+          defaultValue={props.twatContent}
           inputProps={{ maxLength: 280, className: classes.inputColor }}
           label="What's happening?"
         />
@@ -79,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     borderColor: "#D9D9D9",
   },
   inputColor: {
-    color: "#D9D9D9",
+    color: "#000",
   },
 }));
 export default EditTwat;

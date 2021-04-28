@@ -153,7 +153,11 @@ function Twat(props: Props) {
           aria-describedby="simple-modal-description"
         >
           <Box>
-            <EditTwat twatID={props.post._id} handleClose={handleModalClose} />
+            <EditTwat
+              twatID={props.post._id}
+              twatContent={props.post.content}
+              handleClose={handleModalClose}
+            />
           </Box>
         </Modal>
 
