@@ -60,17 +60,19 @@ function Header(props: Props) {
   };
 
   async function loginHandler(loginCredentials: object) {
-    const response = await fetch("/api/login", {
+    const response = await fetch("api/login", {
       method: "POST",
       body: JSON.stringify(loginCredentials),
+      credentials: 'include',
       headers: { "Content-Type": "application/json" },
     });
     return response;
   }
 
   async function logoutHandler() {
-    const response = await fetch("/api/logout", {
+    const response = await fetch("api/logout", {
       method: "DELETE",
+      credentials: 'include',
       headers: { "Content-Type": "application/json" },
     });
     return response;

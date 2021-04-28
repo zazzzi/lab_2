@@ -32,7 +32,7 @@ function ProfileProvider(props: Props) {
   const [profiles, setProfiles] = useState([] as Profile[]);
 
   async function registerNewProfile(body: object) {
-    const profile = await makeRequest(`/api/profiles/`, "POST", body);
+    const profile = await makeRequest(`api/profiles/`, "POST", body);
     if (props.session.role === "admin" || props.session.role === "plebian") {
       const newProfile = [...profiles, profile];
       setProfiles(newProfile);
@@ -42,7 +42,7 @@ function ProfileProvider(props: Props) {
   
   async function deleteProfile(id: string) {
     const deleteProfile = await makeRequest(
-      `/api/profiles/${id}`,
+      `api/profiles/${id}`,
       "DELETE"
     );
     const filteredArray = profiles.filter((p: { _id: string }) => p._id !== id);
@@ -72,7 +72,7 @@ function ProfileProvider(props: Props) {
           role: content.role ? content.role : profile?.role,
         };
     const updatedPost = await makeRequest(
-      `/api/profiles/${id}`,
+      `api/profiles/${id}`,
       "PUT",
       body
     );
@@ -99,14 +99,14 @@ function ProfileProvider(props: Props) {
 
   useEffect(() => {
     const loadProfiles = async () => {
-      const allProfiles = await makeRequest(`/api/profiles`, "GET");
+      const allProfiles = await makeRequest(`api/profiles`, "GET");
       setProfiles(allProfiles);
     };
     loadProfiles();
   }, []);
 
   async function makeRequest(url: RequestInfo, method: any, body?: any) {
-    const response = await fetch("/", {
+    const response = await fetch("api/profiles", {
       method: method,
       body: JSON.stringify(body),
       headers: {

@@ -20,12 +20,12 @@ export interface Session {
 function App() {
   const classes = useStyles();
   const [session, setSession] = useState<any>([] as Session[]);
-  const url = "http://localhost:6969";
 
   useEffect(() => {
     const loadSession = async () => {
-      const response = await fetch(`/api/authenticated`, {
+      const response = await fetch(`api/authenticated`, {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-type": "application/json",
         },
