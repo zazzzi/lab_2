@@ -1,7 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import { Session } from "../../App";
-import bcrypt from "bcrypt";
-
 export interface Profile {
   _id: string;
   userName: string;
