@@ -22,7 +22,10 @@ function Profile(props: Props) {
           .map((p: any, i: any) =>
             p.author === props.session.userName ? (
               <Box key={i} className={classes.twatContainer}>
-                <Twat post={p} />
+                <Twat 
+                  session={props.session}
+                  post={p} 
+                />
               </Box>
             ) : null
           )

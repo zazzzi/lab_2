@@ -11,7 +11,6 @@ import {
   Zoom,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import catProfile from "../assets/images/Cat-Profile.png";
 import AdminPanel from "./AdminPanel";
 import Register from "./Register";
 
@@ -82,7 +81,7 @@ function Header(props: Props) {
         <Box className={`${classes.headerWrapper}`}>
           <Link href="/">
             <Typography variant={"h5"} color={"primary"}>
-              Home
+              Twatter
             </Typography>
           </Link>
 
@@ -95,19 +94,16 @@ function Header(props: Props) {
           >
             Logout
           </Button>
-          {props.session.role === "plebian" ? (
-            <Button onClick={handleRegOpen} color="secondary">
-              profile
-            </Button>
-          ) : (
+          {props.session.role === "plebian" ? null : (
             <Button onClick={handleRegOpen} color="secondary">
               Admin Panel
             </Button>
           )}
           <Link href="/profile">
-
             <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
-              <Avatar src={catProfile}></Avatar>
+              <Avatar className={classes.avatarStyle}>
+                {props.session.name.toUpperCase().slice(0, 1)}
+              </Avatar>
             </Tooltip>
           </Link>
         </Box>
@@ -115,7 +111,7 @@ function Header(props: Props) {
         <Box className={`${classes.headerWrapper}`}>
           <Link href="/">
             <Typography variant={"h5"} color={"primary"}>
-              Home
+              Twatter
             </Typography>
           </Link>
           <Button onClick={handleOpen} color="secondary">
@@ -124,13 +120,6 @@ function Header(props: Props) {
           <Button onClick={handleRegOpen} color="secondary">
             Register
           </Button>
-
-          <Link href="/profile">
-
-            <Tooltip title={"Profile"} arrow TransitionComponent={Zoom}>
-              <Avatar src={catProfile}></Avatar>
-            </Tooltip>
-          </Link>
         </Box>
       )}
       <Modal
@@ -140,19 +129,24 @@ function Header(props: Props) {
         aria-labelledby="Login"
       >
         <Box className={classes.modalContent}>
-          <Typography>Login</Typography>
-          <TextField
-            name="userName"
-            label="User name"
-            onChange={handleChange}
-          />
-          <TextField
-            name="password"
-            label="Password"
-            type="password"
-            onChange={handleChange}
-          />
+          <Box>
+            <Typography color="secondary">Login</Typography>
+            <TextField
+              color="secondary"
+              name="userName"
+              label="User name"
+              onChange={handleChange}
+            />
+            <TextField
+              color="secondary"
+              name="password"
+              label="Password"
+              type="password"
+              onChange={handleChange}
+            />
+          </Box>
           <Button
+            color="secondary"
             onClick={() => {
               reloadPage();
               loginHandler(loginCredentials);
@@ -172,7 +166,7 @@ function Header(props: Props) {
       >
         <Box>
           {props.session.role === "admin" ? (
-            <AdminPanel session={props.session}/>
+            <AdminPanel session={props.session} />
           ) : (
             <Register handleRegClose={handleRegClose} />
           )}
@@ -208,6 +202,13 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    display: "flex",
+    justifyContent: "space-araound",
+    alignItems: "center",
+  },
+  avatarStyle: {
+    background:
+      "linear-gradient(261deg, rgba(33,60,209,1) 0%, rgba(29,161,242,1) 100%)",
   },
   adminModal: {},
 }));

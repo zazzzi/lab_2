@@ -49,15 +49,17 @@ function UserItem(props: IProps) {
     <Box className={classes.rootStyle}>
       <Box className={classes.fieldWrapper}>
         <TextField
+          color="secondary"
           disabled={!editMode}
           label="Username"
           defaultValue={props.userName}
         />
-        <TextField disabled={!editMode} label="Name" defaultValue={props.name} />
+        <TextField color="secondary" disabled={!editMode} label="Name" defaultValue={props.name} />
         {!editMode ? (
-          <TextField disabled={!editMode} label="Role" defaultValue={props.role} />
+          <TextField color="secondary" disabled={!editMode} label="Role" defaultValue={props.role} />
         ) : (
           <TextField
+            color="secondary"
             select
             defaultValue={rolePlaceholder}
             onChange={handleChange}
@@ -76,9 +78,10 @@ function UserItem(props: IProps) {
       </Box>
       <Box>
         {!editMode ? (
-          <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
+          <Button color="secondary" onClick={() => setEditMode(!editMode)}>Edit</Button>
         ) : (
           <Button
+            color="secondary"
             onClick={() => {
               setEditMode(!editMode);
                 editProfile(props.id, values)
@@ -87,7 +90,9 @@ function UserItem(props: IProps) {
             Save
           </Button>
         )}
-        <Button onClick={() => deleteProfile(props.id)}>Delete</Button>
+        <Button             color="primary"
+ onClick={() => deleteProfile(props.id)}>Delete</Button>
+
       </Box>
     </Box>
   );
@@ -99,6 +104,8 @@ const useStyles = makeStyles((theme) => ({
     border: "solid 1px black",
     margin: ".5rem",
     padding: ".5rem",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   fieldWrapper: {
     display: "flex",

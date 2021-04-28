@@ -28,7 +28,7 @@ function EditTwat(props: IProps) {
   return (
     <Box className={classes.modal}>
       <Box className={classes.modalContent}>
-        <Typography>Edit Twat</Typography>
+        <Typography color={"secondary"}>Edit Twat</Typography>
         <TextField
           multiline
           rows={6}

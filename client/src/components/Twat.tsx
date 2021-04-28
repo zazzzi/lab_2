@@ -15,15 +15,15 @@ import {
   Button,
 } from "@material-ui/core";
 import { PostContext, Post } from "./context/postsContext";
-import catProfile from "../assets/images/Cat-Profile.png";
 import moment from "moment";
 import YouTube from "react-youtube";
 import getVideoId from "get-video-id";
 import { LinkedCameraRounded } from "@material-ui/icons";
 import EditTwat from "./EditTwat";
-
+import { Session } from "../App";
 interface Props {
   post: Post;
+  session: Session;
 }
 
 function Twat(props: Props) {
@@ -33,9 +33,6 @@ function Twat(props: Props) {
   const { posts, deletePost, likePost } = useContext(PostContext);
   const [anchorEl, setAnchorEl] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editing, setEdit] = useState(false);
-
-  console.log(props);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -46,7 +43,9 @@ function Twat(props: Props) {
   };
 
   const handleModalOpen = () => {
-    setIsModalOpen(true);
+    if (props.session.length === undefined) {
+      setIsModalOpen(true);
+    }
   };
 
   const handleModalClose = () => {
@@ -62,11 +61,12 @@ function Twat(props: Props) {
   const momentObj = moment(timeOfPost);
   let timeShort = "m";
   let diff = today.diff(momentObj, "minutes");
+
   if (diff >= 60) {
     diff = today.diff(momentObj, "hours");
     timeShort = "h";
   }
-  if (diff >= 1440) {
+  if (diff >= 24 && timeShort === "h") {
     diff = today.diff(momentObj, "days");
     timeShort = "d";
   }
@@ -76,14 +76,16 @@ function Twat(props: Props) {
   const videoID = getVideoId(postContent);
 
   const opts = {
-    height: "190",
-    width: "350",
+    height: "250",
+    width: "390",
   };
   return (
     <Box className={classes.rootStyle}>
       <Box className={classes.twatContainer}>
         <Box className={classes.avatarContainer}>
-          <Avatar src={catProfile} className={classes.avatarLarge}></Avatar>
+          <Avatar className={classes.avatarLarge}>
+            {props.post.name.toUpperCase().slice(0, 1)}
+          </Avatar>
         </Box>
         <Box className={classes.topBar}>
           <Box className={classes.name}>
@@ -99,8 +101,9 @@ function Twat(props: Props) {
             <Box m={0.5}>
               <Tooltip title={timeOfPost} arrow TransitionComponent={Zoom}>
                 <Typography variant="body2">
-                  {diff}
-                  {timeShort}
+                  {diff <= 0 && timeShort === "m"
+                    ? "Just now"
+                    : [diff, timeShort]}
                 </Typography>
               </Tooltip>
             </Box>
@@ -127,7 +130,7 @@ function Twat(props: Props) {
                   handleModalOpen();
                 }}
               >
-                Edit
+                <Typography color={"secondary"}>Edit</Typography>
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -135,7 +138,7 @@ function Twat(props: Props) {
                   deletePost(props.post._id);
                 }}
               >
-                Delete
+                <Typography color={"secondary"}>Delete</Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -230,6 +233,8 @@ const useStyles = makeStyles((theme) => ({
   avatarLarge: {
     width: "4rem",
     height: "4rem",
+    background:
+      "linear-gradient(261deg, rgba(33,60,209,1) 0%, rgba(29,161,242,1) 100%)",
   },
   name: {
     position: "relative",
@@ -248,6 +253,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  avatarBackground: {
+    background: "secondary",
   },
 }));
 
