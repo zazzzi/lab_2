@@ -58,6 +58,9 @@ function PostProvider(props: Props) {
   }
 
   async function editPost(content: string, postID: string) {
+    if (!content){
+      return null;
+    }
     const body = {
       content: content,
     };
@@ -66,7 +69,7 @@ function PostProvider(props: Props) {
       if (!props.session.userName) {
         props.session.userName = "";
       }
-      if (props.session.role === "admin" ||props.session.userName === posts.author) {
+      if (props.session.role === "admin" ||props.session.userName === post.author) {
         setPosts((prev: Post[]) => {
           return prev.map((p: Post) => 
             p._id === post!._id
