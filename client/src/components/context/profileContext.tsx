@@ -35,41 +35,49 @@ function ProfileProvider(props: Props) {
   const [profiles, setProfiles] = useState([] as Profile[]);
   const url = "http://localhost:6969";
 
-
-  async function registerNewProfile(body: object){
-    const profile = await makeRequest(`${url}/api/profiles/`, "POST", body); 
-    if(props.session.role === "admin" || props.session.role === "plebian"){
-      const newProfile = [...profiles, profile]
-      setProfiles(newProfile)
+  async function registerNewProfile(body: object) {
+    const profile = await makeRequest(`${url}/api/profiles/`, "POST", body);
+    if (props.session.role === "admin" || props.session.role === "plebian") {
+      const newProfile = [...profiles, profile];
+      setProfiles(newProfile);
       return;
     }
-}
-
+  }
 
   async function deleteProfile(id: string) {
-    const deleteProfile = await makeRequest(`${url}/api/profiles/${id}`, "DELETE");
-    const filteredArray = profiles.filter((p: { _id: string; }) => p._id !== id);
-    if(props.session.userName === undefined){
+    const deleteProfile = await makeRequest(
+      `${url}/api/profiles/${id}`,
+      "DELETE"
+    );
+    const filteredArray = profiles.filter((p: { _id: string }) => p._id !== id);
+    if (props.session.userName === undefined) {
       props.session.userName = "";
-    } if(props.session.role === "admin" || props.session.userName === deleteProfile.userName){
+    }
+    if (
+      props.session.role === "admin" ||
+      props.session.userName === deleteProfile.userName
+    ) {
       setProfiles(filteredArray);
     }
   }
 
   async function editProfile(id: string, content: any) {
-    const body = content;
+    const profile = profiles.find((p: { _id: string }) => p._id === id);
+    const body = {
+      userName: content.userName ? content.userName : profile?.userName,
+      name: content.name ? content.name : profile?.name,
+      role: content.role ? content.role : profile?.role,
+      password: content.password ? content.password : profile?.password,
+    };
     const updatedPost = await makeRequest(
       `${url}/api/profiles/${id}`,
       "PUT",
       body
     );
-    const profile = profiles.find((p: { _id: string }) => p._id === id);
     if (!props.session.userName) {
       props.session.userName = "";
     }
-    if (
-      props.session.role === "admin"
-    ) {
+    if (props.session.role === "admin") {
       setProfiles((prev: Profile[]) => {
         return prev.map((p: Profile) =>
           p.userName === profile!.userName ? { ...p, content: content } : p
