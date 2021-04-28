@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useContext, useState } from "react";
-import { ProfileContext } from "./context/profileContext";
+import { ProfileContext, Profile } from "./context/profileContext";
 import UserItem from "./UserItem";
 
 function AdminPanel() {
@@ -74,7 +74,7 @@ function AdminPanel() {
             <TextField
               color="secondary"
               select
-              value={!rolePlaceholder ? null : rolePlaceholder}
+              value={!rolePlaceholder ? "" : rolePlaceholder}
               onChange={handleChange}
               label="Role"
               name="role"
@@ -99,8 +99,9 @@ function AdminPanel() {
         ) : currentAction === "edit" ? (
           <Box className={classes.editStlye}>
             <Typography color="secondary">Edit</Typography>
-            {profiles.map((u: any, _i) => (
+            {profiles.map((u: Profile, _i) => (
               <UserItem
+              key={_i}
                 id={u._id}
                 userName={u.userName}
                 name={u.name}
