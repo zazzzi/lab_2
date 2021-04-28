@@ -55,7 +55,7 @@
     "@types/react-router-dom": "^5.1.7"
   },
   "proxy": {
-    "/api": {
+    "/": {
       "target": "http://localhost:6969"
     }
   }
