@@ -59,6 +59,8 @@ profileRouter.put("/profiles/:id", secureWithRole("plebian"), async (req, res) =
         $set: {
           name: req.body.name,
           password: hashedPassword,
+          role: req.body.role,
+          userName: req.body.userName
         },
       },
       { new: true },

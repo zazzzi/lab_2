@@ -1,3 +1,4 @@
+import { profile } from "node:console";
 import { createContext, useEffect, useState } from "react";
 import { Session } from "../../App";
 
@@ -15,7 +16,7 @@ interface State {
   profiles: Profile[];
   registerNewProfile: (body: object) => void;
   deleteProfile: (id: string) => void;
-  editProfile: (id: string) => void;
+  editProfile: (id: string, content: any) => void;
 }
 
 export const ProfileContext = createContext<State>({
@@ -34,18 +35,40 @@ function ProfileProvider(props: Props) {
   const [profiles, setProfiles] = useState([] as Profile[]);
   const url = "http://localhost:6969";
 
-  async function registerNewProfile(body: object){
-    await makeRequest(`${url}/api/profiles/`, "POST", body); 
-}
+  async function registerNewProfile(body: object) {
+    await makeRequest(`${url}/api/profiles/`, "POST", body);
+  }
 
   async function deleteProfile(id: string) {
     makeRequest(`${url}/api/profiles/${id}`, "DELETE");
   }
 
-  async function editProfile() {}
+  async function editProfile(id: string, content: any) {
+    const body = {
+      content: content,
+    };
+    const updatedPost = await makeRequest(
+      `${url}/api/profiles/${id}`,
+      "PUT",
+      body
+    );
+    const profile = profiles.find((p: { _id: string }) => p._id === id);
+    if (!props.session.userName) {
+      props.session.userName = "";
+    }
+    if (
+      props.session.role === "admin"
+    ) {
+      setProfiles((prev: Profile[]) => {
+        return prev.map((p: Profile) =>
+          p.userName === profile!.userName ? { ...p, content: content } : p
+        );
+      });
+    }
+  }
 
   useEffect(() => {
-    const loadProfiles= async () => {
+    const loadProfiles = async () => {
       const allProfiles = await makeRequest(`${url}/api/profiles`, "GET");
       setProfiles(allProfiles);
     };
@@ -56,7 +79,7 @@ function ProfileProvider(props: Props) {
     const response = await fetch(url, {
       method: method,
       body: JSON.stringify(body),
-      credentials: 'include',
+      credentials: "include",
       headers: {
         "Content-type": "application/json",
       },
@@ -66,7 +89,6 @@ function ProfileProvider(props: Props) {
   }
 
   return (
-    
     <ProfileContext.Provider
       value={{
         profiles: profiles,

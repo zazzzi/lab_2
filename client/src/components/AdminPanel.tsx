@@ -30,7 +30,7 @@ function AdminPanel(props: IProps) {
 
   const roles = [
     { value: "admin", label: "Admin" },
-    { value: "pleabian", label: "Pleabian" },
+    { value: "plebian", label: "Plebian" },
   ];
 
   const handleChange = (e: any) => {
