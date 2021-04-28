@@ -10,6 +10,9 @@ export const theme = createMuiTheme({
     secondary: {
       main: "#1DA1F2",
     },
+    error: {
+      main: "#D32F2F",
+    },
   },
   typography: {
     fontFamily: ['"Roboto"'].join(","),

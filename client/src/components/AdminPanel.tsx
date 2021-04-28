@@ -28,7 +28,7 @@ function AdminPanel(props: IProps) {
     password: "",
     role: "",
   });
-  const [rolePlaceholder, setRolePlaceholder] = useState<string | undefined>()
+  const [rolePlaceholder, setRolePlaceholder] = useState<string | undefined>();
 
   const roles = [
     { value: "admin", label: "Admin" },
@@ -41,8 +41,8 @@ function AdminPanel(props: IProps) {
       ...prevState,
       [name]: value,
     }));
-    if (name === "role"){
-        setRolePlaceholder(e.target.value)
+    if (name === "role") {
+      setRolePlaceholder(e.target.value);
     }
   };
 
@@ -50,29 +50,37 @@ function AdminPanel(props: IProps) {
     <Box className={classes.modal}>
       <Box className={classes.modalContent}>
         <Box className={classes.tabs}>
-          <Button onClick={() => setCurrentAction("create")}>
+          <Button color="secondary" onClick={() => setCurrentAction("create")}>
             Create new user
           </Button>
-          <Button onClick={() => setCurrentAction("edit")}>
+          <Button color="secondary" onClick={() => setCurrentAction("edit")}>
             Edit existing users
           </Button>
         </Box>
         {currentAction === "create" ? (
           <Box className={classes.createNewStyle}>
-            <Typography>Create New</Typography>
+            <Typography color="secondary">Create New</Typography>
             <TextField
+              color="secondary"
               onChange={handleChange}
               label="Username"
               name="userName"
             />
-            <TextField onChange={handleChange} label="Name" name="name" />
             <TextField
+              color="secondary"
+              onChange={handleChange}
+              label="Name"
+              name="name"
+            />
+            <TextField
+              color="secondary"
               onChange={handleChange}
               label="Password"
               name="password"
             />
 
             <TextField
+              color="secondary"
               select
               value={!rolePlaceholder ? null : rolePlaceholder}
               onChange={handleChange}
@@ -87,6 +95,7 @@ function AdminPanel(props: IProps) {
             </TextField>
 
             <Button
+              color="secondary"
               onClick={() => {
                 registerNewProfile(values);
                 setCurrentAction("created");
@@ -97,15 +106,24 @@ function AdminPanel(props: IProps) {
           </Box>
         ) : currentAction === "edit" ? (
           <Box className={classes.editStlye}>
-            <Typography>Edit</Typography>
+            <Typography color="secondary">Edit</Typography>
             {profiles.map((u: any, i) => (
-                <UserItem id={u._id} userName={u.userName} name={u.name} password={u.password} role={u.role} />
-              ))}
+              <UserItem
+                id={u._id}
+                userName={u.userName}
+                name={u.name}
+                password={u.password}
+                role={u.role}
+              />
+            ))}
           </Box>
         ) : currentAction === "created" ? (
           <Box>
-            <Typography>New user created</Typography>
-            <Button onClick={() => setCurrentAction("create")}>
+            <Typography color="secondary">New user created</Typography>
+            <Button
+              color="secondary"
+              onClick={() => setCurrentAction("create")}
+            >
               Create one more
             </Button>
           </Box>
@@ -141,8 +159,8 @@ const useStyles = makeStyles((theme) => ({
   },
   editStlye: {
     overflowY: "scroll",
-    maxHeight:"30rem"
-  }
+    maxHeight: "30rem",
+  },
 }));
 
 export default AdminPanel;

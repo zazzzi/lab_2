@@ -67,7 +67,7 @@ function Twat(props: Props) {
     diff = today.diff(momentObj, "hours");
     timeShort = "h";
   }
-  if (diff >= 24) {
+  if (diff >= 24 && timeShort === "h") {
     diff = today.diff(momentObj, "days");
     timeShort = "d";
   }
@@ -77,8 +77,8 @@ function Twat(props: Props) {
   const videoID = getVideoId(postContent);
 
   const opts = {
-    height: "190",
-    width: "350",
+    height: "250",
+    width: "390",
   };
   return (
     <Box className={classes.rootStyle}>
@@ -102,7 +102,9 @@ function Twat(props: Props) {
             <Box m={0.5}>
               <Tooltip title={timeOfPost} arrow TransitionComponent={Zoom}>
                 <Typography variant="body2">
-                  {diff <= 0 ? "Just now" : [diff, timeShort]}
+                  {diff <= 0 && timeShort === "m"
+                    ? "Just now"
+                    : [diff, timeShort]}
                 </Typography>
               </Tooltip>
             </Box>
