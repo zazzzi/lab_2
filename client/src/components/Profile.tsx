@@ -1,11 +1,9 @@
-import { Box, makeStyles, Typography, Modal } from "@material-ui/core";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-
-import React, { useContext, useEffect, useState } from "react";
-import { PostContext, Post } from "./context/postsContext";
+import { Box, makeStyles, Typography} from "@material-ui/core";
+import { useContext} from "react";
+import { PostContext} from "./context/postsContext";
 import Twat from "./Twat";
 import { Session } from "../App";
+import { Post } from "./context/postsContext";
 
 interface Props {
   session: Session;
@@ -19,7 +17,7 @@ function Profile(props: Props) {
     <Box className={classes.rootStyle}>
       <Box>
         {posts
-          .map((p: any, i: any) =>
+          .map((p: Post, i: number) =>
             p.author === props.session.userName ? (
               <Box key={i} className={classes.twatContainer}>
                 <Twat 
@@ -42,7 +40,7 @@ function Profile(props: Props) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   rootStyle: {
     width: "30rem",
     background: "black",

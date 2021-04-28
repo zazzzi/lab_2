@@ -5,7 +5,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { PostContext } from "./context/postsContext";
 
 interface IProps {
@@ -17,9 +17,9 @@ interface IProps {
 function EditTwat(props: IProps) {
   const classes = useStyles();
   const [twat, setTwat] = useState<any>();
-  const [chars, setChars] = useState<number>(0);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const { posts, editPost } = useContext(PostContext);
+  const [, setChars] = useState<number>(0);
+  const [isDisabled] = useState(false);
+  const {editPost} = useContext(PostContext);
 
   function handleCharacters(value: string) {
     setChars(value.length);

@@ -10,12 +10,13 @@ import {
   Tooltip,
   Zoom,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import AdminPanel from "./AdminPanel";
 import Register from "./Register";
+import { Session } from "../App";
 
 interface Props {
-  session: any;
+  session: Session;
 }
 
 function Header(props: Props) {
@@ -43,7 +44,7 @@ function Header(props: Props) {
     setIsRegisterModalOpen(false);
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: { target: { name: string; value: string; }; }) => {
     const { name, value } = e.target;
     setloginCredentials((prevState) => ({
       ...prevState,
@@ -65,6 +66,7 @@ function Header(props: Props) {
       body: JSON.stringify(loginCredentials),
       headers: { "Content-Type": "application/json" },
     });
+    return response;
   }
 
   async function logoutHandler() {
@@ -73,6 +75,7 @@ function Header(props: Props) {
       credentials: "include",
       headers: { "Content-Type": "application/json" },
     });
+    return response;
   }
 
   return (
@@ -166,7 +169,7 @@ function Header(props: Props) {
       >
         <Box>
           {props.session.role === "admin" ? (
-            <AdminPanel session={props.session} />
+            <AdminPanel/>
           ) : (
             <Register handleRegClose={handleRegClose} />
           )}

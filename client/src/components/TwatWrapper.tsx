@@ -1,5 +1,5 @@
 import { Box, makeStyles } from "@material-ui/core";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { PostContext } from "./context/postsContext";
 import Twat from "./Twat";
 import { Session } from "../App";
@@ -11,9 +11,7 @@ interface Props{
 function TwatWrapper(props: Props) {
   const classes = useStyles();
   const { posts } = useContext(PostContext);
-
-  console.log(props.session)
-
+  
   return (
     <Box className={classes.rootStyle}>
       <Box>
@@ -32,7 +30,7 @@ function TwatWrapper(props: Props) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   rootStyle: {
     width: "30rem",
     background: "black",
