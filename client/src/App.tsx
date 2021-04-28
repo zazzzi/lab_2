@@ -9,8 +9,8 @@ import Profile from "./components/Profile";
 import { theme } from "./providers/ThemeProvider";
 import { Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
-
 export interface Session {
+  length: number;
   userName: string;
   id: string;
   name: string;
@@ -55,7 +55,7 @@ function App() {
             </ProfileProvider>
             <PostProvider session={session}>
               <PostField />
-              <TwatWrapper />
+              <TwatWrapper session={session}/>
             </PostProvider>
           </Box>
         </Route>
