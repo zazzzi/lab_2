@@ -74,8 +74,8 @@ function Twat(props: Props) {
   const videoID = getVideoId(postContent);
 
   const opts = {
-    height: "190",
-    width: "350",
+    height: "250",
+    width: "390",
   };
   return (
     <Box className={classes.rootStyle}>
