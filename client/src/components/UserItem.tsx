@@ -23,10 +23,10 @@ function UserItem(props: IProps) {
   const [rolePlaceholder, setRolePlaceholder] = useState<string>(props.role);
 
   const [values, setValues] = useState<Object>({
-    userName: null,
-    name: null,
-    password: null,
-    role: null,
+    userName: undefined,
+    name: undefined,
+    password: undefined,
+    role: undefined,
   });
   const roles = [
     { value: "admin", label: "Admin" },
@@ -43,7 +43,6 @@ function UserItem(props: IProps) {
       setRolePlaceholder(e.target.value);
     }
   };
- console.log(rolePlaceholder);
  
 
   return (
