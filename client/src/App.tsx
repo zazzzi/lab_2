@@ -23,32 +23,19 @@ function App() {
 
   useEffect(() => {
     const loadSession = async () => {
-      const emptyValue = getCookie('session')
-      if(emptyValue === ""){
-        return;
-      } else {
-        const decodedString = await JSON.parse(atob(getCookie("session")));
-        setSession(decodedString);
-    }
+      const response = await fetch("http://localhost:6969/api/authenticated", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+      const result = await response.json();
+      console.log(result)
+      setSession(result)
     };
     loadSession();
   }, []);
-
-  function getCookie(cname: string) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(";");
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) === " ") {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) === 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
 
   return (
     <BrowserRouter>
