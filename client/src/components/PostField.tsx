@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   twatWrapperStyle: {
     width: "30rem",
     height: "10rem",
-    margin: "10rem",
+    margin: "5rem",
   },
   twatFieldStyle: {
     width: "30rem",

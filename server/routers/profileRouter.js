@@ -16,13 +16,14 @@ profileRouter.get("/profiles", async (req, res) => {
 
 //post new user/profile USER/ADMIN
 profileRouter.post("/profiles", async (req, res) => {
- 
+  const role = req.body.role ? req.body.role : "plebian";
+
   const hashedPassword = await bcrypt.hash(req.body.password, 10)
 
   const profile = new Profile({
     userName: req.body.userName,
     password: hashedPassword,
-    role: "plebian",
+    role: role,
     name: req.body.name,
   });
   
