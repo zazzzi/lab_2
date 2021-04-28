@@ -30,9 +30,9 @@ mongoose
       })
     );
     app.set("trust proxy", 1);
-    app.use(
+    /* app.use(
       cors()
-    );
+    ); */
     app.use("/api", sessionRouter);
     app.use("/api", postRouter);
     app.use("/api", profileRouter);
