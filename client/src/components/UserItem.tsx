@@ -44,6 +44,7 @@ function UserItem(props: IProps) {
       setRolePlaceholder(e.target.value);
     }
   };
+  console.log(values);
 
   return (
     <Box className={classes.rootStyle}>
@@ -52,11 +53,26 @@ function UserItem(props: IProps) {
           color="secondary"
           disabled={!editMode}
           label="Username"
+          name="userName"
           defaultValue={props.userName}
+          onChange={handleChange}
         />
-        <TextField color="secondary" disabled={!editMode} label="Name" defaultValue={props.name} />
+        <TextField
+          onChange={handleChange}
+          color="secondary"
+          disabled={!editMode}
+          name="name"
+          label="Name"
+          defaultValue={props.name}
+        />
         {!editMode ? (
-          <TextField color="secondary" disabled={!editMode} label="Role" defaultValue={props.role} />
+          <TextField
+            onChange={handleChange}
+            color="secondary"
+            disabled={!editMode}
+            label="Role"
+            defaultValue={props.role}
+          />
         ) : (
           <TextField
             color="secondary"
@@ -67,32 +83,36 @@ function UserItem(props: IProps) {
             name="role"
           >
             {roles.map((option) => (
-              <MenuItem key={option.value} defaultValue={option.value}>
+              <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
             ))}
           </TextField>
         )}
 
-        {editMode ? <TextField label="Password" /> : null}
+        {editMode ? (
+          <TextField onChange={handleChange} name="password" label="Password" />
+        ) : null}
       </Box>
       <Box>
         {!editMode ? (
-          <Button color="secondary" onClick={() => setEditMode(!editMode)}>Edit</Button>
+          <Button color="secondary" onClick={() => setEditMode(!editMode)}>
+            Edit
+          </Button>
         ) : (
           <Button
             color="secondary"
             onClick={() => {
               setEditMode(!editMode);
-                editProfile(props.id, values)
+              editProfile(props.id, values);
             }}
           >
             Save
           </Button>
         )}
-        <Button             color="primary"
- onClick={() => deleteProfile(props.id)}>Delete</Button>
-
+        <Button color="primary" onClick={() => deleteProfile(props.id)}>
+          Delete
+        </Button>
       </Box>
     </Box>
   );
