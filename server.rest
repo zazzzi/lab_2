@@ -56,10 +56,10 @@ POST http://localhost:6969/api/profiles
 Content-Type: application/json
 
 {
-  "userName": "tester423",
-  "password": "1234",
-  "role": "plebian",
-  "name": "Holasas"
+  "userName": "admin",
+  "password": "admin",
+  "role": "admin",
+  "name": "admin"
 }
 
 ### 
