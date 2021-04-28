@@ -1,6 +1,7 @@
 import { profile } from "node:console";
 import { createContext, useEffect, useState } from "react";
 import { Session } from "../../App";
+import bcrypt from "bcrypt";
 
 export interface Profile {
   _id: string;
@@ -63,12 +64,18 @@ function ProfileProvider(props: Props) {
 
   async function editProfile(id: string, content: any) {
     const profile = profiles.find((p: { _id: string }) => p._id === id);
-    const body = {
-      userName: content.userName ? content.userName : profile?.userName,
-      name: content.name ? content.name : profile?.name,
-      role: content.role ? content.role : profile?.role,
-      password: content.password ? content.password : profile?.password,
-    };
+    const body = content.password
+      ? {
+          userName: content.userName ? content.userName : profile?.userName,
+          name: content.name ? content.name : profile?.name,
+          role: content.role ? content.role : profile?.role,
+          password: content.password,
+        }
+      : {
+          userName: content.userName ? content.userName : profile?.userName,
+          name: content.name ? content.name : profile?.name,
+          role: content.role ? content.role : profile?.role,
+        };
     const updatedPost = await makeRequest(
       `${url}/api/profiles/${id}`,
       "PUT",
@@ -80,7 +87,15 @@ function ProfileProvider(props: Props) {
     if (props.session.role === "admin") {
       setProfiles((prev: Profile[]) => {
         return prev.map((p: Profile) =>
-          p.userName === profile!.userName ? { ...p, content: content } : p
+          p.userName === profile!.userName
+            ? {
+                ...p,
+                userName: body.userName,
+                password: body.password,
+                name: body.name,
+                role: body.role,
+              }
+            : p
         );
       });
     }
