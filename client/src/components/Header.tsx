@@ -60,9 +60,8 @@ function Header(props: Props) {
   };
 
   async function loginHandler(loginCredentials: object) {
-    const response = await fetch("http://localhost:6969/api/login", {
+    const response = await fetch("/api/login", {
       method: "POST",
-      credentials: "include",
       body: JSON.stringify(loginCredentials),
       headers: { "Content-Type": "application/json" },
     });
@@ -70,9 +69,8 @@ function Header(props: Props) {
   }
 
   async function logoutHandler() {
-    const response = await fetch("http://localhost:6969/api/logout", {
+    const response = await fetch("/api/logout", {
       method: "DELETE",
-      credentials: "include",
       headers: { "Content-Type": "application/json" },
     });
     return response;

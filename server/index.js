@@ -31,11 +31,7 @@ mongoose
     );
     app.set("trust proxy", 1);
     app.use(
-      cors({
-        origin: "http://localhost:3000",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        credentials: true,
-      })
+      cors()
     );
     app.use("/api", sessionRouter);
     app.use("/api", postRouter);

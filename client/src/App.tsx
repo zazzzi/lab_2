@@ -24,9 +24,8 @@ function App() {
 
   useEffect(() => {
     const loadSession = async () => {
-      const response = await fetch(`${url}/api/authenticated`, {
+      const response = await fetch(`/api/authenticated`, {
         method: "GET",
-        includes: true,
         headers: {
           "Content-type": "application/json",
         },
