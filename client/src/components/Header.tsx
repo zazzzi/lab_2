@@ -81,7 +81,7 @@ function Header(props: Props) {
         <Box className={`${classes.headerWrapper}`}>
           <Link href="/">
             <Typography variant={"h5"} color={"primary"}>
-              Home
+              Twatter
             </Typography>
           </Link>
 
