@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     const loadSession = async () => {
-      const response = await fetch("http://localhost:6969/api/authenticated", {
+      const response = await fetch(`api/authenticated`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -31,12 +31,13 @@ function App() {
         },
       })
       const result = await response.json();
-      console.log(result)
       setSession(result)
     };
     loadSession();
   }, []);
 
+  /* setInterval(()=> console.log(session), 1000) */
+  
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>

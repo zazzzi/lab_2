@@ -53,5 +53,6 @@
   "devDependencies": {
     "@types/bcrypt": "^3.0.1",
     "@types/react-router-dom": "^5.1.7"
-  }
+  },
+  "proxy": "http://localhost:6969" 
 }

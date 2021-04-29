@@ -30,10 +30,9 @@ interface Props {
 
 function ProfileProvider(props: Props) {
   const [profiles, setProfiles] = useState([] as Profile[]);
-  const url = "http://localhost:6969";
 
   async function registerNewProfile(body: object) {
-    const profile = await makeRequest(`${url}/api/profiles/`, "POST", body);
+    const profile = await makeRequest(`/api/profiles/`, "POST", body);
     if (props.session.role === "admin" || props.session.role === "plebian") {
       const newProfile = [...profiles, profile];
       setProfiles(newProfile);
@@ -43,7 +42,7 @@ function ProfileProvider(props: Props) {
   
   async function deleteProfile(id: string) {
     const deleteProfile = await makeRequest(
-      `${url}/api/profiles/${id}`,
+      `/api/profiles/${id}`,
       "DELETE"
     );
     const filteredArray = profiles.filter((p: { _id: string }) => p._id !== id);
@@ -73,7 +72,7 @@ function ProfileProvider(props: Props) {
           role: content.role ? content.role : profile?.role,
         };
     const updatedPost = await makeRequest(
-      `${url}/api/profiles/${id}`,
+      `/api/profiles/${id}`,
       "PUT",
       body
     );
@@ -100,7 +99,7 @@ function ProfileProvider(props: Props) {
 
   useEffect(() => {
     const loadProfiles = async () => {
-      const allProfiles = await makeRequest(`${url}/api/profiles`, "GET");
+      const allProfiles = await makeRequest(`/api/profiles`, "GET");
       setProfiles(allProfiles);
     };
     loadProfiles();
@@ -110,7 +109,6 @@ function ProfileProvider(props: Props) {
     const response = await fetch(url, {
       method: method,
       body: JSON.stringify(body),
-      credentials: "include",
       headers: {
         "Content-type": "application/json",
       },

@@ -31,13 +31,12 @@ interface Props {
 
 function PostProvider(props: Props) {
   const [posts, setPosts] = useState<any>([] as Post[]);
-  const url = "http://localhost:6969";
 
   async function makeNewPost(content: string) {
     const body = {
       content: content,
     };
-    const post = await makeRequest(`${url}/api/posts/`, "POST", body);
+    const post = await makeRequest(`/api/posts/`, "POST", body);
 
     if(props.session.role === "admin" || props.session.role === "plebian"){
       const newPost = [...posts, post]
@@ -47,7 +46,7 @@ function PostProvider(props: Props) {
   }
 
   async function deletePost(id: string) {
-    const deletedPost = await makeRequest(`${url}/api/posts/${id}`, "DELETE"); 
+    const deletedPost = await makeRequest(`/api/posts/${id}`, "DELETE"); 
     const filteredArray = posts.filter((p: { _id: string; }) => p._id !== id);
     if(props.session.userName === undefined){
       props.session.userName = "";
@@ -64,7 +63,7 @@ function PostProvider(props: Props) {
     const body = {
       content: content,
     };
-    const updatedPost = await makeRequest(`${url}/api/posts/${postID}`, "PUT", body);
+    const updatedPost = await makeRequest(`/api/posts/${postID}`, "PUT", body);
     const post = posts.find((p: { _id: string }) => p._id === postID);
       if (!props.session.userName) {
         props.session.userName = "";
@@ -86,7 +85,7 @@ function PostProvider(props: Props) {
     const body = {
       liked: liked,
     };
-    const likedPost = await makeRequest(`${url}/api/posts/${id}`, "POST", body);
+    const likedPost = await makeRequest(`/api/posts/${id}`, "POST", body);
     setPosts((prev: any) => {
       return prev.map((p: any) =>
         likedPost._id === p._id ? { ...p, likes: p.likes + 1 } : p
@@ -96,7 +95,7 @@ function PostProvider(props: Props) {
 
   useEffect(() => {
     const loadPosts = async () => {
-      const allPosts = await makeRequest(`${url}/api/posts`, "GET");
+      const allPosts = await makeRequest(`/api/posts`, "GET");
       setPosts(allPosts);
     };
     loadPosts();
