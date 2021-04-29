@@ -28,7 +28,7 @@ function PostField() {
           multiline
           rows={6}
           autoFocus
-          variant="outlined"
+          // variant="outlined"
           color="primary"
           className={classes.twatFieldStyle}
           onChange={(event) => handleCharacters(event.target.value)}
@@ -59,6 +59,9 @@ const useStyles = makeStyles(() => ({
     width: "30rem",
     height: "10rem",
     margin: "5rem",
+    border: "2px solid white",
+    borderRadius:"9px",
+    padding:"0.5rem 1rem"
   },
   twatFieldStyle: {
     width: "30rem",
@@ -70,7 +73,7 @@ const useStyles = makeStyles(() => ({
   twatInfoWrapper: {
     display: "flex",
     justifyContent: "space-between",
-    margin: "0.5rem",
+    margin: "1.25rem 0.5rem 0.5rem 0.5rem",
   },
 }));
 
