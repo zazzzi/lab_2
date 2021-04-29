@@ -9,7 +9,7 @@ sessionRouter.post("/login", async (req, res) => {
   const profile = await Profile.findOne({ userName: userName });
 
   if (!profile || !(await bcrypt.compare(password, profile.password))) {
-    res.status(401).json("Incorrect password or username");
+    res.status(400).json({message: "Incorrect user name or password"});
     return;
   }
 
@@ -18,7 +18,7 @@ sessionRouter.post("/login", async (req, res) => {
   req.session.role = profile.role;
   req.session.name = profile.name;
   
-  res.status(204).json(`You are logged in as ${req.session.userName}`);
+  res.status(200).json({message: `You are logged in`});
 });
 
 //Logout
