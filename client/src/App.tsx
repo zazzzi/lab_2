@@ -31,13 +31,13 @@ function App() {
         },
       })
       const result = await response.json();
-      console.log(result)
       setSession(result)
     };
     loadSession();
   }, []);
-  console.log(session)
 
+  setInterval(()=> console.log(session), 1000)
+  
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
