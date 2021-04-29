@@ -36,7 +36,7 @@ function App() {
     loadSession();
   }, []);
 
-  setInterval(()=> console.log(session), 1000)
+  /* setInterval(()=> console.log(session), 1000) */
   
   return (
     <BrowserRouter>
