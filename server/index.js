@@ -5,7 +5,6 @@ const postRouter = require("./routers/postRouter");
 const profileRouter = require("./routers/profileRouter");
 const sessionRouter = require("./routers/sessionRouter");
 const cookieSession = require("cookie-session");
-const cors = require("cors");
 
 const uri =
   "mongodb+srv://admin:admin@twatter.j7drj.mongodb.net/Twatter?retryWrites=true&w=majority";
@@ -30,13 +29,6 @@ mongoose
       })
     );
     app.set("trust proxy", 1);
-    /* app.use(
-      cors({
-        origin: "http://localhost:3000",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        credentials: true,
-      })
-    ); */
     app.use("/api", sessionRouter);
     app.use("/api", postRouter);
     app.use("/api", profileRouter);

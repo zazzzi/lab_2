@@ -27,7 +27,6 @@ function Header(props: Props) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [formValidation, setUserNameValidation] = useState(false);
-
   const [loginCredentials, setloginCredentials] = useState<Credentials>({
     userName: "",
     password: "",
@@ -77,6 +76,7 @@ function Header(props: Props) {
       setUserNameValidation(true)
     } else {
       setUserNameValidation(false)
+      reloadPage();
     }
     return response;
   }
@@ -167,9 +167,6 @@ function Header(props: Props) {
             color="secondary"
             onClick={() => {
               loginHandler(loginCredentials);
-              if(formValidation){
-                reloadPage();
-              } 
             }}
           >
             Login

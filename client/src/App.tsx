@@ -36,8 +36,6 @@ function App() {
     loadSession();
   }, []);
 
-  /* setInterval(()=> console.log(session), 1000) */
-  
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -68,7 +66,7 @@ function App() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   rootStyle: {
     display: "flex",
     flexDirection: "column",

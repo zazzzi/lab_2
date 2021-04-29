@@ -1,9 +1,8 @@
 import { Box, makeStyles } from "@material-ui/core";
 import { useContext } from "react";
-import { PostContext } from "./context/postsContext";
+import { PostContext, Post } from "./context/postsContext";
 import Twat from "./Twat";
 import { Session } from "../App";
-
 interface Props{
   session: Session;
 }
@@ -16,7 +15,7 @@ function TwatWrapper(props: Props) {
     <Box className={classes.rootStyle}>
       <Box>
         {posts
-          .map((p: any, i) => (
+          .map((p: Post, i) => (
             <Box key={i} className={classes.twatContainer}>
               <Twat 
                 session={props.session}

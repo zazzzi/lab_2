@@ -16,7 +16,7 @@ interface IProps {
 
 function EditTwat(props: IProps) {
   const classes = useStyles();
-  const [twat, setTwat] = useState<any>();
+  const [twat, setTwat] = useState<string>("");
   const [, setChars] = useState<number>(0);
   const [isDisabled] = useState(false);
   const {editPost} = useContext(PostContext);

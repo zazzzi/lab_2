@@ -87,7 +87,7 @@ function PostProvider(props: Props) {
     };
     const likedPost = await makeRequest(`/api/posts/${id}`, "POST", body);
     setPosts((prev: any) => {
-      return prev.map((p: any) =>
+      return prev.map((p: Post) =>
         likedPost._id === p._id ? { ...p, likes: p.likes + 1 } : p
       );
     });
@@ -102,7 +102,7 @@ function PostProvider(props: Props) {
   }, []);
 
 
-  async function makeRequest(url: RequestInfo, method: any, body?: any) {
+  async function makeRequest(url: RequestInfo, method: string, body?: object) {
     const response = await fetch(url, {
       method: method,
       body: JSON.stringify(body),

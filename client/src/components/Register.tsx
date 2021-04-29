@@ -7,9 +7,6 @@ import {
   TextField,
 } from "@material-ui/core";
 import { ProfileContext } from "./context/profileContext";
-import { stringify } from "node:querystring";
-import { responseInterceptor } from "http-proxy-middleware";
-
 interface Props {
   handleRegClose: () => void;
 }
@@ -24,7 +21,6 @@ function Register(props: Props) {
   });
   const [errorExist, setErrorExist] = useState(false);
 
-
   const handleChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
     registerValues((prevState) => ({
@@ -34,15 +30,11 @@ function Register(props: Props) {
   };
 
   const checkForDupUsername = async () => {
-    console.log("Check");
-    
     const response = await registerNewProfile(values);
     setErrorExist(response);
     if (!response) {
         props.handleRegClose();
     }
-  
-
   };
 
   return (
