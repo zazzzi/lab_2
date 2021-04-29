@@ -7,6 +7,8 @@ import {
   TextField,
 } from "@material-ui/core";
 import { ProfileContext } from "./context/profileContext";
+import { stringify } from "node:querystring";
+import { responseInterceptor } from "http-proxy-middleware";
 
 interface Props {
   handleRegClose: () => void;
@@ -14,14 +16,16 @@ interface Props {
 
 function Register(props: Props) {
   const classes = useStyles();
-  const { registerNewProfile } = useContext(ProfileContext);
+  const { registerNewProfile, errorMessage } = useContext(ProfileContext);
   const [values, registerValues] = useState<Object>({
     userName: "",
     name: "",
     password: "",
   });
+  const [errorExist, setErrorExist] = useState(false);
 
-  const handleChange = (e: { target: { name: string; value: string; }; }) => {
+
+  const handleChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
     registerValues((prevState) => ({
       ...prevState,
@@ -29,11 +33,23 @@ function Register(props: Props) {
     }));
   };
 
+  const checkForDupUsername = async () => {
+    console.log("Check");
+    
+    const response = await registerNewProfile(values);
+    setErrorExist(response);
+    if (!response) {
+        props.handleRegClose();
+    }
+  
+
+  };
+
   return (
     <Box className={classes.modal}>
       <Box className={classes.modalContent}>
         {<Typography>Register</Typography>}
-        <TextField label="User Name" onChange={handleChange} name="userName" />
+        <TextField error={errorExist} helperText={errorMessage} label="User Name" onChange={handleChange} name="userName" />
         <TextField label="Name" onChange={handleChange} name="name" />
         <TextField
           label="Password"
@@ -43,8 +59,7 @@ function Register(props: Props) {
         />
         <Button
           onClick={() => {
-            registerNewProfile(values);
-            props.handleRegClose();
+            checkForDupUsername();
           }}
         >
           Register
