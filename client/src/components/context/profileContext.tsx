@@ -1,4 +1,3 @@
-import { error } from "node:console";
 import { createContext, useEffect, useState } from "react";
 import { Session } from "../../App";
 export interface Profile {
@@ -14,7 +13,7 @@ interface State {
   profiles: Profile[];
   registerNewProfile: (body: object) => any;
   deleteProfile: (id: string) => void;
-  editProfile: (id: string, content: any) => void;
+  editProfile: (id: string, content: object) => void;
   errorMessage: string;
 }
 
@@ -109,7 +108,7 @@ function ProfileProvider(props: Props) {
     loadProfiles();
   }, []);
 
-  async function makeRequest(url: RequestInfo, method: any, body?: any) {
+  async function makeRequest(url: RequestInfo, method: string, body?: object) {
     const response = await fetch(url, {
       method: method,
       body: JSON.stringify(body),

@@ -53,12 +53,6 @@ postRouter.put("/posts/:id", secureWithRole("plebian"), async (req, res) => {
       { _id: req.params.id },
       { $set: { content: req.body.content } },
       { new: true },
-      (err, doc) => {
-        if (err) {
-          console.log("Opsiiii something went wrooong");
-        }
-        console.log(doc);
-      }
     );
     res.status(200).json("updated")
   } else {

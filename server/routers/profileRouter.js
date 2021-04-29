@@ -7,7 +7,6 @@ const profileRouter = express.Router();
 
 //get all profiles
 profileRouter.get("/profiles", async (req, res) => {
-  console.log(req.session.userName);
   const profile = await profileModel.find();
   res.send(profile);
 });
@@ -90,11 +89,6 @@ profileRouter.put(
               },
         },
         { new: true },
-        (err) => {
-          if (err) {
-            console.log("OH NO SOMETHING WENT WRONG");
-          }
-        }
       );
       res.send(profile);
     } else {

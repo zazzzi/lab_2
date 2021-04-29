@@ -12,7 +12,7 @@ import { PostContext } from "./context/postsContext";
 function PostField() {
   const classes = useStyles();
   const [chars, setChars] = useState<number>(0);
-  const [twat, setTwat] = useState<any>();
+  const [twat, setTwat] = useState<string>("");
   const [isDisabled] = useState(false);
   const { makeNewPost } = useContext(PostContext);
 
