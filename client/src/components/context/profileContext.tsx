@@ -1,3 +1,4 @@
+import { error } from "node:console";
 import { createContext, useEffect, useState } from "react";
 import { Session } from "../../App";
 export interface Profile {
@@ -11,9 +12,10 @@ export interface Profile {
 
 interface State {
   profiles: Profile[];
-  registerNewProfile: (body: object) => void;
+  registerNewProfile: (body: object) => any;
   deleteProfile: (id: string) => void;
   editProfile: (id: string, content: any) => void;
+  errorMessage: string;
 }
 
 export const ProfileContext = createContext<State>({
@@ -21,6 +23,7 @@ export const ProfileContext = createContext<State>({
   registerNewProfile: () => {},
   deleteProfile: () => {},
   editProfile: () => {},
+  errorMessage: "",
 });
 
 interface Props {
@@ -30,21 +33,26 @@ interface Props {
 
 function ProfileProvider(props: Props) {
   const [profiles, setProfiles] = useState([] as Profile[]);
-
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  
   async function registerNewProfile(body: object) {
+    setErrorMessage("");
     const profile = await makeRequest(`/api/profiles/`, "POST", body);
-    if (props.session.role === "admin" || props.session.role === "plebian") {
+   
+    
+    if (profile === "Username already in use.") {
+      setErrorMessage(profile);      
+      return true;
+    } else if (props.session.role === "admin" || props.session.role === "plebian") {
       const newProfile = [...profiles, profile];
       setProfiles(newProfile);
-      return;
-    }
+      return false;
+    } 
+    return false;
   }
-  
+
   async function deleteProfile(id: string) {
-    const deleteProfile = await makeRequest(
-      `/api/profiles/${id}`,
-      "DELETE"
-    );
+    const deleteProfile = await makeRequest(`/api/profiles/${id}`, "DELETE");
     const filteredArray = profiles.filter((p: { _id: string }) => p._id !== id);
     if (props.session.userName === undefined) {
       props.session.userName = "";
@@ -71,11 +79,7 @@ function ProfileProvider(props: Props) {
           name: content.name ? content.name : profile?.name,
           role: content.role ? content.role : profile?.role,
         };
-    const updatedPost = await makeRequest(
-      `/api/profiles/${id}`,
-      "PUT",
-      body
-    );
+    const updatedPost = await makeRequest(`/api/profiles/${id}`, "PUT", body);
     if (!props.session.userName) {
       props.session.userName = "";
     }
@@ -124,6 +128,7 @@ function ProfileProvider(props: Props) {
         registerNewProfile: registerNewProfile,
         deleteProfile: deleteProfile,
         editProfile: editProfile,
+        errorMessage: errorMessage
       }}
     >
       {props.children}
