@@ -10,20 +10,25 @@ import {
   Tooltip,
   Zoom,
 } from "@material-ui/core";
-import { useState } from "react";
+import { useState} from "react";
 import AdminPanel from "./AdminPanel";
 import Register from "./Register";
 import { Session } from "../App";
-
 interface Props {
   session: Session;
+}
+interface Credentials {
+  userName: string;
+  password: string;
 }
 
 function Header(props: Props) {
   const classes = useStyles();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [loginCredentials, setloginCredentials] = useState<Object>({
+  const [formValidation, setUserNameValidation] = useState(false);
+
+  const [loginCredentials, setloginCredentials] = useState<Credentials>({
     userName: "",
     password: "",
   });
@@ -34,6 +39,7 @@ function Header(props: Props) {
 
   const handleClose = () => {
     setIsLoginModalOpen(false);
+    setUserNameValidation(false);
   };
 
   const handleRegOpen = () => {
@@ -59,13 +65,19 @@ function Header(props: Props) {
     }
   };
 
-  async function loginHandler(loginCredentials: object) {
+  async function loginHandler(loginCredentials: Credentials) {
     const response = await fetch("api/login", {
       method: "POST",
       body: JSON.stringify(loginCredentials),
       credentials: 'include',
       headers: { "Content-Type": "application/json" },
     });
+    const result = await response.json();
+    if(result.message === "Incorrect user name or password"){
+      setUserNameValidation(true)
+    } else {
+      setUserNameValidation(false)
+    }
     return response;
   }
 
@@ -77,7 +89,7 @@ function Header(props: Props) {
     });
     return response;
   }
-
+  
   return (
     <Box className={classes.rootStyle}>
       {props.session.role === "admin" || props.session.role === "plebian" ? (
@@ -135,25 +147,29 @@ function Header(props: Props) {
           <Box>
             <Typography color="secondary">Login</Typography>
             <TextField
+              error={formValidation}
               color="secondary"
               name="userName"
               label="User name"
               onChange={handleChange}
             />
             <TextField
+              error={formValidation}
               color="secondary"
               name="password"
               label="Password"
               type="password"
               onChange={handleChange}
+              helperText="Incorrect password or username"
             />
           </Box>
           <Button
             color="secondary"
             onClick={() => {
-              reloadPage();
               loginHandler(loginCredentials);
-              handleClose();
+              if(formValidation){
+                reloadPage();
+              } 
             }}
           >
             Login
@@ -217,3 +233,4 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default Header;
+
